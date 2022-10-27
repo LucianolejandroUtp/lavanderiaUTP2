@@ -18,7 +18,6 @@
 
 
     <div>
-      algo
       <jsp:include page="../DistritoListServlet" />
     </div>
     <div class="col-md-12">
