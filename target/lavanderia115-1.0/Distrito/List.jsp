@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <!DOCTYPE html>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.servlets.DistritoCreateServlet" %>
 <%@page import="com.servlets.DistritoListServlet" %>
 
@@ -18,7 +19,7 @@
 
 
     <div>
-      <jsp:include page="../DistritoListServlet" />
+      <%--<jsp:include page="../DistritoListServlet" />--%>
     </div>
     <div class="col-md-12">
       <div class="card">
@@ -77,7 +78,7 @@
                         </div>
                       </div>
                       <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                       </div>
                     </div>
                   </form>
@@ -94,43 +95,30 @@
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th style="width: 10%">Action</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th style="width: 10%">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>
-                    <div class="form-button-action">
-                      <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                      <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                        <i class="fa fa-times"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>
-                    <div class="form-button-action">
-                      <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                      <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                        <i class="fa fa-times"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                <c:forEach var="tempDistritos" items="${mi_lista_de_distritos }">
+                  <tr>
+                    <td>${tempDistritos.nombre }</td>
+
+                    <td>${tempDistritos.createdAt }</td>
+                    <td>
+                      <div class="form-button-action">
+                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </c:forEach>
+                
               </tbody>
             </table>
           </div>

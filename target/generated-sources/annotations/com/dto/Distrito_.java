@@ -7,7 +7,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-26T19:33:11")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-27T13:22:25")
 @StaticMetamodel(Distrito.class)
 public class Distrito_ { 
 

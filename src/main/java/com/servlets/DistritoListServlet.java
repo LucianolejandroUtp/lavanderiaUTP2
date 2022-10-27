@@ -5,8 +5,11 @@
 package com.servlets;
 
 import com.dao.DistritoJpaController;
+import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,8 +38,17 @@ public class DistritoListServlet extends HttpServlet {
     System.out.println("Entrando al List Servlet");
     try {
       DistritoJpaController listD = new DistritoJpaController();
+      List<Distrito> mi_lista_de_distritos = new ArrayList<>();
 
-      System.out.println(listD.findDistritoEntities());
+//      System.out.println(listD.findDistritoEntities());
+      mi_lista_de_distritos = listD.findDistritoEntities();
+
+      for (Distrito dis : mi_lista_de_distritos) {
+        System.out.println(dis.getId() + " - " + dis.getNombre() + " - " + dis.getCreatedAt());
+      }
+
+      request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
+      request.getRequestDispatcher("Distrito/List.jsp").forward(request, response);
 
     } catch (Throwable theException) {
       System.out.println(theException);

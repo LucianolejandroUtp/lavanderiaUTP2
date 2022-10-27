@@ -11,3 +11,4 @@ com\dao\DistritoJpaController.class
 com\dto\TipoPersona.class
 com\dto\Persona.class
 com\dao\exceptions\IllegalOrphanException.class
+com\servlets\DistritoListServlet.class
