@@ -17,10 +17,6 @@
   </jsp:attribute>
   <jsp:attribute name="body_area">
 
-
-    <div>
-      <%--<jsp:include page="../DistritoListServlet" />--%>
-    </div>
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -33,7 +29,7 @@
           </div>
         </div>
         <div class="card-body">
-          <!-- Modal -->
+          <!-- Modal Crear Distrito-->
           <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -50,31 +46,12 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class ="row">
-                    <div class="col-md-12">
-                      <form action="../DistritoCreateServlet" method="post">
-                        <div class="form-group form-inline">
-                          <div class="form-group form-inline">
-                            <label for="inlineinput" class="col-md-3 col-form-label">Nombre</label>
-                            <div class="col-md-9 p-0">
-                              <input name="distrito2" type="text" class="form-control input-full" id="inlineinput" placeholder="Ingresa un distrito">
-                            </div>
-                          </div>
-                          <div class="col-md-3 col-form-label">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <p class="small">Crear un nuevo distrito</p>
-                  <form  action="../DistritoCreateServlet" method="post">
+                  <form  action="DistritoCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="distrito" id="addName" type="text" class="form-control" placeholder="llene el distrito">
+                          <input name="distrito" id="addName" type="text" class="form-control" placeholder="Llene el distrito">
                         </div>
                       </div>
                       <div class="col-md-6">
