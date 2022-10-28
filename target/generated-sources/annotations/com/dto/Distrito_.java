@@ -1,21 +1,24 @@
 package com.dto;
 
-import com.dto.Persona;
+import com.dto.Departamento;
+import com.dto.Direccion;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-27T18:44:20")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-28T14:04:52")
 @StaticMetamodel(Distrito.class)
 public class Distrito_ { 
 
+    public static volatile SingularAttribute<Distrito, String> distrito;
     public static volatile SingularAttribute<Distrito, Date> createdAt;
+    public static volatile SingularAttribute<Distrito, String> estado;
     public static volatile SingularAttribute<Distrito, Date> deletedAt;
-    public static volatile CollectionAttribute<Distrito, Persona> personaCollection;
     public static volatile SingularAttribute<Distrito, Long> id;
-    public static volatile SingularAttribute<Distrito, String> nombre;
+    public static volatile CollectionAttribute<Distrito, Direccion> direccionCollection;
+    public static volatile SingularAttribute<Distrito, Departamento> departamentoId;
     public static volatile SingularAttribute<Distrito, Date> updatedAt;
 
 }

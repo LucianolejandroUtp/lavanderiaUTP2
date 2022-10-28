@@ -5,13 +5,14 @@
 package com.dao;
 
 import com.dao.exceptions.NonexistentEntityException;
-import com.dto.Distrito;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.dto.Persona;
+import com.dto.Departamento;
+import com.dto.Direccion;
+import com.dto.Distrito;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,10 +29,9 @@ public class DistritoJpaController implements Serializable {
   public DistritoJpaController(EntityManagerFactory emf) {
     this.emf = emf;
   }
-
-  public DistritoJpaController() {
-    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-  }
+    public DistritoJpaController(){
+        emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+    }
 
   private EntityManagerFactory emf = null;
 
@@ -40,27 +40,36 @@ public class DistritoJpaController implements Serializable {
   }
 
   public void create(Distrito distrito) {
-    if (distrito.getPersonaCollection() == null) {
-      distrito.setPersonaCollection(new ArrayList<Persona>());
+    if (distrito.getDireccionCollection() == null) {
+      distrito.setDireccionCollection(new ArrayList<Direccion>());
     }
     EntityManager em = null;
     try {
       em = getEntityManager();
       em.getTransaction().begin();
-      Collection<Persona> attachedPersonaCollection = new ArrayList<Persona>();
-      for (Persona personaCollectionPersonaToAttach : distrito.getPersonaCollection()) {
-        personaCollectionPersonaToAttach = em.getReference(personaCollectionPersonaToAttach.getClass(), personaCollectionPersonaToAttach.getId());
-        attachedPersonaCollection.add(personaCollectionPersonaToAttach);
+      Departamento departamentoId = distrito.getDepartamentoId();
+      if (departamentoId != null) {
+        departamentoId = em.getReference(departamentoId.getClass(), departamentoId.getId());
+        distrito.setDepartamentoId(departamentoId);
       }
-      distrito.setPersonaCollection(attachedPersonaCollection);
+      Collection<Direccion> attachedDireccionCollection = new ArrayList<Direccion>();
+      for (Direccion direccionCollectionDireccionToAttach : distrito.getDireccionCollection()) {
+        direccionCollectionDireccionToAttach = em.getReference(direccionCollectionDireccionToAttach.getClass(), direccionCollectionDireccionToAttach.getId());
+        attachedDireccionCollection.add(direccionCollectionDireccionToAttach);
+      }
+      distrito.setDireccionCollection(attachedDireccionCollection);
       em.persist(distrito);
-      for (Persona personaCollectionPersona : distrito.getPersonaCollection()) {
-        Distrito oldDistritoIdOfPersonaCollectionPersona = personaCollectionPersona.getDistritoId();
-        personaCollectionPersona.setDistritoId(distrito);
-        personaCollectionPersona = em.merge(personaCollectionPersona);
-        if (oldDistritoIdOfPersonaCollectionPersona != null) {
-          oldDistritoIdOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
-          oldDistritoIdOfPersonaCollectionPersona = em.merge(oldDistritoIdOfPersonaCollectionPersona);
+      if (departamentoId != null) {
+        departamentoId.getDistritoCollection().add(distrito);
+        departamentoId = em.merge(departamentoId);
+      }
+      for (Direccion direccionCollectionDireccion : distrito.getDireccionCollection()) {
+        Distrito oldDistritoIdOfDireccionCollectionDireccion = direccionCollectionDireccion.getDistritoId();
+        direccionCollectionDireccion.setDistritoId(distrito);
+        direccionCollectionDireccion = em.merge(direccionCollectionDireccion);
+        if (oldDistritoIdOfDireccionCollectionDireccion != null) {
+          oldDistritoIdOfDireccionCollectionDireccion.getDireccionCollection().remove(direccionCollectionDireccion);
+          oldDistritoIdOfDireccionCollectionDireccion = em.merge(oldDistritoIdOfDireccionCollectionDireccion);
         }
       }
       em.getTransaction().commit();
@@ -77,30 +86,44 @@ public class DistritoJpaController implements Serializable {
       em = getEntityManager();
       em.getTransaction().begin();
       Distrito persistentDistrito = em.find(Distrito.class, distrito.getId());
-      Collection<Persona> personaCollectionOld = persistentDistrito.getPersonaCollection();
-      Collection<Persona> personaCollectionNew = distrito.getPersonaCollection();
-      Collection<Persona> attachedPersonaCollectionNew = new ArrayList<Persona>();
-      for (Persona personaCollectionNewPersonaToAttach : personaCollectionNew) {
-        personaCollectionNewPersonaToAttach = em.getReference(personaCollectionNewPersonaToAttach.getClass(), personaCollectionNewPersonaToAttach.getId());
-        attachedPersonaCollectionNew.add(personaCollectionNewPersonaToAttach);
+      Departamento departamentoIdOld = persistentDistrito.getDepartamentoId();
+      Departamento departamentoIdNew = distrito.getDepartamentoId();
+      Collection<Direccion> direccionCollectionOld = persistentDistrito.getDireccionCollection();
+      Collection<Direccion> direccionCollectionNew = distrito.getDireccionCollection();
+      if (departamentoIdNew != null) {
+        departamentoIdNew = em.getReference(departamentoIdNew.getClass(), departamentoIdNew.getId());
+        distrito.setDepartamentoId(departamentoIdNew);
       }
-      personaCollectionNew = attachedPersonaCollectionNew;
-      distrito.setPersonaCollection(personaCollectionNew);
+      Collection<Direccion> attachedDireccionCollectionNew = new ArrayList<Direccion>();
+      for (Direccion direccionCollectionNewDireccionToAttach : direccionCollectionNew) {
+        direccionCollectionNewDireccionToAttach = em.getReference(direccionCollectionNewDireccionToAttach.getClass(), direccionCollectionNewDireccionToAttach.getId());
+        attachedDireccionCollectionNew.add(direccionCollectionNewDireccionToAttach);
+      }
+      direccionCollectionNew = attachedDireccionCollectionNew;
+      distrito.setDireccionCollection(direccionCollectionNew);
       distrito = em.merge(distrito);
-      for (Persona personaCollectionOldPersona : personaCollectionOld) {
-        if (!personaCollectionNew.contains(personaCollectionOldPersona)) {
-          personaCollectionOldPersona.setDistritoId(null);
-          personaCollectionOldPersona = em.merge(personaCollectionOldPersona);
+      if (departamentoIdOld != null && !departamentoIdOld.equals(departamentoIdNew)) {
+        departamentoIdOld.getDistritoCollection().remove(distrito);
+        departamentoIdOld = em.merge(departamentoIdOld);
+      }
+      if (departamentoIdNew != null && !departamentoIdNew.equals(departamentoIdOld)) {
+        departamentoIdNew.getDistritoCollection().add(distrito);
+        departamentoIdNew = em.merge(departamentoIdNew);
+      }
+      for (Direccion direccionCollectionOldDireccion : direccionCollectionOld) {
+        if (!direccionCollectionNew.contains(direccionCollectionOldDireccion)) {
+          direccionCollectionOldDireccion.setDistritoId(null);
+          direccionCollectionOldDireccion = em.merge(direccionCollectionOldDireccion);
         }
       }
-      for (Persona personaCollectionNewPersona : personaCollectionNew) {
-        if (!personaCollectionOld.contains(personaCollectionNewPersona)) {
-          Distrito oldDistritoIdOfPersonaCollectionNewPersona = personaCollectionNewPersona.getDistritoId();
-          personaCollectionNewPersona.setDistritoId(distrito);
-          personaCollectionNewPersona = em.merge(personaCollectionNewPersona);
-          if (oldDistritoIdOfPersonaCollectionNewPersona != null && !oldDistritoIdOfPersonaCollectionNewPersona.equals(distrito)) {
-            oldDistritoIdOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
-            oldDistritoIdOfPersonaCollectionNewPersona = em.merge(oldDistritoIdOfPersonaCollectionNewPersona);
+      for (Direccion direccionCollectionNewDireccion : direccionCollectionNew) {
+        if (!direccionCollectionOld.contains(direccionCollectionNewDireccion)) {
+          Distrito oldDistritoIdOfDireccionCollectionNewDireccion = direccionCollectionNewDireccion.getDistritoId();
+          direccionCollectionNewDireccion.setDistritoId(distrito);
+          direccionCollectionNewDireccion = em.merge(direccionCollectionNewDireccion);
+          if (oldDistritoIdOfDireccionCollectionNewDireccion != null && !oldDistritoIdOfDireccionCollectionNewDireccion.equals(distrito)) {
+            oldDistritoIdOfDireccionCollectionNewDireccion.getDireccionCollection().remove(direccionCollectionNewDireccion);
+            oldDistritoIdOfDireccionCollectionNewDireccion = em.merge(oldDistritoIdOfDireccionCollectionNewDireccion);
           }
         }
       }
@@ -133,10 +156,15 @@ public class DistritoJpaController implements Serializable {
       } catch (EntityNotFoundException enfe) {
         throw new NonexistentEntityException("The distrito with id " + id + " no longer exists.", enfe);
       }
-      Collection<Persona> personaCollection = distrito.getPersonaCollection();
-      for (Persona personaCollectionPersona : personaCollection) {
-        personaCollectionPersona.setDistritoId(null);
-        personaCollectionPersona = em.merge(personaCollectionPersona);
+      Departamento departamentoId = distrito.getDepartamentoId();
+      if (departamentoId != null) {
+        departamentoId.getDistritoCollection().remove(distrito);
+        departamentoId = em.merge(departamentoId);
+      }
+      Collection<Direccion> direccionCollection = distrito.getDireccionCollection();
+      for (Direccion direccionCollectionDireccion : direccionCollection) {
+        direccionCollectionDireccion.setDistritoId(null);
+        direccionCollectionDireccion = em.merge(direccionCollectionDireccion);
       }
       em.remove(distrito);
       em.getTransaction().commit();
@@ -192,5 +220,5 @@ public class DistritoJpaController implements Serializable {
       em.close();
     }
   }
-
+  
 }

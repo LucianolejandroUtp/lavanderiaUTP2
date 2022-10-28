@@ -2,9 +2,19 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.lav_lavanderia115_war_1.0PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.dto.Distrito</class>
-    <class>com.dto.Persona</class>
+    <class>com.dto.Vehiculo</class>
     <class>com.dto.TipoPersona</class>
+    <class>com.dto.DireccionPersona</class>
+    <class>com.dto.Direccion</class>
+    <class>com.dto.Categoria</class>
+    <class>com.dto.Distrito</class>
+    <class>com.dto.Factura</class>
+    <class>com.dto.Cita</class>
+    <class>com.dto.Persona</class>
+    <class>com.dto.Departamento</class>
+    <class>com.dto.Servicio</class>
+    <class>com.dto.DetalleFactura</class>
+    <class>com.dto.Telefono</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/lavanderiautpmigrations?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
@@ -13,7 +23,6 @@
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-
     </properties>
   </persistence-unit>
 </persistence>

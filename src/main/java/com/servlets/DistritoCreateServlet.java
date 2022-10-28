@@ -47,7 +47,7 @@ public class DistritoCreateServlet extends HttpServlet {
 	    Distrito mi_distrito = new Distrito();
 
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-	    mi_distrito.setNombre(request.getParameter("distrito"));
+	    mi_distrito.setDistrito(request.getParameter("distrito"));
 	    mi_distrito.setCreatedAt(ts);
 	    mi_distrito.setUpdatedAt(ts);
 

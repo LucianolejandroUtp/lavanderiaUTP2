@@ -13,12 +13,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
   @NamedQuery(name = "Distrito.findAll", query = "SELECT d FROM Distrito d"),
   @NamedQuery(name = "Distrito.findById", query = "SELECT d FROM Distrito d WHERE d.id = :id"),
-  @NamedQuery(name = "Distrito.findByNombre", query = "SELECT d FROM Distrito d WHERE d.nombre = :nombre"),
+  @NamedQuery(name = "Distrito.findByDistrito", query = "SELECT d FROM Distrito d WHERE d.distrito = :distrito"),
+  @NamedQuery(name = "Distrito.findByEstado", query = "SELECT d FROM Distrito d WHERE d.estado = :estado"),
   @NamedQuery(name = "Distrito.findByDeletedAt", query = "SELECT d FROM Distrito d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "Distrito.findByCreatedAt", query = "SELECT d FROM Distrito d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Distrito.findByUpdatedAt", query = "SELECT d FROM Distrito d WHERE d.updatedAt = :updatedAt")})
@@ -46,8 +50,13 @@ public class Distrito implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "nombre")
-  private String nombre;
+  @Column(name = "distrito")
+  private String distrito;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 8)
+  @Column(name = "estado")
+  private String estado;
   @Column(name = "deleted_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date deletedAt;
@@ -57,14 +66,22 @@ public class Distrito implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
+  @JoinColumn(name = "departamento_id", referencedColumnName = "id")
+  @ManyToOne
+  private Departamento departamentoId;
   @OneToMany(mappedBy = "distritoId")
-  private Collection<Persona> personaCollection;
+  private Collection<Direccion> direccionCollection;
 
   public Distrito() {
   }
 
   public Distrito(Long id) {
     this.id = id;
+  }
+
+  public Distrito(Long id, String estado) {
+    this.id = id;
+    this.estado = estado;
   }
 
   public Long getId() {
@@ -75,12 +92,20 @@ public class Distrito implements Serializable {
     this.id = id;
   }
 
-  public String getNombre() {
-    return nombre;
+  public String getDistrito() {
+    return distrito;
   }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
+  public void setDistrito(String distrito) {
+    this.distrito = distrito;
+  }
+
+  public String getEstado() {
+    return estado;
+  }
+
+  public void setEstado(String estado) {
+    this.estado = estado;
   }
 
   public Date getDeletedAt() {
@@ -107,13 +132,21 @@ public class Distrito implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
-  public Collection<Persona> getPersonaCollection() {
-    return personaCollection;
+  public Departamento getDepartamentoId() {
+    return departamentoId;
   }
 
-  public void setPersonaCollection(Collection<Persona> personaCollection) {
-    this.personaCollection = personaCollection;
+  public void setDepartamentoId(Departamento departamentoId) {
+    this.departamentoId = departamentoId;
+  }
+
+  @XmlTransient
+  public Collection<Direccion> getDireccionCollection() {
+    return direccionCollection;
+  }
+
+  public void setDireccionCollection(Collection<Direccion> direccionCollection) {
+    this.direccionCollection = direccionCollection;
   }
 
   @Override

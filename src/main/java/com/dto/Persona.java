@@ -5,6 +5,7 @@
 package com.dto;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,12 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,9 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
   @NamedQuery(name = "Persona.findByNombres", query = "SELECT p FROM Persona p WHERE p.nombres = :nombres"),
   @NamedQuery(name = "Persona.findByApellidos", query = "SELECT p FROM Persona p WHERE p.apellidos = :apellidos"),
   @NamedQuery(name = "Persona.findByDni", query = "SELECT p FROM Persona p WHERE p.dni = :dni"),
-  @NamedQuery(name = "Persona.findByDireccion", query = "SELECT p FROM Persona p WHERE p.direccion = :direccion"),
-  @NamedQuery(name = "Persona.findByReferencia", query = "SELECT p FROM Persona p WHERE p.referencia = :referencia"),
-  @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono"),
   @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email"),
   @NamedQuery(name = "Persona.findByPassword", query = "SELECT p FROM Persona p WHERE p.password = :password"),
   @NamedQuery(name = "Persona.findByEstado", query = "SELECT p FROM Persona p WHERE p.estado = :estado"),
@@ -62,15 +62,6 @@ public class Persona implements Serializable {
   @Size(max = 255)
   @Column(name = "dni")
   private String dni;
-  @Size(max = 255)
-  @Column(name = "direccion")
-  private String direccion;
-  @Size(max = 255)
-  @Column(name = "referencia")
-  private String referencia;
-  @Size(max = 255)
-  @Column(name = "telefono")
-  private String telefono;
   // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
   @Size(max = 255)
   @Column(name = "email")
@@ -92,12 +83,19 @@ public class Persona implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @JoinColumn(name = "distrito_id", referencedColumnName = "id")
-  @ManyToOne
-  private Distrito distritoId;
   @JoinColumn(name = "tipo_persona_id", referencedColumnName = "id")
   @ManyToOne
   private TipoPersona tipoPersonaId;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<Vehiculo> vehiculoCollection;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<DireccionPersona> direccionPersonaCollection;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<Factura> facturaCollection;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<Telefono> telefonoCollection;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<Cita> citaCollection;
 
   public Persona() {
   }
@@ -141,30 +139,6 @@ public class Persona implements Serializable {
 
   public void setDni(String dni) {
     this.dni = dni;
-  }
-
-  public String getDireccion() {
-    return direccion;
-  }
-
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
-  }
-
-  public String getReferencia() {
-    return referencia;
-  }
-
-  public void setReferencia(String referencia) {
-    this.referencia = referencia;
-  }
-
-  public String getTelefono() {
-    return telefono;
-  }
-
-  public void setTelefono(String telefono) {
-    this.telefono = telefono;
   }
 
   public String getEmail() {
@@ -215,20 +189,57 @@ public class Persona implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Distrito getDistritoId() {
-    return distritoId;
-  }
-
-  public void setDistritoId(Distrito distritoId) {
-    this.distritoId = distritoId;
-  }
-
   public TipoPersona getTipoPersonaId() {
     return tipoPersonaId;
   }
 
   public void setTipoPersonaId(TipoPersona tipoPersonaId) {
     this.tipoPersonaId = tipoPersonaId;
+  }
+
+  @XmlTransient
+  public Collection<Vehiculo> getVehiculoCollection() {
+    return vehiculoCollection;
+  }
+
+  public void setVehiculoCollection(Collection<Vehiculo> vehiculoCollection) {
+    this.vehiculoCollection = vehiculoCollection;
+  }
+
+  @XmlTransient
+  public Collection<DireccionPersona> getDireccionPersonaCollection() {
+    return direccionPersonaCollection;
+  }
+
+  public void setDireccionPersonaCollection(Collection<DireccionPersona> direccionPersonaCollection) {
+    this.direccionPersonaCollection = direccionPersonaCollection;
+  }
+
+  @XmlTransient
+  public Collection<Factura> getFacturaCollection() {
+    return facturaCollection;
+  }
+
+  public void setFacturaCollection(Collection<Factura> facturaCollection) {
+    this.facturaCollection = facturaCollection;
+  }
+
+  @XmlTransient
+  public Collection<Telefono> getTelefonoCollection() {
+    return telefonoCollection;
+  }
+
+  public void setTelefonoCollection(Collection<Telefono> telefonoCollection) {
+    this.telefonoCollection = telefonoCollection;
+  }
+
+  @XmlTransient
+  public Collection<Cita> getCitaCollection() {
+    return citaCollection;
+  }
+
+  public void setCitaCollection(Collection<Cita> citaCollection) {
+    this.citaCollection = citaCollection;
   }
 
   @Override
