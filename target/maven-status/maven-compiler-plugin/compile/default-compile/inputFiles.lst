@@ -1,6 +1,8 @@
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Vehiculo.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Servicio.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\IllegalOrphanException.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Distrito.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Factura.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DireccionJpaController.java
@@ -22,10 +24,13 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\Departame
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\NonexistentEntityException.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Telefono.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoPersonaJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\extra\MyCustomizer.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Categoria.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\FacturaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\ServicioJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DistritoListServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoEditServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoDestroyServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CitaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\VehiculoJpaController.java

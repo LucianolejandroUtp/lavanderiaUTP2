@@ -50,7 +50,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
 
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
       mi_depa.setDepartamento(request.getParameter("departamento"));
-      mi_depa.setEstado("ACTIVO");
+      mi_depa.setEstado("ACTIVE");
       mi_depa.setCreatedAt(ts);
       mi_depa.setUpdatedAt(ts);
 
