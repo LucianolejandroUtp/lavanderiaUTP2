@@ -44,7 +44,7 @@ public class DistritoListServlet extends HttpServlet {
       mi_lista_de_distritos = listD.findDistritoEntities();
 
       for (Distrito dis : mi_lista_de_distritos) {
-        System.out.println(dis.getId() + " - " + dis.getDistrito()+ " - " + dis.getCreatedAt());
+        System.out.println(dis.getId() + " - " + dis.getDistrito()+ " - " + dis.getDepartamentoId().getDepartamento());
       }
 
       request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);

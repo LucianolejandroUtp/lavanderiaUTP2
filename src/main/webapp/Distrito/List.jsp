@@ -73,6 +73,8 @@
               <thead>
                 <tr>
                   <th>Nombre</th>
+                  <th>Estado</th>
+                  <th>Provincia</th>
                   <th>Fecha</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
@@ -80,8 +82,10 @@
               <tbody>
                 <c:forEach var="tempDistritos" items="${mi_lista_de_distritos }">
                   <tr>
-                    <td>${tempDistritos.nombre }</td>
-
+                    <td>${tempDistritos.distrito }</td>
+                    <td>${tempDistritos.estado}</td>
+                    <td>${tempDistritos.departamentoId.departamento}</td>
+                    
                     <td>${tempDistritos.createdAt }</td>
                     <td>
                       <div class="form-button-action">
