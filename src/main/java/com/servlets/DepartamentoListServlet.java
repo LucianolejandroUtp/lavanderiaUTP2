@@ -4,14 +4,14 @@
  */
 package com.servlets;
 
+import com.dao.DepartamentoJpaController;
 import com.dao.DistritoJpaController;
 import com.dto.Departamento;
 import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DistritoCreateServlet", urlPatterns = {"/DistritoCreateServlet"})
-public class DistritoCreateServlet extends HttpServlet {
+@WebServlet(name = "DepartamentoListServlet", urlPatterns = {"/DepartamentoListServlet"})
+public class DepartamentoListServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,36 +37,25 @@ public class DistritoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera servlet create distrito");
+    System.out.println("Entrando a Departamento List Servlet");
     try {
-//	    LocalDate myObj = LocalDate.now(); // Create a date object
-//	    System.out.println(myObj); // Display the current date
-      Date dt = new Date();
-      Timestamp ts = new Timestamp(dt.getTime());
-      System.out.println(ts);
-      
-      Distrito mi_distrito = new Distrito();
-      Departamento mi_depa = new Departamento();
-      mi_depa.setId(Long.valueOf(1));
-      mi_depa.setDepartamento("Arequipa");
+      DepartamentoJpaController listDepa = new DepartamentoJpaController();
+      List<Departamento> mi_lista_de_objetos = new ArrayList<>();
 
-//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_distrito.setDistrito(request.getParameter("distrito"));
-      mi_distrito.setEstado("ACTIVO");
-      mi_distrito.setDepartamentoId(mi_depa);
-      mi_distrito.setCreatedAt(ts);
-      mi_distrito.setUpdatedAt(ts);
-      
-      DistritoJpaController djpac = new DistritoJpaController();
-      djpac.create(mi_distrito);
-      
-      DistritoListServlet call = new DistritoListServlet();
-      call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
-      
+//      System.out.println(listD.findDistritoEntities());
+      mi_lista_de_objetos = listDepa.findDepartamentoEntities();
+
+      for (Departamento elemento : mi_lista_de_objetos) {
+        System.out.println(elemento.getId() + " - " + elemento.getDepartamento() );
+      }
+
+      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
+      request.getRequestDispatcher("listDepartamento.jsp").forward(request, response);
+
     } catch (Throwable theException) {
       System.out.println(theException);
     }
+    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

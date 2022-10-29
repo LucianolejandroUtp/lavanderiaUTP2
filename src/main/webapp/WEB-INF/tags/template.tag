@@ -180,6 +180,17 @@
                 </div>
               </li>
 
+              
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DepartamentoListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Departamentos</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+
               <li class="nav-item">
                 <!--<a href="../Distrito/List.jsp">-->
                 <a href="../DistritoListServlet">
@@ -188,7 +199,6 @@
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
-
             </ul>
           </div>
         </div>

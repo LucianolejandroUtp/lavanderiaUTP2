@@ -4,13 +4,11 @@
  */
 package com.servlets;
 
-import com.dao.DistritoJpaController;
+import com.dao.DepartamentoJpaController;
 import com.dto.Departamento;
-import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DistritoCreateServlet", urlPatterns = {"/DistritoCreateServlet"})
-public class DistritoCreateServlet extends HttpServlet {
+@WebServlet(name = "DepartamentoCreateServlet", urlPatterns = {"/DepartamentoCreateServlet"})
+public class DepartamentoCreateServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,26 +42,25 @@ public class DistritoCreateServlet extends HttpServlet {
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
-      
-      Distrito mi_distrito = new Distrito();
+
+//      Distrito mi_distrito = new Distrito();
       Departamento mi_depa = new Departamento();
-      mi_depa.setId(Long.valueOf(1));
-      mi_depa.setDepartamento("Arequipa");
+//      mi_depa.setId(Long.valueOf(1));
+//      mi_depa.setDepartamento("Arequipa");
 
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_distrito.setDistrito(request.getParameter("distrito"));
-      mi_distrito.setEstado("ACTIVO");
-      mi_distrito.setDepartamentoId(mi_depa);
-      mi_distrito.setCreatedAt(ts);
-      mi_distrito.setUpdatedAt(ts);
-      
-      DistritoJpaController djpac = new DistritoJpaController();
-      djpac.create(mi_distrito);
-      
-      DistritoListServlet call = new DistritoListServlet();
+      mi_depa.setDepartamento(request.getParameter("departamento"));
+      mi_depa.setEstado("ACTIVO");
+      mi_depa.setCreatedAt(ts);
+      mi_depa.setUpdatedAt(ts);
+
+      DepartamentoJpaController djpac = new DepartamentoJpaController();
+      djpac.create(mi_depa);
+
+      DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
-      
+
     } catch (Throwable theException) {
       System.out.println(theException);
     }
