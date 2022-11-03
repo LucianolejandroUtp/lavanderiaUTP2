@@ -21,30 +21,23 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.annotations.AdditionalCriteria;
-import org.eclipse.persistence.config.DescriptorCustomizer;
-import org.eclipse.persistence.descriptors.ClassDescriptor;
 
 /**
  *
  * @author desti
  */
 @Entity
-@AdditionalCriteria("this.estado <> 'deleted'")
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "departamento")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
   @NamedQuery(name = "Departamento.findById", query = "SELECT d FROM Departamento d WHERE d.id = :id"),
   @NamedQuery(name = "Departamento.findByDepartamento", query = "SELECT d FROM Departamento d WHERE d.departamento = :departamento"),
   @NamedQuery(name = "Departamento.findByEstado", query = "SELECT d FROM Departamento d WHERE d.estado = :estado"),
-  @NamedQuery(name = "Departamento.findByDeleted", query = "SELECT d FROM Departamento d WHERE d.deleted = :deleted"),
-  @NamedQuery(name = "Departamento.findByDeletedAt", query = "SELECT d FROM Departamento d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "Departamento.findByCreatedAt", query = "SELECT d FROM Departamento d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Departamento.findByUpdatedAt", query = "SELECT d FROM Departamento d WHERE d.updatedAt = :updatedAt")})
-public class Departamento implements Serializable, DescriptorCustomizer {
+public class Departamento implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -57,16 +50,9 @@ public class Departamento implements Serializable, DescriptorCustomizer {
   private String departamento;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Basic(optional = false)
-  @NotNull
-  @Column(name = "deleted")
-  private boolean deleted;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -76,19 +62,6 @@ public class Departamento implements Serializable, DescriptorCustomizer {
   @OneToMany(mappedBy = "departamentoId")
   private Collection<Distrito> distritoCollection;
 
-  
-  
-  
-  @Override
-  public void customize(ClassDescriptor descriptor) {
-    descriptor.getQueryManager().setDeleteSQLString("Update departamento set estado = 'deleted' where id = #id");
-    // Optionally add a query key for status.
-    descriptor.addDirectQueryKey("status", "STATUS");
-  }
-  
-  
-  
-  
   public Departamento() {
   }
 
@@ -96,10 +69,9 @@ public class Departamento implements Serializable, DescriptorCustomizer {
     this.id = id;
   }
 
-  public Departamento(Long id, String estado, boolean deleted) {
+  public Departamento(Long id, String estado) {
     this.id = id;
     this.estado = estado;
-    this.deleted = deleted;
   }
 
   public Long getId() {
@@ -126,22 +98,6 @@ public class Departamento implements Serializable, DescriptorCustomizer {
     this.estado = estado;
   }
 
-  public boolean getDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(boolean deleted) {
-    this.deleted = deleted;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
-  }
-
   public Date getCreatedAt() {
     return createdAt;
   }
@@ -158,7 +114,6 @@ public class Departamento implements Serializable, DescriptorCustomizer {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
   public Collection<Distrito> getDistritoCollection() {
     return distritoCollection;
   }

@@ -8,14 +8,13 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-29T06:52:38")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-11-03T02:01:35")
 @StaticMetamodel(Distrito.class)
 public class Distrito_ { 
 
     public static volatile SingularAttribute<Distrito, String> distrito;
     public static volatile SingularAttribute<Distrito, Date> createdAt;
     public static volatile SingularAttribute<Distrito, String> estado;
-    public static volatile SingularAttribute<Distrito, Date> deletedAt;
     public static volatile SingularAttribute<Distrito, Long> id;
     public static volatile CollectionAttribute<Distrito, Direccion> direccionCollection;
     public static volatile SingularAttribute<Distrito, Departamento> departamentoId;

@@ -35,7 +35,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera servlet create distrito");
+    System.out.println("Bandera Departamento Create Servlet");
     try {
 //	    LocalDate myObj = LocalDate.now(); // Create a date object
 //	    System.out.println(myObj); // Display the current date
@@ -48,9 +48,9 @@ public class DepartamentoCreateServlet extends HttpServlet {
 //      mi_depa.setId(Long.valueOf(1));
 //      mi_depa.setDepartamento("Arequipa");
 
-//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+//      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
       mi_depa.setDepartamento(request.getParameter("departamento"));
-      mi_depa.setEstado("ACTIVE");
+      mi_depa.setEstado("activo");
       mi_depa.setCreatedAt(ts);
       mi_depa.setUpdatedAt(ts);
 
@@ -61,7 +61,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
-    } catch (Throwable theException) {
+    } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
   }

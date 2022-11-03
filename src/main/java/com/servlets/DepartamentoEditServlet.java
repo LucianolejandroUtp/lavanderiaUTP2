@@ -40,34 +40,57 @@ public class DepartamentoEditServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando a Departamento Edit Servlet");
+    System.out.println(request.getParameter("edit_depa_id"));
+    System.out.println(request.getParameter("edit_depa_departamento"));
+    System.out.println(request.getParameter("edit_depa_estado"));
     try {
+//      Departamento nuevo_objeto = new Departamento();
+      Departamento viejo_objeto = new Departamento();
+      DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
+      
 //      Lo relacionado a la fecha
-      Departamento mi_depa = new Departamento();
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
       
-//      Necesitamos una lista de los distritos
+//      Necesitamos una lista de los Distritos
       DistritoJpaController lista_de_Distritos = new DistritoJpaController();
       List<Distrito> mi_lista_de_Distritos = new ArrayList<>();
-      
       mi_lista_de_Distritos = lista_de_Distritos.findDistritoEntities();
       
-//      Asignando nuevos valores al departamento
-      mi_depa.setId(Long.valueOf(10));
-      mi_depa.setDepartamento("AQP");
-      mi_depa.setEstado("INACTIVE");
-      mi_depa.setUpdatedAt(ts);
-      mi_depa.setDistritoCollection(mi_lista_de_Distritos);
+    //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
+      viejo_objeto = jpacontroller_object.findDepartamento(Long.valueOf(request.getParameter("edit_depa_id")));
+      System.out.println("El depa obtenido es: " + viejo_objeto);
       
-      DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
+//      Comparando y asignando nuevos valores al departamento
+      if(!viejo_objeto.getDepartamento().equals(request.getParameter("edit_depa_departamento"))) {
+        viejo_objeto.setDepartamento(request.getParameter("edit_depa_departamento"));
+      }
+      if(!viejo_objeto.getEstado().equals(request.getParameter("edit_depa_estado"))){
+        viejo_objeto.setEstado(request.getParameter("edit_depa_estado"));
+      }
       
-      jpacontroller_object.edit(mi_depa);
+
+//      nuevo_objeto.setId(viejo_objeto.getId());
+//      nuevo_objeto.setDepartamento("AQP");
+//      nuevo_objeto.setEstado("INACTIVE");
+      viejo_objeto.setUpdatedAt(ts);
+      viejo_objeto.setDistritoCollection(mi_lista_de_Distritos);
+      
+      System.out.println("El depa actualizado es: "
+          + viejo_objeto.getId() +" - "
+          + viejo_objeto.getDepartamento() +" - "
+          + viejo_objeto.getEstado() +" - "
+          + viejo_objeto.getCreatedAt() +" - "
+          + viejo_objeto.getUpdatedAt() +" - "
+          + viejo_objeto.getDistritoCollection());
+      
+      jpacontroller_object.edit(viejo_objeto);
       
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);
       
-    } catch (Throwable theException) {
+    } catch (Exception theException) {
       System.out.println(theException);
     }
   }

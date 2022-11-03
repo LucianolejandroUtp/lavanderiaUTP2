@@ -21,22 +21,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "categoria")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
   @NamedQuery(name = "Categoria.findById", query = "SELECT c FROM Categoria c WHERE c.id = :id"),
-  @NamedQuery(name = "Categoria.findByCategoria", query = "SELECT c FROM Categoria c WHERE c.categoria = :categoria"),
   @NamedQuery(name = "Categoria.findByEstado", query = "SELECT c FROM Categoria c WHERE c.estado = :estado"),
-  @NamedQuery(name = "Categoria.findByDeletedAt", query = "SELECT c FROM Categoria c WHERE c.deletedAt = :deletedAt"),
   @NamedQuery(name = "Categoria.findByCreatedAt", query = "SELECT c FROM Categoria c WHERE c.createdAt = :createdAt"),
   @NamedQuery(name = "Categoria.findByUpdatedAt", query = "SELECT c FROM Categoria c WHERE c.updatedAt = :updatedAt")})
 public class Categoria implements Serializable {
@@ -47,17 +44,11 @@ public class Categoria implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
-  @Size(max = 255)
-  @Column(name = "categoria")
-  private String categoria;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -87,28 +78,12 @@ public class Categoria implements Serializable {
     this.id = id;
   }
 
-  public String getCategoria() {
-    return categoria;
-  }
-
-  public void setCategoria(String categoria) {
-    this.categoria = categoria;
-  }
-
   public String getEstado() {
     return estado;
   }
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {
@@ -127,7 +102,6 @@ public class Categoria implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
   public Collection<Servicio> getServicioCollection() {
     return servicioCollection;
   }

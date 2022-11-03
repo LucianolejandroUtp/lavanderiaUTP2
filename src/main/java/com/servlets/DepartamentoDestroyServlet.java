@@ -5,6 +5,7 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
+import com.dao.exceptions.NonexistentEntityException;
 import com.dto.Departamento;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,14 +37,20 @@ public class DepartamentoDestroyServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando a Departamento Destroy Servlet");
+    System.out.println(request.getParameter("destroy_depa_id"));
     try {
+      Departamento objeto_archivado = new Departamento();
       DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
-      jpacontroller_object.destroy(Long.valueOf(8));
-      
+
+      objeto_archivado = jpacontroller_object.findDepartamento(Long.valueOf(request.getParameter("destroy_depa_id")));
+
+      objeto_archivado.setEstado("eliminado");
+      jpacontroller_object.softDelete(objeto_archivado);
+
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);
 
-    } catch (Throwable theException) {
+    } catch (Exception theException) {
       System.out.println(theException);
     }
   }
