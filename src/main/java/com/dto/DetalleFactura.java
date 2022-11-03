@@ -74,6 +74,9 @@ public class DetalleFactura implements Serializable {
   @JoinColumn(name = "factura_id", referencedColumnName = "id")
   @ManyToOne
   private Factura facturaId;
+  @JoinColumn(name = "prenda_id", referencedColumnName = "id")
+  @ManyToOne
+  private Prenda prendaId;
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
   @ManyToOne
   private Servicio servicioId;
@@ -168,6 +171,14 @@ public class DetalleFactura implements Serializable {
 
   public void setFacturaId(Factura facturaId) {
     this.facturaId = facturaId;
+  }
+
+  public Prenda getPrendaId() {
+    return prendaId;
+  }
+
+  public void setPrendaId(Prenda prendaId) {
+    this.prendaId = prendaId;
   }
 
   public Servicio getServicioId() {

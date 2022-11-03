@@ -88,6 +88,8 @@ public class Persona implements Serializable {
   @OneToMany(mappedBy = "personaId")
   private Collection<Factura> facturaCollection;
   @OneToMany(mappedBy = "personaId")
+  private Collection<Prenda> prendaCollection;
+  @OneToMany(mappedBy = "personaId")
   private Collection<Telefono> telefonoCollection;
   @OneToMany(mappedBy = "personaId")
   private Collection<Cita> citaCollection;
@@ -206,6 +208,14 @@ public class Persona implements Serializable {
 
   public void setFacturaCollection(Collection<Factura> facturaCollection) {
     this.facturaCollection = facturaCollection;
+  }
+
+  public Collection<Prenda> getPrendaCollection() {
+    return prendaCollection;
+  }
+
+  public void setPrendaCollection(Collection<Prenda> prendaCollection) {
+    this.prendaCollection = prendaCollection;
   }
 
   public Collection<Telefono> getTelefonoCollection() {

@@ -29,7 +29,7 @@ public class DepartamentoJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
-  
+
   public DepartamentoJpaController() {
     emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
   }

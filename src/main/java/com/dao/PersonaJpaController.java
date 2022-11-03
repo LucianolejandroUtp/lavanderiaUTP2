@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import com.dto.DireccionPersona;
 import com.dto.Factura;
+import com.dto.Prenda;
 import com.dto.Telefono;
 import com.dto.Cita;
 import com.dto.Persona;
@@ -47,6 +48,9 @@ public class PersonaJpaController implements Serializable {
     }
     if (persona.getFacturaCollection() == null) {
       persona.setFacturaCollection(new ArrayList<Factura>());
+    }
+    if (persona.getPrendaCollection() == null) {
+      persona.setPrendaCollection(new ArrayList<Prenda>());
     }
     if (persona.getTelefonoCollection() == null) {
       persona.setTelefonoCollection(new ArrayList<Telefono>());
@@ -81,6 +85,12 @@ public class PersonaJpaController implements Serializable {
         attachedFacturaCollection.add(facturaCollectionFacturaToAttach);
       }
       persona.setFacturaCollection(attachedFacturaCollection);
+      Collection<Prenda> attachedPrendaCollection = new ArrayList<Prenda>();
+      for (Prenda prendaCollectionPrendaToAttach : persona.getPrendaCollection()) {
+        prendaCollectionPrendaToAttach = em.getReference(prendaCollectionPrendaToAttach.getClass(), prendaCollectionPrendaToAttach.getId());
+        attachedPrendaCollection.add(prendaCollectionPrendaToAttach);
+      }
+      persona.setPrendaCollection(attachedPrendaCollection);
       Collection<Telefono> attachedTelefonoCollection = new ArrayList<Telefono>();
       for (Telefono telefonoCollectionTelefonoToAttach : persona.getTelefonoCollection()) {
         telefonoCollectionTelefonoToAttach = em.getReference(telefonoCollectionTelefonoToAttach.getClass(), telefonoCollectionTelefonoToAttach.getId());
@@ -125,6 +135,15 @@ public class PersonaJpaController implements Serializable {
           oldPersonaIdOfFacturaCollectionFactura = em.merge(oldPersonaIdOfFacturaCollectionFactura);
         }
       }
+      for (Prenda prendaCollectionPrenda : persona.getPrendaCollection()) {
+        Persona oldPersonaIdOfPrendaCollectionPrenda = prendaCollectionPrenda.getPersonaId();
+        prendaCollectionPrenda.setPersonaId(persona);
+        prendaCollectionPrenda = em.merge(prendaCollectionPrenda);
+        if (oldPersonaIdOfPrendaCollectionPrenda != null) {
+          oldPersonaIdOfPrendaCollectionPrenda.getPrendaCollection().remove(prendaCollectionPrenda);
+          oldPersonaIdOfPrendaCollectionPrenda = em.merge(oldPersonaIdOfPrendaCollectionPrenda);
+        }
+      }
       for (Telefono telefonoCollectionTelefono : persona.getTelefonoCollection()) {
         Persona oldPersonaIdOfTelefonoCollectionTelefono = telefonoCollectionTelefono.getPersonaId();
         telefonoCollectionTelefono.setPersonaId(persona);
@@ -165,6 +184,8 @@ public class PersonaJpaController implements Serializable {
       Collection<DireccionPersona> direccionPersonaCollectionNew = persona.getDireccionPersonaCollection();
       Collection<Factura> facturaCollectionOld = persistentPersona.getFacturaCollection();
       Collection<Factura> facturaCollectionNew = persona.getFacturaCollection();
+      Collection<Prenda> prendaCollectionOld = persistentPersona.getPrendaCollection();
+      Collection<Prenda> prendaCollectionNew = persona.getPrendaCollection();
       Collection<Telefono> telefonoCollectionOld = persistentPersona.getTelefonoCollection();
       Collection<Telefono> telefonoCollectionNew = persona.getTelefonoCollection();
       Collection<Cita> citaCollectionOld = persistentPersona.getCitaCollection();
@@ -194,6 +215,13 @@ public class PersonaJpaController implements Serializable {
       }
       facturaCollectionNew = attachedFacturaCollectionNew;
       persona.setFacturaCollection(facturaCollectionNew);
+      Collection<Prenda> attachedPrendaCollectionNew = new ArrayList<Prenda>();
+      for (Prenda prendaCollectionNewPrendaToAttach : prendaCollectionNew) {
+        prendaCollectionNewPrendaToAttach = em.getReference(prendaCollectionNewPrendaToAttach.getClass(), prendaCollectionNewPrendaToAttach.getId());
+        attachedPrendaCollectionNew.add(prendaCollectionNewPrendaToAttach);
+      }
+      prendaCollectionNew = attachedPrendaCollectionNew;
+      persona.setPrendaCollection(prendaCollectionNew);
       Collection<Telefono> attachedTelefonoCollectionNew = new ArrayList<Telefono>();
       for (Telefono telefonoCollectionNewTelefonoToAttach : telefonoCollectionNew) {
         telefonoCollectionNewTelefonoToAttach = em.getReference(telefonoCollectionNewTelefonoToAttach.getClass(), telefonoCollectionNewTelefonoToAttach.getId());
@@ -265,6 +293,23 @@ public class PersonaJpaController implements Serializable {
           if (oldPersonaIdOfFacturaCollectionNewFactura != null && !oldPersonaIdOfFacturaCollectionNewFactura.equals(persona)) {
             oldPersonaIdOfFacturaCollectionNewFactura.getFacturaCollection().remove(facturaCollectionNewFactura);
             oldPersonaIdOfFacturaCollectionNewFactura = em.merge(oldPersonaIdOfFacturaCollectionNewFactura);
+          }
+        }
+      }
+      for (Prenda prendaCollectionOldPrenda : prendaCollectionOld) {
+        if (!prendaCollectionNew.contains(prendaCollectionOldPrenda)) {
+          prendaCollectionOldPrenda.setPersonaId(null);
+          prendaCollectionOldPrenda = em.merge(prendaCollectionOldPrenda);
+        }
+      }
+      for (Prenda prendaCollectionNewPrenda : prendaCollectionNew) {
+        if (!prendaCollectionOld.contains(prendaCollectionNewPrenda)) {
+          Persona oldPersonaIdOfPrendaCollectionNewPrenda = prendaCollectionNewPrenda.getPersonaId();
+          prendaCollectionNewPrenda.setPersonaId(persona);
+          prendaCollectionNewPrenda = em.merge(prendaCollectionNewPrenda);
+          if (oldPersonaIdOfPrendaCollectionNewPrenda != null && !oldPersonaIdOfPrendaCollectionNewPrenda.equals(persona)) {
+            oldPersonaIdOfPrendaCollectionNewPrenda.getPrendaCollection().remove(prendaCollectionNewPrenda);
+            oldPersonaIdOfPrendaCollectionNewPrenda = em.merge(oldPersonaIdOfPrendaCollectionNewPrenda);
           }
         }
       }
@@ -350,6 +395,11 @@ public class PersonaJpaController implements Serializable {
       for (Factura facturaCollectionFactura : facturaCollection) {
         facturaCollectionFactura.setPersonaId(null);
         facturaCollectionFactura = em.merge(facturaCollectionFactura);
+      }
+      Collection<Prenda> prendaCollection = persona.getPrendaCollection();
+      for (Prenda prendaCollectionPrenda : prendaCollection) {
+        prendaCollectionPrenda.setPersonaId(null);
+        prendaCollectionPrenda = em.merge(prendaCollectionPrenda);
       }
       Collection<Telefono> telefonoCollection = persona.getTelefonoCollection();
       for (Telefono telefonoCollectionTelefono : telefonoCollection) {

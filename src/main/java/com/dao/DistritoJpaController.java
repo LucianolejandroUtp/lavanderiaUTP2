@@ -30,10 +30,10 @@ public class DistritoJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
-  
-    public DistritoJpaController(){
-        emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-    }
+
+  public DistritoJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -220,5 +220,5 @@ public class DistritoJpaController implements Serializable {
       em.close();
     }
   }
-  
+
 }
