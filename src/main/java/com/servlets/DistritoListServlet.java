@@ -4,7 +4,9 @@
  */
 package com.servlets;
 
+import com.dao.DepartamentoJpaController;
 import com.dao.DistritoJpaController;
+import com.dto.Departamento;
 import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,20 +39,28 @@ public class DistritoListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando al List Servlet");
     try {
-      DistritoJpaController listD = new DistritoJpaController();
-      List<Distrito> mi_lista_de_distritos = new ArrayList<>();
+      DistritoJpaController jpacontroller_object = new DistritoJpaController();
+      DepartamentoJpaController jpacontroller_object2 = new DepartamentoJpaController();
+      List<Distrito> mi_lista_de_objetos = new ArrayList<>();
+      List<Departamento> mi_lista_de_objetos2 = new ArrayList<>();
 
-//      System.out.println(listD.findDistritoEntities());
-      mi_lista_de_distritos = listD.findDistritoEntities();
+//      System.out.println(jpacontroller_object.findDistritoEntities());
+      mi_lista_de_objetos = jpacontroller_object.findDistritoEntities();
+      mi_lista_de_objetos2 = jpacontroller_object2.findDepartamentoEntities();
 
-      for (Distrito dis : mi_lista_de_distritos) {
+      for (Distrito dis : mi_lista_de_objetos) {
         System.out.println(dis.getId() + " - " + dis.getDistrito()+ " - " + dis.getDepartamentoId().getDepartamento());
       }
+      for (Departamento dep : mi_lista_de_objetos2) {
+        System.out.println(dep.getId() + " - " + dep.getDepartamento());
+      }
 
-      request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
-      request.getRequestDispatcher("Distrito/List.jsp").forward(request, response);
+      
+      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
+      request.setAttribute("mi_lista_de_objetos2", mi_lista_de_objetos2);
+      request.getRequestDispatcher("listDistrito.jsp").forward(request, response);
 
-    } catch (Throwable theException) {
+    } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
 

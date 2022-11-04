@@ -37,8 +37,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera Departamento Create Servlet");
     try {
-//	    LocalDate myObj = LocalDate.now(); // Create a date object
-//	    System.out.println(myObj); // Display the current date
+      
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
@@ -54,8 +53,8 @@ public class DepartamentoCreateServlet extends HttpServlet {
       mi_depa.setCreatedAt(ts);
       mi_depa.setUpdatedAt(ts);
 
-      DepartamentoJpaController djpac = new DepartamentoJpaController();
-      djpac.create(mi_depa);
+      DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
+      jpacontroller_object.create(mi_depa);
 
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);

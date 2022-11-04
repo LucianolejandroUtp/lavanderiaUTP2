@@ -144,8 +144,6 @@
                   </div>
                 </div>
 
-
-
                 <!-- Modal Editar Departamento-->
                 <div class="modal fade" id="${tempObjeto.id }" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">

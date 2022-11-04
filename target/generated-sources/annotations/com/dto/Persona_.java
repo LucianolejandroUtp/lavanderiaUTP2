@@ -3,6 +3,7 @@ package com.dto;
 import com.dto.Cita;
 import com.dto.DireccionPersona;
 import com.dto.Factura;
+import com.dto.Prenda;
 import com.dto.Telefono;
 import com.dto.TipoPersona;
 import com.dto.Vehiculo;
@@ -12,11 +13,12 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-11-03T02:01:35")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-11-04T00:43:02")
 @StaticMetamodel(Persona.class)
 public class Persona_ { 
 
     public static volatile SingularAttribute<Persona, String> apellidos;
+    public static volatile CollectionAttribute<Persona, Prenda> prendaCollection;
     public static volatile CollectionAttribute<Persona, Cita> citaCollection;
     public static volatile SingularAttribute<Persona, String> estado;
     public static volatile CollectionAttribute<Persona, DireccionPersona> direccionPersonaCollection;

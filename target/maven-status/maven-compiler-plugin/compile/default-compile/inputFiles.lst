@@ -8,6 +8,7 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Factura.j
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DireccionJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoPersona.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CategoriaJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoDePrendaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DistritoJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Cita.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\PreexistingEntityException.java
@@ -23,8 +24,8 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Direccion
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DepartamentoJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\NonexistentEntityException.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Telefono.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoDePrenda.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoPersonaJpaController.java
-D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\extra\MyCustomizer.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Categoria.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\FacturaJpaController.java
@@ -33,4 +34,6 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\Dist
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoEditServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoDestroyServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CitaJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PrendaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\VehiculoJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Prenda.java
