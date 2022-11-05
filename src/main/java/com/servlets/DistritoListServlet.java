@@ -39,25 +39,25 @@ public class DistritoListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando al List Servlet");
     try {
-      DistritoJpaController jpacontroller_object = new DistritoJpaController();
-      DepartamentoJpaController jpacontroller_object2 = new DepartamentoJpaController();
-      List<Distrito> mi_lista_de_objetos = new ArrayList<>();
-      List<Departamento> mi_lista_de_objetos2 = new ArrayList<>();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
+      DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController();
+      List<Distrito> mi_lista_de_distritos = new ArrayList<>();
+      List<Departamento> mi_lista_de_departamentos = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_objetos = jpacontroller_object.findDistritoEntities();
-      mi_lista_de_objetos2 = jpacontroller_object2.findDepartamentoEntities();
+      mi_lista_de_distritos = jpac_object_distrito.findDistritoEntities();
+      mi_lista_de_departamentos = jpac_object_departamento.findDepartamentoEntities();
 
-      for (Distrito dis : mi_lista_de_objetos) {
-        System.out.println(dis.getId() + " - " + dis.getDistrito()+ " - " + dis.getDepartamentoId().getDepartamento());
+      for (Distrito dis : mi_lista_de_distritos) {
+        System.out.println(dis.getId() + " - " + dis.getDescripcion()+ " - " + dis.getDepartamentoId().getDescripcion());
       }
-      for (Departamento dep : mi_lista_de_objetos2) {
-        System.out.println(dep.getId() + " - " + dep.getDepartamento());
+      for (Departamento dep : mi_lista_de_departamentos) {
+        System.out.println(dep.getId() + " - " + dep.getDescripcion());
       }
 
       
-      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
-      request.setAttribute("mi_lista_de_objetos2", mi_lista_de_objetos2);
+      request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
+      request.setAttribute("mi_lista_de_departamentos", mi_lista_de_departamentos);
       request.getRequestDispatcher("listDistrito.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {

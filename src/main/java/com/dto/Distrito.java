@@ -35,7 +35,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Distrito.findAll", query = "SELECT d FROM Distrito d"),
   @NamedQuery(name = "Distrito.findById", query = "SELECT d FROM Distrito d WHERE d.id = :id"),
-  @NamedQuery(name = "Distrito.findByDistrito", query = "SELECT d FROM Distrito d WHERE d.distrito = :distrito"),
+  @NamedQuery(name = "Distrito.findByDescripcion", query = "SELECT d FROM Distrito d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Distrito.findByEstado", query = "SELECT d FROM Distrito d WHERE d.estado = :estado"),
   @NamedQuery(name = "Distrito.findByCreatedAt", query = "SELECT d FROM Distrito d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Distrito.findByUpdatedAt", query = "SELECT d FROM Distrito d WHERE d.updatedAt = :updatedAt")})
@@ -48,8 +48,8 @@ public class Distrito implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "distrito")
-  private String distrito;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 9)
@@ -87,12 +87,12 @@ public class Distrito implements Serializable {
     this.id = id;
   }
 
-  public String getDistrito() {
-    return distrito;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setDistrito(String distrito) {
-    this.distrito = distrito;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {

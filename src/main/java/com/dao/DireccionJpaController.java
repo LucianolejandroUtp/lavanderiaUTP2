@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -29,6 +30,10 @@ public class DireccionJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
+
+  public DireccionJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -215,5 +220,5 @@ public class DireccionJpaController implements Serializable {
       em.close();
     }
   }
-  
+
 }

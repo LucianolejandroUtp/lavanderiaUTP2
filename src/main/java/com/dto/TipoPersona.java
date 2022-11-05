@@ -33,7 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "TipoPersona.findAll", query = "SELECT t FROM TipoPersona t"),
   @NamedQuery(name = "TipoPersona.findById", query = "SELECT t FROM TipoPersona t WHERE t.id = :id"),
-  @NamedQuery(name = "TipoPersona.findByNombre", query = "SELECT t FROM TipoPersona t WHERE t.nombre = :nombre"),
+  @NamedQuery(name = "TipoPersona.findByDescripcion", query = "SELECT t FROM TipoPersona t WHERE t.descripcion = :descripcion"),
   @NamedQuery(name = "TipoPersona.findByEstado", query = "SELECT t FROM TipoPersona t WHERE t.estado = :estado"),
   @NamedQuery(name = "TipoPersona.findByCreatedAt", query = "SELECT t FROM TipoPersona t WHERE t.createdAt = :createdAt"),
   @NamedQuery(name = "TipoPersona.findByUpdatedAt", query = "SELECT t FROM TipoPersona t WHERE t.updatedAt = :updatedAt")})
@@ -46,8 +46,8 @@ public class TipoPersona implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "nombre")
-  private String nombre;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 9)
@@ -82,12 +82,12 @@ public class TipoPersona implements Serializable {
     this.id = id;
   }
 
-  public String getNombre() {
-    return nombre;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {

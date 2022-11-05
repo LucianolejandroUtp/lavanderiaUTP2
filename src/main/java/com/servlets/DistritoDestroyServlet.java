@@ -5,12 +5,11 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
-import com.dao.exceptions.NonexistentEntityException;
+import com.dao.DistritoJpaController;
 import com.dto.Departamento;
+import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoDestroyServlet", urlPatterns = {"/DepartamentoDestroyServlet"})
-public class DepartamentoDestroyServlet extends HttpServlet {
+@WebServlet(name = "DistritoDestroyServlet", urlPatterns = {"/DistritoDestroyServlet"})
+public class DistritoDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +35,19 @@ public class DepartamentoDestroyServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+    
     System.out.println("Entrando a Departamento Destroy Servlet");
-    System.out.println(request.getParameter("destroy_depa_id"));
+    System.out.println(request.getParameter("destroy_distrito_id"));
     try {
-      Departamento departamento_archivado = new Departamento();
-      DepartamentoJpaController jpac_departamento = new DepartamentoJpaController();
+      Distrito distrito_archivado;
+      DistritoJpaController jpac_distrito = new DistritoJpaController();
 
-      departamento_archivado = jpac_departamento.findDepartamento(Long.valueOf(request.getParameter("destroy_depa_id")));
+      distrito_archivado = jpac_distrito.findDistrito(Long.valueOf(request.getParameter("destroy_distrito_id")));
 
-      departamento_archivado.setEstado("eliminado");
-      jpac_departamento.softDelete(departamento_archivado);
+      distrito_archivado.setEstado("eliminado");
+      jpac_distrito.softDelete(distrito_archivado);
 
-      DepartamentoListServlet call = new DepartamentoListServlet();
+      DistritoListServlet call = new DistritoListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {

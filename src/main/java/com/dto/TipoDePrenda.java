@@ -33,7 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "TipoDePrenda.findAll", query = "SELECT t FROM TipoDePrenda t"),
   @NamedQuery(name = "TipoDePrenda.findById", query = "SELECT t FROM TipoDePrenda t WHERE t.id = :id"),
-  @NamedQuery(name = "TipoDePrenda.findByTipoPrenda", query = "SELECT t FROM TipoDePrenda t WHERE t.tipoPrenda = :tipoPrenda"),
+  @NamedQuery(name = "TipoDePrenda.findByDescripcion", query = "SELECT t FROM TipoDePrenda t WHERE t.descripcion = :descripcion"),
   @NamedQuery(name = "TipoDePrenda.findByEstado", query = "SELECT t FROM TipoDePrenda t WHERE t.estado = :estado"),
   @NamedQuery(name = "TipoDePrenda.findByCreatedAt", query = "SELECT t FROM TipoDePrenda t WHERE t.createdAt = :createdAt"),
   @NamedQuery(name = "TipoDePrenda.findByUpdatedAt", query = "SELECT t FROM TipoDePrenda t WHERE t.updatedAt = :updatedAt")})
@@ -46,8 +46,8 @@ public class TipoDePrenda implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "tipo_prenda")
-  private String tipoPrenda;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 9)
@@ -82,12 +82,12 @@ public class TipoDePrenda implements Serializable {
     this.id = id;
   }
 
-  public String getTipoPrenda() {
-    return tipoPrenda;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setTipoPrenda(String tipoPrenda) {
-    this.tipoPrenda = tipoPrenda;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {

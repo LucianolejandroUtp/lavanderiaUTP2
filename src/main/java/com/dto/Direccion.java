@@ -36,7 +36,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d"),
   @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id"),
-  @NamedQuery(name = "Direccion.findByDireccion", query = "SELECT d FROM Direccion d WHERE d.direccion = :direccion"),
+  @NamedQuery(name = "Direccion.findByDescripcion", query = "SELECT d FROM Direccion d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Direccion.findByEstado", query = "SELECT d FROM Direccion d WHERE d.estado = :estado"),
   @NamedQuery(name = "Direccion.findByCreatedAt", query = "SELECT d FROM Direccion d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Direccion.findByUpdatedAt", query = "SELECT d FROM Direccion d WHERE d.updatedAt = :updatedAt")})
@@ -49,8 +49,8 @@ public class Direccion implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "direccion")
-  private String direccion;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Lob
   @Size(max = 65535)
   @Column(name = "referencia")
@@ -92,12 +92,12 @@ public class Direccion implements Serializable {
     this.id = id;
   }
 
-  public String getDireccion() {
-    return direccion;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getReferencia() {

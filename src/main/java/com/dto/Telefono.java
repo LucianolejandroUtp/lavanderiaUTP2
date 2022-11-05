@@ -33,6 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Telefono.findAll", query = "SELECT t FROM Telefono t"),
   @NamedQuery(name = "Telefono.findById", query = "SELECT t FROM Telefono t WHERE t.id = :id"),
+  @NamedQuery(name = "Telefono.findByDescripcion", query = "SELECT t FROM Telefono t WHERE t.descripcion = :descripcion"),
   @NamedQuery(name = "Telefono.findByEstado", query = "SELECT t FROM Telefono t WHERE t.estado = :estado"),
   @NamedQuery(name = "Telefono.findByCreatedAt", query = "SELECT t FROM Telefono t WHERE t.createdAt = :createdAt"),
   @NamedQuery(name = "Telefono.findByUpdatedAt", query = "SELECT t FROM Telefono t WHERE t.updatedAt = :updatedAt")})
@@ -44,6 +45,9 @@ public class Telefono implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Size(max = 255)
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 9)
@@ -77,6 +81,14 @@ public class Telefono implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getDescripcion() {
+    return descripcion;
+  }
+
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {

@@ -41,51 +41,55 @@ public class DepartamentoEditServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando a Departamento Edit Servlet");
     System.out.println(request.getParameter("edit_depa_id"));
-    System.out.println(request.getParameter("edit_depa_departamento"));
+    System.out.println(request.getParameter("edit_depa_descripcion"));
     System.out.println(request.getParameter("edit_depa_estado"));
     try {
 //      Departamento nuevo_objeto = new Departamento();
-      Departamento viejo_objeto = new Departamento();
-      DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
+      Departamento viejo_objeto_departamento;
+      DepartamentoJpaController jpacontroller_object_departamento = new DepartamentoJpaController();
       
 //      Lo relacionado a la fecha
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
       
+      
+      //Por alguna razón ya no lo necesita
 //      Necesitamos una lista de los Distritos
-      DistritoJpaController lista_de_Distritos = new DistritoJpaController();
-      List<Distrito> mi_lista_de_Distritos = new ArrayList<>();
-      mi_lista_de_Distritos = lista_de_Distritos.findDistritoEntities();
+//      DistritoJpaController lista_de_Distritos = new DistritoJpaController();
+//      List<Distrito> mi_lista_de_Distritos = new ArrayList<>();
+//      mi_lista_de_Distritos = lista_de_Distritos.findDistritoEntities();
       
     //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      viejo_objeto = jpacontroller_object.findDepartamento(Long.valueOf(request.getParameter("edit_depa_id")));
-      System.out.println("El depa obtenido es: " + viejo_objeto);
+      viejo_objeto_departamento = jpacontroller_object_departamento.findDepartamento(Long.valueOf(request.getParameter("edit_depa_id")));
+      System.out.println("El depa obtenido es: " + viejo_objeto_departamento);
       
 //      Comparando y asignando nuevos valores al departamento
-      if(!viejo_objeto.getDepartamento().equals(request.getParameter("edit_depa_departamento"))) {
-        viejo_objeto.setDepartamento(request.getParameter("edit_depa_departamento"));
+      if(!viejo_objeto_departamento.getDescripcion().equals(request.getParameter("edit_depa_descripcion"))) {
+        viejo_objeto_departamento.setDescripcion(request.getParameter("edit_depa_descripcion"));
       }
-      if(!viejo_objeto.getEstado().equals(request.getParameter("edit_depa_estado"))){
-        viejo_objeto.setEstado(request.getParameter("edit_depa_estado"));
+      if(!viejo_objeto_departamento.getEstado().equals(request.getParameter("edit_depa_estado"))){
+        viejo_objeto_departamento.setEstado(request.getParameter("edit_depa_estado"));
       }
       
 
 //      nuevo_objeto.setId(viejo_objeto.getId());
 //      nuevo_objeto.setDepartamento("AQP");
 //      nuevo_objeto.setEstado("INACTIVE");
-      viejo_objeto.setUpdatedAt(ts);
-      viejo_objeto.setDistritoCollection(mi_lista_de_Distritos);
+      viejo_objeto_departamento.setUpdatedAt(ts);
+      
+      //Por alguna razón ya no lo necesita
+    //  viejo_objeto_departamento.setDistritoCollection(mi_lista_de_Distritos);
       
       System.out.println("El depa actualizado es: "
-          + viejo_objeto.getId() +" - "
-          + viejo_objeto.getDepartamento() +" - "
-          + viejo_objeto.getEstado() +" - "
-          + viejo_objeto.getCreatedAt() +" - "
-          + viejo_objeto.getUpdatedAt() +" - "
-          + viejo_objeto.getDistritoCollection());
+          + viejo_objeto_departamento.getId() +" - "
+          + viejo_objeto_departamento.getDescripcion() +" - "
+          + viejo_objeto_departamento.getEstado() +" - "
+          + viejo_objeto_departamento.getCreatedAt() +" - "
+          + viejo_objeto_departamento.getUpdatedAt() +" - "
+          + viejo_objeto_departamento.getDistritoCollection());
       
-      jpacontroller_object.edit(viejo_objeto);
+      jpacontroller_object_departamento.edit(viejo_objeto_departamento);
       
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);

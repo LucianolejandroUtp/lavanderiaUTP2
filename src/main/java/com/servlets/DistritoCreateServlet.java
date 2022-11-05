@@ -52,11 +52,11 @@ public class DistritoCreateServlet extends HttpServlet {
       
 //      Obteniendo el departamento en base al Id obtenido de la vista
       mi_departamento = jpacontroller_object_departamento.findDepartamento(Long.valueOf(request.getParameter("distritoDepartamentoIdCreate")));
-      System.out.println("El departamento obtenido fue: " + mi_departamento.getDepartamento() +" - "+ mi_departamento.getId());
+      System.out.println("El departamento obtenido fue: " + mi_departamento.getDescripcion() +" - "+ mi_departamento.getId());
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_distrito.setDistrito(request.getParameter("distritoNombreCreate"));
+      mi_distrito.setDescripcion(request.getParameter("distritoNombreCreate"));
       mi_distrito.setEstado("activo");
       mi_distrito.setDepartamentoId(mi_departamento);
       mi_distrito.setCreatedAt(ts);

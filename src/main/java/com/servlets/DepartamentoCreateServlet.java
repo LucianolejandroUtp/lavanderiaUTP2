@@ -37,24 +37,24 @@ public class DepartamentoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera Departamento Create Servlet");
     try {
+      DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController();
+      Departamento mi_depa = new Departamento();
       
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
 
 //      Distrito mi_distrito = new Distrito();
-      Departamento mi_depa = new Departamento();
 //      mi_depa.setId(Long.valueOf(1));
 //      mi_depa.setDepartamento("Arequipa");
 
 //      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_depa.setDepartamento(request.getParameter("departamento"));
+      mi_depa.setDescripcion(request.getParameter("descripcion"));
       mi_depa.setEstado("activo");
       mi_depa.setCreatedAt(ts);
       mi_depa.setUpdatedAt(ts);
 
-      DepartamentoJpaController jpacontroller_object = new DepartamentoJpaController();
-      jpacontroller_object.create(mi_depa);
+      jpac_object_departamento.create(mi_depa);
 
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);

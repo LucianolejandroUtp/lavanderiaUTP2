@@ -54,7 +54,7 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="departamento" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
+                          <input name="descripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -79,15 +79,14 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_objetos }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_departamentos }">
                   <tr>
-                    <td>${tempObjeto.departamento }</td>
+                    <td>${tempObjeto.descripcion }</td>
                     <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
                       <div class="form-button-action">
-
                         <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
                                 data-target="#${tempObjeto.id }" id="submit">
                           <i class="fa fa-edit"></i>
@@ -130,7 +129,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="destroy_depa_departamento" id="destroy_depa_departamento" type="text" class="form-control" value="${tempObjeto.departamento }" readonly>
+                                <input name="destroy_depa_departamento" id="destroy_depa_departamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
                               </div>
 
                             </div>
@@ -170,7 +169,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="edit_depa_departamento" id="edit_depa_departamento" type="text" class="form-control" value="${tempObjeto.departamento }">
+                                <input name="edit_depa_descripcion" id="edit_depa_descripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
 
                               <div class="form-group form-group-default">
@@ -178,7 +177,7 @@
                                 <select class="form-control" name="edit_depa_estado" id="edit_depa_estado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
-                                  <option value="eliminado">Eliminado</option>
+                                  <!--<option value="eliminado">Eliminado</option>-->
                                 </select>
                               </div>
                             </div>
