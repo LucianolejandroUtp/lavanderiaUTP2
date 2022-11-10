@@ -115,7 +115,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DepartamentoDestroyServlet" method="post">
+                        <form  action="CategoriaDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -124,7 +124,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="destroyDepartamento" id="destroyDepartamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <input name="destroyAlgo" id="destroyAlgo" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
                               </div>
 
                             </div>
@@ -155,7 +155,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DepartamentoEditServlet" method="post">
+                        <form  action="CategoriaEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
