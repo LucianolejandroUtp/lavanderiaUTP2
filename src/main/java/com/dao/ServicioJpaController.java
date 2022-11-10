@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -29,6 +30,10 @@ public class ServicioJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
+
+  public ServicioJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -76,6 +81,70 @@ public class ServicioJpaController implements Serializable {
   }
 
   public void edit(Servicio servicio) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Servicio persistentServicio = em.find(Servicio.class, servicio.getId());
+      Categoria categoriaIdOld = persistentServicio.getCategoriaId();
+      Categoria categoriaIdNew = servicio.getCategoriaId();
+      Collection<DetalleFactura> detalleFacturaCollectionOld = persistentServicio.getDetalleFacturaCollection();
+      Collection<DetalleFactura> detalleFacturaCollectionNew = servicio.getDetalleFacturaCollection();
+      if (categoriaIdNew != null) {
+        categoriaIdNew = em.getReference(categoriaIdNew.getClass(), categoriaIdNew.getId());
+        servicio.setCategoriaId(categoriaIdNew);
+      }
+      Collection<DetalleFactura> attachedDetalleFacturaCollectionNew = new ArrayList<DetalleFactura>();
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFacturaToAttach : detalleFacturaCollectionNew) {
+        detalleFacturaCollectionNewDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionNewDetalleFacturaToAttach.getClass(), detalleFacturaCollectionNewDetalleFacturaToAttach.getId());
+        attachedDetalleFacturaCollectionNew.add(detalleFacturaCollectionNewDetalleFacturaToAttach);
+      }
+      detalleFacturaCollectionNew = attachedDetalleFacturaCollectionNew;
+      servicio.setDetalleFacturaCollection(detalleFacturaCollectionNew);
+      servicio = em.merge(servicio);
+      if (categoriaIdOld != null && !categoriaIdOld.equals(categoriaIdNew)) {
+        categoriaIdOld.getServicioCollection().remove(servicio);
+        categoriaIdOld = em.merge(categoriaIdOld);
+      }
+      if (categoriaIdNew != null && !categoriaIdNew.equals(categoriaIdOld)) {
+        categoriaIdNew.getServicioCollection().add(servicio);
+        categoriaIdNew = em.merge(categoriaIdNew);
+      }
+      for (DetalleFactura detalleFacturaCollectionOldDetalleFactura : detalleFacturaCollectionOld) {
+        if (!detalleFacturaCollectionNew.contains(detalleFacturaCollectionOldDetalleFactura)) {
+          detalleFacturaCollectionOldDetalleFactura.setServicioId(null);
+          detalleFacturaCollectionOldDetalleFactura = em.merge(detalleFacturaCollectionOldDetalleFactura);
+        }
+      }
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFactura : detalleFacturaCollectionNew) {
+        if (!detalleFacturaCollectionOld.contains(detalleFacturaCollectionNewDetalleFactura)) {
+          Servicio oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura = detalleFacturaCollectionNewDetalleFactura.getServicioId();
+          detalleFacturaCollectionNewDetalleFactura.setServicioId(servicio);
+          detalleFacturaCollectionNewDetalleFactura = em.merge(detalleFacturaCollectionNewDetalleFactura);
+          if (oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura != null && !oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura.equals(servicio)) {
+            oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionNewDetalleFactura);
+            oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura = em.merge(oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = servicio.getId();
+        if (findServicio(id) == null) {
+          throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
+  public void softDelete(Servicio servicio) throws NonexistentEntityException, Exception {
     EntityManager em = null;
     try {
       em = getEntityManager();
