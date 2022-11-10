@@ -369,6 +369,200 @@ public class PersonaJpaController implements Serializable {
     }
   }
 
+  public void softDelete(Persona persona) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Persona persistentPersona = em.find(Persona.class, persona.getId());
+      TipoPersona tipoPersonaIdOld = persistentPersona.getTipoPersonaId();
+      TipoPersona tipoPersonaIdNew = persona.getTipoPersonaId();
+      Collection<Vehiculo> vehiculoCollectionOld = persistentPersona.getVehiculoCollection();
+      Collection<Vehiculo> vehiculoCollectionNew = persona.getVehiculoCollection();
+      Collection<DireccionPersona> direccionPersonaCollectionOld = persistentPersona.getDireccionPersonaCollection();
+      Collection<DireccionPersona> direccionPersonaCollectionNew = persona.getDireccionPersonaCollection();
+      Collection<Factura> facturaCollectionOld = persistentPersona.getFacturaCollection();
+      Collection<Factura> facturaCollectionNew = persona.getFacturaCollection();
+      Collection<Prenda> prendaCollectionOld = persistentPersona.getPrendaCollection();
+      Collection<Prenda> prendaCollectionNew = persona.getPrendaCollection();
+      Collection<Telefono> telefonoCollectionOld = persistentPersona.getTelefonoCollection();
+      Collection<Telefono> telefonoCollectionNew = persona.getTelefonoCollection();
+      Collection<Cita> citaCollectionOld = persistentPersona.getCitaCollection();
+      Collection<Cita> citaCollectionNew = persona.getCitaCollection();
+      if (tipoPersonaIdNew != null) {
+        tipoPersonaIdNew = em.getReference(tipoPersonaIdNew.getClass(), tipoPersonaIdNew.getId());
+        persona.setTipoPersonaId(tipoPersonaIdNew);
+      }
+      Collection<Vehiculo> attachedVehiculoCollectionNew = new ArrayList<Vehiculo>();
+      for (Vehiculo vehiculoCollectionNewVehiculoToAttach : vehiculoCollectionNew) {
+        vehiculoCollectionNewVehiculoToAttach = em.getReference(vehiculoCollectionNewVehiculoToAttach.getClass(), vehiculoCollectionNewVehiculoToAttach.getId());
+        attachedVehiculoCollectionNew.add(vehiculoCollectionNewVehiculoToAttach);
+      }
+      vehiculoCollectionNew = attachedVehiculoCollectionNew;
+      persona.setVehiculoCollection(vehiculoCollectionNew);
+      Collection<DireccionPersona> attachedDireccionPersonaCollectionNew = new ArrayList<DireccionPersona>();
+      for (DireccionPersona direccionPersonaCollectionNewDireccionPersonaToAttach : direccionPersonaCollectionNew) {
+        direccionPersonaCollectionNewDireccionPersonaToAttach = em.getReference(direccionPersonaCollectionNewDireccionPersonaToAttach.getClass(), direccionPersonaCollectionNewDireccionPersonaToAttach.getId());
+        attachedDireccionPersonaCollectionNew.add(direccionPersonaCollectionNewDireccionPersonaToAttach);
+      }
+      direccionPersonaCollectionNew = attachedDireccionPersonaCollectionNew;
+      persona.setDireccionPersonaCollection(direccionPersonaCollectionNew);
+      Collection<Factura> attachedFacturaCollectionNew = new ArrayList<Factura>();
+      for (Factura facturaCollectionNewFacturaToAttach : facturaCollectionNew) {
+        facturaCollectionNewFacturaToAttach = em.getReference(facturaCollectionNewFacturaToAttach.getClass(), facturaCollectionNewFacturaToAttach.getId());
+        attachedFacturaCollectionNew.add(facturaCollectionNewFacturaToAttach);
+      }
+      facturaCollectionNew = attachedFacturaCollectionNew;
+      persona.setFacturaCollection(facturaCollectionNew);
+      Collection<Prenda> attachedPrendaCollectionNew = new ArrayList<Prenda>();
+      for (Prenda prendaCollectionNewPrendaToAttach : prendaCollectionNew) {
+        prendaCollectionNewPrendaToAttach = em.getReference(prendaCollectionNewPrendaToAttach.getClass(), prendaCollectionNewPrendaToAttach.getId());
+        attachedPrendaCollectionNew.add(prendaCollectionNewPrendaToAttach);
+      }
+      prendaCollectionNew = attachedPrendaCollectionNew;
+      persona.setPrendaCollection(prendaCollectionNew);
+      Collection<Telefono> attachedTelefonoCollectionNew = new ArrayList<Telefono>();
+      for (Telefono telefonoCollectionNewTelefonoToAttach : telefonoCollectionNew) {
+        telefonoCollectionNewTelefonoToAttach = em.getReference(telefonoCollectionNewTelefonoToAttach.getClass(), telefonoCollectionNewTelefonoToAttach.getId());
+        attachedTelefonoCollectionNew.add(telefonoCollectionNewTelefonoToAttach);
+      }
+      telefonoCollectionNew = attachedTelefonoCollectionNew;
+      persona.setTelefonoCollection(telefonoCollectionNew);
+      Collection<Cita> attachedCitaCollectionNew = new ArrayList<Cita>();
+      for (Cita citaCollectionNewCitaToAttach : citaCollectionNew) {
+        citaCollectionNewCitaToAttach = em.getReference(citaCollectionNewCitaToAttach.getClass(), citaCollectionNewCitaToAttach.getId());
+        attachedCitaCollectionNew.add(citaCollectionNewCitaToAttach);
+      }
+      citaCollectionNew = attachedCitaCollectionNew;
+      persona.setCitaCollection(citaCollectionNew);
+      persona = em.merge(persona);
+      if (tipoPersonaIdOld != null && !tipoPersonaIdOld.equals(tipoPersonaIdNew)) {
+        tipoPersonaIdOld.getPersonaCollection().remove(persona);
+        tipoPersonaIdOld = em.merge(tipoPersonaIdOld);
+      }
+      if (tipoPersonaIdNew != null && !tipoPersonaIdNew.equals(tipoPersonaIdOld)) {
+        tipoPersonaIdNew.getPersonaCollection().add(persona);
+        tipoPersonaIdNew = em.merge(tipoPersonaIdNew);
+      }
+      for (Vehiculo vehiculoCollectionOldVehiculo : vehiculoCollectionOld) {
+        if (!vehiculoCollectionNew.contains(vehiculoCollectionOldVehiculo)) {
+          vehiculoCollectionOldVehiculo.setPersonaId(null);
+          vehiculoCollectionOldVehiculo = em.merge(vehiculoCollectionOldVehiculo);
+        }
+      }
+      for (Vehiculo vehiculoCollectionNewVehiculo : vehiculoCollectionNew) {
+        if (!vehiculoCollectionOld.contains(vehiculoCollectionNewVehiculo)) {
+          Persona oldPersonaIdOfVehiculoCollectionNewVehiculo = vehiculoCollectionNewVehiculo.getPersonaId();
+          vehiculoCollectionNewVehiculo.setPersonaId(persona);
+          vehiculoCollectionNewVehiculo = em.merge(vehiculoCollectionNewVehiculo);
+          if (oldPersonaIdOfVehiculoCollectionNewVehiculo != null && !oldPersonaIdOfVehiculoCollectionNewVehiculo.equals(persona)) {
+            oldPersonaIdOfVehiculoCollectionNewVehiculo.getVehiculoCollection().remove(vehiculoCollectionNewVehiculo);
+            oldPersonaIdOfVehiculoCollectionNewVehiculo = em.merge(oldPersonaIdOfVehiculoCollectionNewVehiculo);
+          }
+        }
+      }
+      for (DireccionPersona direccionPersonaCollectionOldDireccionPersona : direccionPersonaCollectionOld) {
+        if (!direccionPersonaCollectionNew.contains(direccionPersonaCollectionOldDireccionPersona)) {
+          direccionPersonaCollectionOldDireccionPersona.setPersonaId(null);
+          direccionPersonaCollectionOldDireccionPersona = em.merge(direccionPersonaCollectionOldDireccionPersona);
+        }
+      }
+      for (DireccionPersona direccionPersonaCollectionNewDireccionPersona : direccionPersonaCollectionNew) {
+        if (!direccionPersonaCollectionOld.contains(direccionPersonaCollectionNewDireccionPersona)) {
+          Persona oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona = direccionPersonaCollectionNewDireccionPersona.getPersonaId();
+          direccionPersonaCollectionNewDireccionPersona.setPersonaId(persona);
+          direccionPersonaCollectionNewDireccionPersona = em.merge(direccionPersonaCollectionNewDireccionPersona);
+          if (oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona != null && !oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona.equals(persona)) {
+            oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona.getDireccionPersonaCollection().remove(direccionPersonaCollectionNewDireccionPersona);
+            oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona = em.merge(oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona);
+          }
+        }
+      }
+      for (Factura facturaCollectionOldFactura : facturaCollectionOld) {
+        if (!facturaCollectionNew.contains(facturaCollectionOldFactura)) {
+          facturaCollectionOldFactura.setPersonaId(null);
+          facturaCollectionOldFactura = em.merge(facturaCollectionOldFactura);
+        }
+      }
+      for (Factura facturaCollectionNewFactura : facturaCollectionNew) {
+        if (!facturaCollectionOld.contains(facturaCollectionNewFactura)) {
+          Persona oldPersonaIdOfFacturaCollectionNewFactura = facturaCollectionNewFactura.getPersonaId();
+          facturaCollectionNewFactura.setPersonaId(persona);
+          facturaCollectionNewFactura = em.merge(facturaCollectionNewFactura);
+          if (oldPersonaIdOfFacturaCollectionNewFactura != null && !oldPersonaIdOfFacturaCollectionNewFactura.equals(persona)) {
+            oldPersonaIdOfFacturaCollectionNewFactura.getFacturaCollection().remove(facturaCollectionNewFactura);
+            oldPersonaIdOfFacturaCollectionNewFactura = em.merge(oldPersonaIdOfFacturaCollectionNewFactura);
+          }
+        }
+      }
+      for (Prenda prendaCollectionOldPrenda : prendaCollectionOld) {
+        if (!prendaCollectionNew.contains(prendaCollectionOldPrenda)) {
+          prendaCollectionOldPrenda.setPersonaId(null);
+          prendaCollectionOldPrenda = em.merge(prendaCollectionOldPrenda);
+        }
+      }
+      for (Prenda prendaCollectionNewPrenda : prendaCollectionNew) {
+        if (!prendaCollectionOld.contains(prendaCollectionNewPrenda)) {
+          Persona oldPersonaIdOfPrendaCollectionNewPrenda = prendaCollectionNewPrenda.getPersonaId();
+          prendaCollectionNewPrenda.setPersonaId(persona);
+          prendaCollectionNewPrenda = em.merge(prendaCollectionNewPrenda);
+          if (oldPersonaIdOfPrendaCollectionNewPrenda != null && !oldPersonaIdOfPrendaCollectionNewPrenda.equals(persona)) {
+            oldPersonaIdOfPrendaCollectionNewPrenda.getPrendaCollection().remove(prendaCollectionNewPrenda);
+            oldPersonaIdOfPrendaCollectionNewPrenda = em.merge(oldPersonaIdOfPrendaCollectionNewPrenda);
+          }
+        }
+      }
+      for (Telefono telefonoCollectionOldTelefono : telefonoCollectionOld) {
+        if (!telefonoCollectionNew.contains(telefonoCollectionOldTelefono)) {
+          telefonoCollectionOldTelefono.setPersonaId(null);
+          telefonoCollectionOldTelefono = em.merge(telefonoCollectionOldTelefono);
+        }
+      }
+      for (Telefono telefonoCollectionNewTelefono : telefonoCollectionNew) {
+        if (!telefonoCollectionOld.contains(telefonoCollectionNewTelefono)) {
+          Persona oldPersonaIdOfTelefonoCollectionNewTelefono = telefonoCollectionNewTelefono.getPersonaId();
+          telefonoCollectionNewTelefono.setPersonaId(persona);
+          telefonoCollectionNewTelefono = em.merge(telefonoCollectionNewTelefono);
+          if (oldPersonaIdOfTelefonoCollectionNewTelefono != null && !oldPersonaIdOfTelefonoCollectionNewTelefono.equals(persona)) {
+            oldPersonaIdOfTelefonoCollectionNewTelefono.getTelefonoCollection().remove(telefonoCollectionNewTelefono);
+            oldPersonaIdOfTelefonoCollectionNewTelefono = em.merge(oldPersonaIdOfTelefonoCollectionNewTelefono);
+          }
+        }
+      }
+      for (Cita citaCollectionOldCita : citaCollectionOld) {
+        if (!citaCollectionNew.contains(citaCollectionOldCita)) {
+          citaCollectionOldCita.setPersonaId(null);
+          citaCollectionOldCita = em.merge(citaCollectionOldCita);
+        }
+      }
+      for (Cita citaCollectionNewCita : citaCollectionNew) {
+        if (!citaCollectionOld.contains(citaCollectionNewCita)) {
+          Persona oldPersonaIdOfCitaCollectionNewCita = citaCollectionNewCita.getPersonaId();
+          citaCollectionNewCita.setPersonaId(persona);
+          citaCollectionNewCita = em.merge(citaCollectionNewCita);
+          if (oldPersonaIdOfCitaCollectionNewCita != null && !oldPersonaIdOfCitaCollectionNewCita.equals(persona)) {
+            oldPersonaIdOfCitaCollectionNewCita.getCitaCollection().remove(citaCollectionNewCita);
+            oldPersonaIdOfCitaCollectionNewCita = em.merge(oldPersonaIdOfCitaCollectionNewCita);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = persona.getId();
+        if (findPersona(id) == null) {
+          throw new NonexistentEntityException("The persona with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

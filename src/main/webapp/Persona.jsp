@@ -10,9 +10,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<%@page import="com.servlets.DepartamentoCreateServlet" %>
-
-
 <t:template title="Listar Personas">
   <jsp:attribute name="head_area">
   </jsp:attribute>
@@ -32,7 +29,7 @@
         </div>
         <div class="card-body">
 
-          <!-- Modal Crear Distrito-->
+          <!-- Modal Crear -->
           <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -49,19 +46,35 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="DistritoCreateServlet" method="post">
+                  <form  action="PersonaCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
-                          <label>Nombre</label>
-                          <input name="distritoNombreCreate" id="addName" type="text" class="form-control" placeholder="Llene el distrito">
+                          <label>Nombres</label>
+                          <input name="addNombres" id="addNombres" type="text" class="form-control" placeholder="Llene">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Apellidos</label>
+                          <input name="addApellidos" id="addApellidos" type="text" class="form-control" placeholder="Llene">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>DNI</label>
+                          <input name="addDni" id="addDni" type="text" class="form-control" placeholder="Llene">
+                        </div>
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input name="addEmail" id="addEmail" type="email" class="form-control" placeholder="Llene">
+                        </div>
+                        <div class="form-group">
+                          <label>Password</label>
+                          <input name="addPassword" id="addPassword" type="password" class="form-control" placeholder="Llene">
                         </div>
 
                         <div class="form-group form-group-default">
-                          <label>Select</label>
-                          <select class="form-control" name="distritoDepartamentoIdCreate" id="distritoDepartamentoIdCreate">
-                            <c:forEach var="departamentoObjetoTemp" items="${mi_lista_de_departamentos }">
-                              <option value="${departamentoObjetoTemp.id }">${departamentoObjetoTemp.descripcion }</option>
+                          <label>Tipo de Persona</label>
+                          <select class="form-control" name="addTdP" id="addTdP">
+                            <c:forEach var="TdPObjetoTemp" items="${mi_lista_de_TdP }">
+                              <option value="${TdPObjetoTemp.id }">${TdPObjetoTemp.descripcion }</option>
                             </c:forEach>
 
                           </select>
@@ -82,20 +95,28 @@
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
                 <tr>
-                  <th>Nombre</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>DNI</th>
+                  <th>Email</th>
+                  <th>Password</th>
                   <th>Estado</th>
-                  <th>Provincia</th>
+                  <th>Tipo de Persona</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_distritos }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_personas }">
                   <tr>
-                    <td>${tempObjeto.descripcion }</td>
+                    <td>${tempObjeto.nombres }</td>
+                    <td>${tempObjeto.apellidos}</td>
+                    <td>${tempObjeto.dni}</td>
+                    <td>${tempObjeto.email}</td>
+                    <td>${tempObjeto.password}</td>
                     <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.departamentoId.descripcion}</td>
+                    <td>${tempObjeto.tipoPersonaId.descripcion}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
@@ -136,7 +157,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="destroy_distrito_departamento" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <input name="destroy_distrito_departamento" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.nombres }" readonly>
                               </div>
 
                             </div>
@@ -176,7 +197,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.nombres }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Departamento</label>
