@@ -39,17 +39,17 @@ public class DepartamentoListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando a Departamento List Servlet");
     try {
-      DepartamentoJpaController jpacontroller_object_departamento = new DepartamentoJpaController();
-      List<Departamento> mi_lista_de_objetos_departamento = new ArrayList<>();
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      List<Departamento> mi_lista_de_objetos = new ArrayList<>();
 
 //      System.out.println(listD.findDistritoEntities());
-      mi_lista_de_objetos_departamento = jpacontroller_object_departamento.findDepartamentoEntities();
+      mi_lista_de_objetos = jpac_object.findDepartamentoEntities();
 
-      for (Departamento elemento : mi_lista_de_objetos_departamento) {
+      for (Departamento elemento : mi_lista_de_objetos) {
         System.out.println(elemento.getId() + " - " + elemento.getDescripcion() );
       }
 
-      request.setAttribute("mi_lista_de_departamentos", mi_lista_de_objetos_departamento);
+      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
       request.getRequestDispatcher("listDepartamento.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {

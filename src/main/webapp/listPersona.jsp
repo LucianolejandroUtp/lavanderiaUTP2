@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listDistrito
-    Created on : 3 nov. 2022, 23:48:52
+    Document   : listPersona
+    Created on : 9 nov. 2022, 10:32:06
     Author     : desti
 --%>
 
@@ -10,7 +10,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<t:template title="Listar Distritos">
+<%@page import="com.servlets.DepartamentoCreateServlet" %>
+
+
+<t:template title="Listar Personas">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
@@ -20,25 +23,25 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Distritos</h4>
+            <h4 class="card-title">Personas</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Distrito
+              Añadir Persona
             </button>
           </div>
         </div>
         <div class="card-body">
 
-          <!-- Modal Crear -->
+          <!-- Modal Crear Distrito-->
           <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header no-bd">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      Nuevo</span> 
+                      Nueva</span> 
                     <span class="fw-light">
-                      Distrito
+                      Persona
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -51,14 +54,14 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el distrito">
+                          <input name="distritoNombreCreate" id="addName" type="text" class="form-control" placeholder="Llene el distrito">
                         </div>
 
                         <div class="form-group form-group-default">
                           <label>Select</label>
-                          <select class="form-control" name="addDepartamentoId" id="addDepartamentoId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_departamentos }">
-                              <option value="${tempObjetoDepa.id }">${tempObjetoDepa.descripcion }</option>
+                          <select class="form-control" name="distritoDepartamentoIdCreate" id="distritoDepartamentoIdCreate">
+                            <c:forEach var="departamentoObjetoTemp" items="${mi_lista_de_departamentos }">
+                              <option value="${departamentoObjetoTemp.id }">${departamentoObjetoTemp.descripcion }</option>
                             </c:forEach>
 
                           </select>
@@ -129,7 +132,7 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroy_distrito_id" id="destroy_distrito_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
@@ -169,24 +172,24 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="editId" id="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="edit_distrito_id" id="edit_distrito_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Departamento</label>
-                                <select class="form-control" name="editDepaId" id="editDepaId">
-                                  <c:forEach var="tempObjetoDepa" items="${mi_lista_de_departamentos }">
-                                    <option value="${tempObjetoDepa.id }">${tempObjetoDepa.descripcion }</option>
+                                <select class="form-control" name="edit_distrito_depaId" id="edit_distrito_depaId">
+                                  <c:forEach var="departamentoObjetoTemp" items="${mi_lista_de_departamentos }">
+                                    <option value="${departamentoObjetoTemp.id }">${departamentoObjetoTemp.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Select</label>
 
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <select class="form-control" name="edit_distrito_estado" id="edit_distrito_estado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->

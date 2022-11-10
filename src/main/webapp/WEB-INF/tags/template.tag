@@ -192,10 +192,17 @@
               </li>
 
               <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
                 <a href="../DistritoListServlet">
                   <i class="fas fa-map-marked-alt"></i>
                   <p>Distritos</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../TdPListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Tipo de Persona</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>

@@ -43,21 +43,21 @@ public class DistritoEditServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
 
     System.out.println("Entrando a Distrito Edit Servlet");
-    System.out.println(request.getParameter("edit_distrito_id"));
-    System.out.println(request.getParameter("edit_distrito_descripcion"));
-    System.out.println(request.getParameter("edit_distrito_estado"));
-    System.out.println(request.getParameter("edit_distrito_depaId"));
+    System.out.println(request.getParameter("editId"));
+    System.out.println(request.getParameter("editDescripcion"));
+    System.out.println(request.getParameter("editEstado"));
+    System.out.println(request.getParameter("editDepaId"));
     try {
+//      Inicialización de objetos
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
+      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
+      Distrito oldObject_distrito;
+      Departamento depa;
+
 //      Lo relacionado a la fecha
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
-
-//      Inicialización de objetos
-      Distrito oldObject_distrito;
-      Departamento depa;
-      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
-      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
 
 //      Necesitamos una lista de los Direcciones
 //      DireccionJpaController jpac_xa_lista_de_Direcciones = new DireccionJpaController();
@@ -65,29 +65,29 @@ public class DistritoEditServlet extends HttpServlet {
 //      mi_lista_de_Direcciones = jpac_xa_lista_de_Direcciones.findDireccionEntities();
 
 //      Obteniendo el departamento en base al Id que nos da la vista
-      depa = jpac_object_depa.findDepartamento(Long.valueOf(request.getParameter("edit_distrito_depaId")));
-      
+      depa = jpac_object_depa.findDepartamento(Long.valueOf(request.getParameter("editDepaId")));
+
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      oldObject_distrito = jpac_object_distrito.findDistrito(Long.valueOf(request.getParameter("edit_distrito_id")));
+      oldObject_distrito = jpac_object_distrito.findDistrito(Long.valueOf(request.getParameter("editId")));
       System.out.println("El depa obtenido es: " + oldObject_distrito);
 
 //      Comparando y asignando nuevos valores al Distrito
-      if (!oldObject_distrito.getDescripcion().equals(request.getParameter("edit_distrito_descripcion"))) {
-        oldObject_distrito.setDescripcion(request.getParameter("edit_distrito_descripcion"));
+      if (!oldObject_distrito.getDescripcion().equals(request.getParameter("editDescripcion"))) {
+        oldObject_distrito.setDescripcion(request.getParameter("editDescripcion"));
       }
-      if (!oldObject_distrito.getEstado().equals(request.getParameter("edit_distrito_estado"))) {
-        oldObject_distrito.setEstado(request.getParameter("edit_distrito_estado"));
+      if (!oldObject_distrito.getEstado().equals(request.getParameter("editEstado"))) {
+        oldObject_distrito.setEstado(request.getParameter("editEstado"));
       }
-      if(!oldObject_distrito.getDepartamentoId().equals(depa)){
-      oldObject_distrito.setDepartamentoId(depa);
+      if (!oldObject_distrito.getDepartamentoId().equals(depa)) {
+        oldObject_distrito.setDepartamentoId(depa);
       }
       oldObject_distrito.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);
 
       System.out.println("El Distrito actualizado es: "
-          + oldObject_distrito.getId() +" - "+ oldObject_distrito.getDescripcion() +" - "
-          + oldObject_distrito.getEstado() +" - "+ oldObject_distrito.getDepartamentoId().getDescripcion()+" - "
-          + oldObject_distrito.getCreatedAt() +" - "+ oldObject_distrito.getUpdatedAt() +" - "
+          + oldObject_distrito.getId() + " - " + oldObject_distrito.getDescripcion() + " - "
+          + oldObject_distrito.getEstado() + " - " + oldObject_distrito.getDepartamentoId().getDescripcion() + " - "
+          + oldObject_distrito.getCreatedAt() + " - " + oldObject_distrito.getUpdatedAt() + " - "
           + oldObject_distrito.getDireccionCollection());
 
       jpac_object_distrito.edit(oldObject_distrito);

@@ -5,11 +5,11 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
+import com.dao.TipoPersonaJpaController;
 import com.dto.Departamento;
+import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoCreateServlet", urlPatterns = {"/DepartamentoCreateServlet"})
-public class DepartamentoCreateServlet extends HttpServlet {
+@WebServlet(name = "TdPDestroyServlet", urlPatterns = {"/TdPDestroyServlet"})
+public class TdPDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,32 +35,22 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera Departamento Create Servlet");
+    
+    System.out.println("Entrando a Tipo de Persona Destroy Servlet");
+    System.out.println(request.getParameter("destroyId"));
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
-      Departamento mi_objeto = new Departamento();
-      
-      Date dt = new Date();
-      Timestamp ts = new Timestamp(dt.getTime());
-      System.out.println(ts);
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      TipoPersona objeto_archivado = new TipoPersona();
 
-//      Distrito mi_distrito = new Distrito();
-//      mi_depa.setId(Long.valueOf(1));
-//      mi_depa.setDepartamento("Arequipa");
+      objeto_archivado = jpac_object.findTipoPersona(Long.valueOf(request.getParameter("destroyId")));
 
-//      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
-      mi_objeto.setEstado("activo");
-      mi_objeto.setCreatedAt(ts);
-      mi_objeto.setUpdatedAt(ts);
+      objeto_archivado.setEstado("eliminado");
+      jpac_object.softDelete(objeto_archivado);
 
-      jpac_object.create(mi_objeto);
-
-      DepartamentoListServlet call = new DepartamentoListServlet();
+      TdPListServlet call = new TdPListServlet();
       call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
-    } catch (IOException | ServletException theException) {
+    } catch (Exception theException) {
       System.out.println(theException);
     }
   }

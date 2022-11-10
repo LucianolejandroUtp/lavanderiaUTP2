@@ -37,15 +37,15 @@ public class DepartamentoDestroyServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando a Departamento Destroy Servlet");
-    System.out.println(request.getParameter("destroy_depa_id"));
+    System.out.println(request.getParameter("destroyId"));
     try {
-      Departamento departamento_archivado = new Departamento();
-      DepartamentoJpaController jpac_departamento = new DepartamentoJpaController();
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      Departamento objeto_archivado = new Departamento();
 
-      departamento_archivado = jpac_departamento.findDepartamento(Long.valueOf(request.getParameter("destroy_depa_id")));
+      objeto_archivado = jpac_object.findDepartamento(Long.valueOf(request.getParameter("destroyId")));
 
-      departamento_archivado.setEstado("eliminado");
-      jpac_departamento.softDelete(departamento_archivado);
+      objeto_archivado.setEstado("eliminado");
+      jpac_object.softDelete(objeto_archivado);
 
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);

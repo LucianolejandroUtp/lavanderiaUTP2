@@ -42,22 +42,22 @@ public class DistritoListServlet extends HttpServlet {
       DistritoJpaController jpac_object_distrito = new DistritoJpaController();
       DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController();
       List<Distrito> mi_lista_de_distritos = new ArrayList<>();
-      List<Departamento> mi_lista_de_departamentos = new ArrayList<>();
+      List<Departamento> mi_lista_de_depas = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
       mi_lista_de_distritos = jpac_object_distrito.findDistritoEntities();
-      mi_lista_de_departamentos = jpac_object_departamento.findDepartamentoEntities();
+      mi_lista_de_depas = jpac_object_departamento.findDepartamentoEntities();
 
       for (Distrito dis : mi_lista_de_distritos) {
         System.out.println(dis.getId() + " - " + dis.getDescripcion()+ " - " + dis.getDepartamentoId().getDescripcion());
       }
-      for (Departamento dep : mi_lista_de_departamentos) {
+      for (Departamento dep : mi_lista_de_depas) {
         System.out.println(dep.getId() + " - " + dep.getDescripcion());
       }
 
       
       request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
-      request.setAttribute("mi_lista_de_departamentos", mi_lista_de_departamentos);
+      request.setAttribute("mi_lista_de_departamentos", mi_lista_de_depas);
       request.getRequestDispatcher("listDistrito.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {

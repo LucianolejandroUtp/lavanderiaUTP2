@@ -23,6 +23,7 @@ import com.dto.Persona;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -34,6 +35,10 @@ public class PersonaJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
+
+  public PersonaJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();

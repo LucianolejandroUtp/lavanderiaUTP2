@@ -5,7 +5,9 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
+import com.dao.TipoPersonaJpaController;
 import com.dto.Departamento;
+import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoCreateServlet", urlPatterns = {"/DepartamentoCreateServlet"})
-public class DepartamentoCreateServlet extends HttpServlet {
+@WebServlet(name = "TdPEditServlet", urlPatterns = {"/TdPEditServlet"})
+public class TdPEditServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,34 +37,53 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera Departamento Create Servlet");
+    System.out.println("Entrando a Tipo de Persona Edit Servlet");
+    System.out.println(request.getParameter("editId"));
+    System.out.println(request.getParameter("editDescripcion"));
+    System.out.println(request.getParameter("editEstado"));
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
-      Departamento mi_objeto = new Departamento();
-      
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      TipoPersona old_objet;
+
+//      Lo relacionado a la fecha
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
 
-//      Distrito mi_distrito = new Distrito();
-//      mi_depa.setId(Long.valueOf(1));
-//      mi_depa.setDepartamento("Arequipa");
+      //Por alguna razón ya no lo necesita
+//      Necesitamos una lista de los Distritos
+//      DistritoJpaController lista_de_Distritos = new DistritoJpaController();
+//      List<Distrito> mi_lista_de_Distritos = new ArrayList<>();
+//      mi_lista_de_Distritos = lista_de_Distritos.findDistritoEntities();
+      //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
+      old_objet = jpac_object.findTipoPersona(Long.valueOf(request.getParameter("editId")));
+      System.out.println("El Tipo de Persona obtenido es: " + old_objet.getDescripcion());
 
-//      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
-      mi_objeto.setEstado("activo");
-      mi_objeto.setCreatedAt(ts);
-      mi_objeto.setUpdatedAt(ts);
+//      Comparando y asignando nuevos valores al departamento
+      if (!old_objet.getDescripcion().equals(request.getParameter("editDescripcion"))) {
+        old_objet.setDescripcion(request.getParameter("editDescripcion"));
+      }
+      if (!old_objet.getEstado().equals(request.getParameter("editEstado"))) {
+        old_objet.setEstado(request.getParameter("editEstado"));
+      }
+      old_objet.setUpdatedAt(ts);
 
-      jpac_object.create(mi_objeto);
+      //Por alguna razón ya no lo necesita
+      //  viejo_objeto_departamento.setDistritoCollection(mi_lista_de_Distritos);
+      System.out.println("El Tipo de Persona actualizado es: "
+          + old_objet.getId() + " - " + old_objet.getDescripcion() + " - "
+          + old_objet.getEstado() + " - " + old_objet.getCreatedAt() + " - "
+          + old_objet.getUpdatedAt() + " - " + old_objet.getPersonaCollection());
 
-      DepartamentoListServlet call = new DepartamentoListServlet();
+      jpac_object.edit(old_objet);
+
+      TdPListServlet call = new TdPListServlet();
       call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
-    } catch (IOException | ServletException theException) {
+    } catch (Exception theException) {
       System.out.println(theException);
     }
+    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

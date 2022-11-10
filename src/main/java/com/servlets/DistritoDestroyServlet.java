@@ -37,15 +37,15 @@ public class DistritoDestroyServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     
     System.out.println("Entrando a Departamento Destroy Servlet");
-    System.out.println(request.getParameter("destroy_distrito_id"));
+    System.out.println(request.getParameter("destroyId"));
     try {
-      Distrito distrito_archivado;
-      DistritoJpaController jpac_distrito = new DistritoJpaController();
+      DistritoJpaController jpac_object = new DistritoJpaController();
+      Distrito objeto_archivado;
 
-      distrito_archivado = jpac_distrito.findDistrito(Long.valueOf(request.getParameter("destroy_distrito_id")));
+      objeto_archivado = jpac_object.findDistrito(Long.valueOf(request.getParameter("destroyId")));
 
-      distrito_archivado.setEstado("eliminado");
-      jpac_distrito.softDelete(distrito_archivado);
+      objeto_archivado.setEstado("eliminado");
+      jpac_object.softDelete(objeto_archivado);
 
       DistritoListServlet call = new DistritoListServlet();
       call.processRequest(request, response);

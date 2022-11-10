@@ -10,10 +10,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<%@page import="com.servlets.DepartamentoCreateServlet" %>
-<%@page import="com.servlets.DepartamentoListServlet" %>
-<%@page import="com.servlets.DepartamentoEditServlet" %>
-
 
 <t:template title="Listar Departamentos">
   <jsp:attribute name="head_area">
@@ -54,7 +50,7 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="descripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
+                          <input name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -79,7 +75,7 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_departamentos }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_objetos }">
                   <tr>
                     <td>${tempObjeto.descripcion }</td>
                     <td>${tempObjeto.estado}</td>
@@ -100,7 +96,7 @@
                   </tr>
 
 
-                  <!-- Modal Eliminar Departamento-->
+                  <!-- Modal Eliminar -->
                 <div class="modal fade" id="${tempObjeto.id }${tempObjeto.id }" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -125,11 +121,11 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroy_depa_id" id="destroy_depa_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="destroy_depa_departamento" id="destroy_depa_departamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <input name="destroyDepartamento" id="destroyDepartamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
                               </div>
 
                             </div>
@@ -143,7 +139,7 @@
                   </div>
                 </div>
 
-                <!-- Modal Editar Departamento-->
+                <!-- Modal Editar -->
                 <div class="modal fade" id="${tempObjeto.id }" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -165,16 +161,16 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="edit_depa_id" id="edit_depa_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="editId" id="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="edit_depa_descripcion" id="edit_depa_descripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
 
                               <div class="form-group form-group-default">
                                 <label>Select</label>
-                                <select class="form-control" name="edit_depa_estado" id="edit_depa_estado">
+                                <select class="form-control" name="editEstado" id="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->

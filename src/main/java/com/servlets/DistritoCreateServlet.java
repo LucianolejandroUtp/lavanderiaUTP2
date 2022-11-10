@@ -40,10 +40,10 @@ public class DistritoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera servlet create distrito");
     try {
-      DistritoJpaController jpacontroller_object_distrito = new DistritoJpaController();
-      DepartamentoJpaController jpacontroller_object_departamento = new DepartamentoJpaController();
-      Distrito mi_distrito = new Distrito();
-      Departamento mi_departamento = new Departamento();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
+      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
+      Distrito mi_objeto_distrito = new Distrito();
+      Departamento mi_objeto_depa = new Departamento();
 
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
@@ -51,19 +51,19 @@ public class DistritoCreateServlet extends HttpServlet {
 
       
 //      Obteniendo el departamento en base al Id obtenido de la vista
-      mi_departamento = jpacontroller_object_departamento.findDepartamento(Long.valueOf(request.getParameter("distritoDepartamentoIdCreate")));
-      System.out.println("El departamento obtenido fue: " + mi_departamento.getDescripcion() +" - "+ mi_departamento.getId());
+      mi_objeto_depa = jpac_object_depa.findDepartamento(Long.valueOf(request.getParameter("addDepartamentoId")));
+      System.out.println("El departamento obtenido fue: " + mi_objeto_depa.getDescripcion() +" - "+ mi_objeto_depa.getId());
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_distrito.setDescripcion(request.getParameter("distritoNombreCreate"));
-      mi_distrito.setEstado("activo");
-      mi_distrito.setDepartamentoId(mi_departamento);
-      mi_distrito.setCreatedAt(ts);
-      mi_distrito.setUpdatedAt(ts);
+      mi_objeto_distrito.setDescripcion(request.getParameter("addDescripcion"));
+      mi_objeto_distrito.setEstado("activo");
+      mi_objeto_distrito.setDepartamentoId(mi_objeto_depa);
+      mi_objeto_distrito.setCreatedAt(ts);
+      mi_objeto_distrito.setUpdatedAt(ts);
 
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpacontroller_object_distrito.create(mi_distrito);
+      jpac_object_distrito.create(mi_objeto_distrito);
 
 //      Llamando al listALGO.jsp
       DistritoListServlet call = new DistritoListServlet();

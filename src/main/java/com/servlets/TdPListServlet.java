@@ -5,11 +5,13 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
+import com.dao.TipoPersonaJpaController;
 import com.dto.Departamento;
+import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoCreateServlet", urlPatterns = {"/DepartamentoCreateServlet"})
-public class DepartamentoCreateServlet extends HttpServlet {
+@WebServlet(name = "TdPListServlet", urlPatterns = {"/TdPListServlet"})
+public class TdPListServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +37,20 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera Departamento Create Servlet");
+    System.out.println("Entrando a Tipo de Persona List Servlet");
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
-      Departamento mi_objeto = new Departamento();
-      
-      Date dt = new Date();
-      Timestamp ts = new Timestamp(dt.getTime());
-      System.out.println(ts);
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      List<TipoPersona> mi_lista_de_objetos = new ArrayList<>();
 
-//      Distrito mi_distrito = new Distrito();
-//      mi_depa.setId(Long.valueOf(1));
-//      mi_depa.setDepartamento("Arequipa");
+//      System.out.println(listD.findDistritoEntities());
+      mi_lista_de_objetos = jpac_object.findTipoPersonaEntities();
 
-//      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
-      mi_objeto.setEstado("activo");
-      mi_objeto.setCreatedAt(ts);
-      mi_objeto.setUpdatedAt(ts);
+      for (TipoPersona elemento : mi_lista_de_objetos) {
+        System.out.println(elemento.getId() + " - " + elemento.getDescripcion());
+      }
 
-      jpac_object.create(mi_objeto);
-
-      DepartamentoListServlet call = new DepartamentoListServlet();
-      call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
+      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
+      request.getRequestDispatcher("TipoPersona.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);

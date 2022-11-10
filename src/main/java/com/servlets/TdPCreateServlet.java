@@ -5,7 +5,9 @@
 package com.servlets;
 
 import com.dao.DepartamentoJpaController;
+import com.dao.TipoPersonaJpaController;
 import com.dto.Departamento;
+import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoCreateServlet", urlPatterns = {"/DepartamentoCreateServlet"})
-public class DepartamentoCreateServlet extends HttpServlet {
+@WebServlet(name = "TdPCreateServlet", urlPatterns = {"/TdPCreateServlet"})
+public class TdPCreateServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +37,10 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera Departamento Create Servlet");
+    System.out.println("Bandera TdP Create Servlet");
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
-      Departamento mi_objeto = new Departamento();
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      TipoPersona mi_objeto = new TipoPersona();
       
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
@@ -56,7 +58,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
 
       jpac_object.create(mi_objeto);
 
-      DepartamentoListServlet call = new DepartamentoListServlet();
+      TdPListServlet call = new TdPListServlet();
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
