@@ -206,6 +206,14 @@
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
+              
+              <li class="nav-item">
+                <a href="../CategoriaListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Categoría</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
             </ul>
           </div>
         </div>

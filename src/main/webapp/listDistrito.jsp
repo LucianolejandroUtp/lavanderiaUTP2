@@ -81,7 +81,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Estado</th>
-                  <th>Provincia</th>
+                  <th>Departamento</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>

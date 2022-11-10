@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listDepartamento
-    Created on : 28 oct. 2022, 23:29:15
+    Document   : Categoria
+    Created on : 9 nov. 2022, 23:38:16
     Author     : desti
 --%>
 
@@ -11,7 +11,7 @@
 
 
 
-<t:template title="Listar Departamentos">
+<t:template title="Listar Categoría">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
@@ -20,10 +20,10 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Departamentos</h4>
+            <h4 class="card-title">Categorías</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir departamento
+              Añadir Categoría
             </button>
           </div>
         </div>
@@ -35,9 +35,9 @@
                 <div class="modal-header no-bd">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      Nuevo</span> 
+                      Nueva</span> 
                     <span class="fw-light">
-                      Departamento
+                      Categoría
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -45,7 +45,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="DepartamentoCreateServlet" method="post">
+                  <form  action="CategoriaCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
@@ -62,7 +62,8 @@
               </div>
             </div>
           </div>
-
+          <!-- Final Modal Crear -->
+          
           <div class="table-responsive">
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
