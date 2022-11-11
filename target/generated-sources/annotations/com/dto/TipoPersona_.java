@@ -7,15 +7,15 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-10-29T03:24:59")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-11-10T19:13:46")
 @StaticMetamodel(TipoPersona.class)
 public class TipoPersona_ { 
 
+    public static volatile SingularAttribute<TipoPersona, String> descripcion;
     public static volatile SingularAttribute<TipoPersona, Date> createdAt;
-    public static volatile SingularAttribute<TipoPersona, Date> deletedAt;
+    public static volatile SingularAttribute<TipoPersona, String> estado;
     public static volatile CollectionAttribute<TipoPersona, Persona> personaCollection;
     public static volatile SingularAttribute<TipoPersona, Long> id;
-    public static volatile SingularAttribute<TipoPersona, String> nombre;
     public static volatile SingularAttribute<TipoPersona, Date> updatedAt;
 
 }

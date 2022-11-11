@@ -103,7 +103,14 @@
       <div class="sidebar sidebar-style-2">			
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
+              
+              
             <ul class="nav nav-primary">
+                
+                
+                
+                
+                
               <li class="nav-item">
                 <a data-toggle="collapse" href="#submenu">
                   <i class="fas fa-bars"></i>
@@ -161,7 +168,7 @@
               <li class="nav-item">
                 <a data-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
-                  <p>Tables</p>
+                  <p>Tablas</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables">
@@ -193,12 +200,52 @@
 
               <li class="nav-item">
                 <a href="../DistritoListServlet">
+                  <i class="fas fa-user"></i>
+                  <p>Usuarios</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DistritoListServlet">
+                  <i class="fas fa-car"></i>
+                  <p>Choferes</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DistritoListServlet">
+                  <i class="fas fa-clock"></i>
+                  <p>Servicios Programados</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DistritoListServlet">
+                  <i class="fas fa-handshake"></i>
+                  <p>Citas Programadas</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DistritoListServlet">
                   <i class="fas fa-map-marked-alt"></i>
                   <p>Distritos</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
               
+<<<<<<< Updated upstream
               <li class="nav-item">
                 <a href="../TdPListServlet">
                   <i class="fas fa-map-marked-alt"></i>
@@ -222,6 +269,13 @@
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
+=======
+              
+              
+              
+              
+
+>>>>>>> Stashed changes
             </ul>
           </div>
         </div>
