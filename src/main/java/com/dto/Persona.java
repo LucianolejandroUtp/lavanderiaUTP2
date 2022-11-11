@@ -23,16 +23,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "persona")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
   @NamedQuery(name = "Persona.findById", query = "SELECT p FROM Persona p WHERE p.id = :id"),
@@ -42,7 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
   @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email"),
   @NamedQuery(name = "Persona.findByPassword", query = "SELECT p FROM Persona p WHERE p.password = :password"),
   @NamedQuery(name = "Persona.findByEstado", query = "SELECT p FROM Persona p WHERE p.estado = :estado"),
-  @NamedQuery(name = "Persona.findByDeletedAt", query = "SELECT p FROM Persona p WHERE p.deletedAt = :deletedAt"),
   @NamedQuery(name = "Persona.findByCreatedAt", query = "SELECT p FROM Persona p WHERE p.createdAt = :createdAt"),
   @NamedQuery(name = "Persona.findByUpdatedAt", query = "SELECT p FROM Persona p WHERE p.updatedAt = :updatedAt")})
 public class Persona implements Serializable {
@@ -71,12 +69,9 @@ public class Persona implements Serializable {
   private String password;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -92,6 +87,8 @@ public class Persona implements Serializable {
   private Collection<DireccionPersona> direccionPersonaCollection;
   @OneToMany(mappedBy = "personaId")
   private Collection<Factura> facturaCollection;
+  @OneToMany(mappedBy = "personaId")
+  private Collection<Prenda> prendaCollection;
   @OneToMany(mappedBy = "personaId")
   private Collection<Telefono> telefonoCollection;
   @OneToMany(mappedBy = "personaId")
@@ -165,14 +162,6 @@ public class Persona implements Serializable {
     this.estado = estado;
   }
 
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
-  }
-
   public Date getCreatedAt() {
     return createdAt;
   }
@@ -197,7 +186,6 @@ public class Persona implements Serializable {
     this.tipoPersonaId = tipoPersonaId;
   }
 
-  @XmlTransient
   public Collection<Vehiculo> getVehiculoCollection() {
     return vehiculoCollection;
   }
@@ -206,7 +194,6 @@ public class Persona implements Serializable {
     this.vehiculoCollection = vehiculoCollection;
   }
 
-  @XmlTransient
   public Collection<DireccionPersona> getDireccionPersonaCollection() {
     return direccionPersonaCollection;
   }
@@ -215,7 +202,6 @@ public class Persona implements Serializable {
     this.direccionPersonaCollection = direccionPersonaCollection;
   }
 
-  @XmlTransient
   public Collection<Factura> getFacturaCollection() {
     return facturaCollection;
   }
@@ -224,7 +210,14 @@ public class Persona implements Serializable {
     this.facturaCollection = facturaCollection;
   }
 
-  @XmlTransient
+  public Collection<Prenda> getPrendaCollection() {
+    return prendaCollection;
+  }
+
+  public void setPrendaCollection(Collection<Prenda> prendaCollection) {
+    this.prendaCollection = prendaCollection;
+  }
+
   public Collection<Telefono> getTelefonoCollection() {
     return telefonoCollection;
   }
@@ -233,7 +226,6 @@ public class Persona implements Serializable {
     this.telefonoCollection = telefonoCollection;
   }
 
-  @XmlTransient
   public Collection<Cita> getCitaCollection() {
     return citaCollection;
   }

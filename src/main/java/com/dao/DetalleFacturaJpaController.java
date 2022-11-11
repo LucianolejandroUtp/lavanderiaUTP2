@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.dto.Factura;
+import com.dto.Prenda;
 import com.dto.Servicio;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -42,6 +43,11 @@ public class DetalleFacturaJpaController implements Serializable {
         facturaId = em.getReference(facturaId.getClass(), facturaId.getId());
         detalleFactura.setFacturaId(facturaId);
       }
+      Prenda prendaId = detalleFactura.getPrendaId();
+      if (prendaId != null) {
+        prendaId = em.getReference(prendaId.getClass(), prendaId.getId());
+        detalleFactura.setPrendaId(prendaId);
+      }
       Servicio servicioId = detalleFactura.getServicioId();
       if (servicioId != null) {
         servicioId = em.getReference(servicioId.getClass(), servicioId.getId());
@@ -51,6 +57,10 @@ public class DetalleFacturaJpaController implements Serializable {
       if (facturaId != null) {
         facturaId.getDetalleFacturaCollection().add(detalleFactura);
         facturaId = em.merge(facturaId);
+      }
+      if (prendaId != null) {
+        prendaId.getDetalleFacturaCollection().add(detalleFactura);
+        prendaId = em.merge(prendaId);
       }
       if (servicioId != null) {
         servicioId.getDetalleFacturaCollection().add(detalleFactura);
@@ -72,11 +82,17 @@ public class DetalleFacturaJpaController implements Serializable {
       DetalleFactura persistentDetalleFactura = em.find(DetalleFactura.class, detalleFactura.getId());
       Factura facturaIdOld = persistentDetalleFactura.getFacturaId();
       Factura facturaIdNew = detalleFactura.getFacturaId();
+      Prenda prendaIdOld = persistentDetalleFactura.getPrendaId();
+      Prenda prendaIdNew = detalleFactura.getPrendaId();
       Servicio servicioIdOld = persistentDetalleFactura.getServicioId();
       Servicio servicioIdNew = detalleFactura.getServicioId();
       if (facturaIdNew != null) {
         facturaIdNew = em.getReference(facturaIdNew.getClass(), facturaIdNew.getId());
         detalleFactura.setFacturaId(facturaIdNew);
+      }
+      if (prendaIdNew != null) {
+        prendaIdNew = em.getReference(prendaIdNew.getClass(), prendaIdNew.getId());
+        detalleFactura.setPrendaId(prendaIdNew);
       }
       if (servicioIdNew != null) {
         servicioIdNew = em.getReference(servicioIdNew.getClass(), servicioIdNew.getId());
@@ -90,6 +106,14 @@ public class DetalleFacturaJpaController implements Serializable {
       if (facturaIdNew != null && !facturaIdNew.equals(facturaIdOld)) {
         facturaIdNew.getDetalleFacturaCollection().add(detalleFactura);
         facturaIdNew = em.merge(facturaIdNew);
+      }
+      if (prendaIdOld != null && !prendaIdOld.equals(prendaIdNew)) {
+        prendaIdOld.getDetalleFacturaCollection().remove(detalleFactura);
+        prendaIdOld = em.merge(prendaIdOld);
+      }
+      if (prendaIdNew != null && !prendaIdNew.equals(prendaIdOld)) {
+        prendaIdNew.getDetalleFacturaCollection().add(detalleFactura);
+        prendaIdNew = em.merge(prendaIdNew);
       }
       if (servicioIdOld != null && !servicioIdOld.equals(servicioIdNew)) {
         servicioIdOld.getDetalleFacturaCollection().remove(detalleFactura);
@@ -132,6 +156,11 @@ public class DetalleFacturaJpaController implements Serializable {
       if (facturaId != null) {
         facturaId.getDetalleFacturaCollection().remove(detalleFactura);
         facturaId = em.merge(facturaId);
+      }
+      Prenda prendaId = detalleFactura.getPrendaId();
+      if (prendaId != null) {
+        prendaId.getDetalleFacturaCollection().remove(detalleFactura);
+        prendaId = em.merge(prendaId);
       }
       Servicio servicioId = detalleFactura.getServicioId();
       if (servicioId != null) {

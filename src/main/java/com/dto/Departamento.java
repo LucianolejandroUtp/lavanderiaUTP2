@@ -21,22 +21,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "departamento")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
   @NamedQuery(name = "Departamento.findById", query = "SELECT d FROM Departamento d WHERE d.id = :id"),
-  @NamedQuery(name = "Departamento.findByDepartamento", query = "SELECT d FROM Departamento d WHERE d.departamento = :departamento"),
+  @NamedQuery(name = "Departamento.findByDescripcion", query = "SELECT d FROM Departamento d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Departamento.findByEstado", query = "SELECT d FROM Departamento d WHERE d.estado = :estado"),
-  @NamedQuery(name = "Departamento.findByDeletedAt", query = "SELECT d FROM Departamento d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "Departamento.findByCreatedAt", query = "SELECT d FROM Departamento d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Departamento.findByUpdatedAt", query = "SELECT d FROM Departamento d WHERE d.updatedAt = :updatedAt")})
 public class Departamento implements Serializable {
@@ -48,16 +46,13 @@ public class Departamento implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "departamento")
-  private String departamento;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -87,12 +82,12 @@ public class Departamento implements Serializable {
     this.id = id;
   }
 
-  public String getDepartamento() {
-    return departamento;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setDepartamento(String departamento) {
-    this.departamento = departamento;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {
@@ -101,14 +96,6 @@ public class Departamento implements Serializable {
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {
@@ -127,7 +114,6 @@ public class Departamento implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
   public Collection<Distrito> getDistritoCollection() {
     return distritoCollection;
   }

@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -28,6 +29,10 @@ public class CategoriaJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
+
+  public CategoriaJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -66,6 +71,56 @@ public class CategoriaJpaController implements Serializable {
   }
 
   public void edit(Categoria categoria) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Categoria persistentCategoria = em.find(Categoria.class, categoria.getId());
+      Collection<Servicio> servicioCollectionOld = persistentCategoria.getServicioCollection();
+      Collection<Servicio> servicioCollectionNew = categoria.getServicioCollection();
+      Collection<Servicio> attachedServicioCollectionNew = new ArrayList<Servicio>();
+      for (Servicio servicioCollectionNewServicioToAttach : servicioCollectionNew) {
+        servicioCollectionNewServicioToAttach = em.getReference(servicioCollectionNewServicioToAttach.getClass(), servicioCollectionNewServicioToAttach.getId());
+        attachedServicioCollectionNew.add(servicioCollectionNewServicioToAttach);
+      }
+      servicioCollectionNew = attachedServicioCollectionNew;
+      categoria.setServicioCollection(servicioCollectionNew);
+      categoria = em.merge(categoria);
+      for (Servicio servicioCollectionOldServicio : servicioCollectionOld) {
+        if (!servicioCollectionNew.contains(servicioCollectionOldServicio)) {
+          servicioCollectionOldServicio.setCategoriaId(null);
+          servicioCollectionOldServicio = em.merge(servicioCollectionOldServicio);
+        }
+      }
+      for (Servicio servicioCollectionNewServicio : servicioCollectionNew) {
+        if (!servicioCollectionOld.contains(servicioCollectionNewServicio)) {
+          Categoria oldCategoriaIdOfServicioCollectionNewServicio = servicioCollectionNewServicio.getCategoriaId();
+          servicioCollectionNewServicio.setCategoriaId(categoria);
+          servicioCollectionNewServicio = em.merge(servicioCollectionNewServicio);
+          if (oldCategoriaIdOfServicioCollectionNewServicio != null && !oldCategoriaIdOfServicioCollectionNewServicio.equals(categoria)) {
+            oldCategoriaIdOfServicioCollectionNewServicio.getServicioCollection().remove(servicioCollectionNewServicio);
+            oldCategoriaIdOfServicioCollectionNewServicio = em.merge(oldCategoriaIdOfServicioCollectionNewServicio);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = categoria.getId();
+        if (findCategoria(id) == null) {
+          throw new NonexistentEntityException("The categoria with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
+  public void softDelete(Categoria categoria) throws NonexistentEntityException, Exception {
     EntityManager em = null;
     try {
       em = getEntityManager();

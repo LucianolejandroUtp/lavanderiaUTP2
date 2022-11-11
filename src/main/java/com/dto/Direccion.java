@@ -24,22 +24,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "direccion")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d"),
   @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id"),
-  @NamedQuery(name = "Direccion.findByDireccion", query = "SELECT d FROM Direccion d WHERE d.direccion = :direccion"),
+  @NamedQuery(name = "Direccion.findByDescripcion", query = "SELECT d FROM Direccion d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Direccion.findByEstado", query = "SELECT d FROM Direccion d WHERE d.estado = :estado"),
-  @NamedQuery(name = "Direccion.findByDeletedAt", query = "SELECT d FROM Direccion d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "Direccion.findByCreatedAt", query = "SELECT d FROM Direccion d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Direccion.findByUpdatedAt", query = "SELECT d FROM Direccion d WHERE d.updatedAt = :updatedAt")})
 public class Direccion implements Serializable {
@@ -51,20 +49,17 @@ public class Direccion implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "direccion")
-  private String direccion;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Lob
   @Size(max = 65535)
   @Column(name = "referencia")
   private String referencia;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -97,12 +92,12 @@ public class Direccion implements Serializable {
     this.id = id;
   }
 
-  public String getDireccion() {
-    return direccion;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getReferencia() {
@@ -119,14 +114,6 @@ public class Direccion implements Serializable {
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {
@@ -153,7 +140,6 @@ public class Direccion implements Serializable {
     this.distritoId = distritoId;
   }
 
-  @XmlTransient
   public Collection<DireccionPersona> getDireccionPersonaCollection() {
     return direccionPersonaCollection;
   }

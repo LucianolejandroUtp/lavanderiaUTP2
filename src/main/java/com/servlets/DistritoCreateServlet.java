@@ -4,6 +4,7 @@
  */
 package com.servlets;
 
+import com.dao.DepartamentoJpaController;
 import com.dao.DistritoJpaController;
 import com.dto.Departamento;
 import com.dto.Distrito;
@@ -39,32 +40,36 @@ public class DistritoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera servlet create distrito");
     try {
-//	    LocalDate myObj = LocalDate.now(); // Create a date object
-//	    System.out.println(myObj); // Display the current date
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
+      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
+      Distrito mi_objeto_distrito = new Distrito();
+      Departamento mi_objeto_depa = new Departamento();
+
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
       
-      Distrito mi_distrito = new Distrito();
-      Departamento mi_depa = new Departamento();
-      mi_depa.setId(Long.valueOf(1));
-      mi_depa.setDepartamento("Arequipa");
+//      Obteniendo el departamento en base al Id obtenido de la vista
+      mi_objeto_depa = jpac_object_depa.findDepartamento(Long.valueOf(request.getParameter("addDepartamentoId")));
+      System.out.println("El departamento obtenido fue: " + mi_objeto_depa.getDescripcion() +" - "+ mi_objeto_depa.getId());
 
+//      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_distrito.setDistrito(request.getParameter("distrito"));
-      mi_distrito.setEstado("ACTIVO");
-      mi_distrito.setDepartamentoId(mi_depa);
-      mi_distrito.setCreatedAt(ts);
-      mi_distrito.setUpdatedAt(ts);
-      
-      DistritoJpaController djpac = new DistritoJpaController();
-      djpac.create(mi_distrito);
-      
+      mi_objeto_distrito.setDescripcion(request.getParameter("addDescripcion"));
+      mi_objeto_distrito.setEstado("activo");
+      mi_objeto_distrito.setDepartamentoId(mi_objeto_depa);
+      mi_objeto_distrito.setCreatedAt(ts);
+      mi_objeto_distrito.setUpdatedAt(ts);
+
+//      Llamando al método crear del controlador y pasándole el objeto Distrito
+      jpac_object_distrito.create(mi_objeto_distrito);
+
+//      Llamando al listALGO.jsp
       DistritoListServlet call = new DistritoListServlet();
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
-      
-    } catch (Throwable theException) {
+
+    } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
   }

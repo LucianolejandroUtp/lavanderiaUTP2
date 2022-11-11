@@ -24,23 +24,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "servicio")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s"),
   @NamedQuery(name = "Servicio.findById", query = "SELECT s FROM Servicio s WHERE s.id = :id"),
-  @NamedQuery(name = "Servicio.findByServicio", query = "SELECT s FROM Servicio s WHERE s.servicio = :servicio"),
+  @NamedQuery(name = "Servicio.findByDescripcion", query = "SELECT s FROM Servicio s WHERE s.descripcion = :descripcion"),
   @NamedQuery(name = "Servicio.findByPrecio", query = "SELECT s FROM Servicio s WHERE s.precio = :precio"),
   @NamedQuery(name = "Servicio.findByEstado", query = "SELECT s FROM Servicio s WHERE s.estado = :estado"),
-  @NamedQuery(name = "Servicio.findByDeletedAt", query = "SELECT s FROM Servicio s WHERE s.deletedAt = :deletedAt"),
   @NamedQuery(name = "Servicio.findByCreatedAt", query = "SELECT s FROM Servicio s WHERE s.createdAt = :createdAt"),
   @NamedQuery(name = "Servicio.findByUpdatedAt", query = "SELECT s FROM Servicio s WHERE s.updatedAt = :updatedAt")})
 public class Servicio implements Serializable {
@@ -52,23 +50,20 @@ public class Servicio implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "servicio")
-  private String servicio;
-  @Lob
-  @Size(max = 65535)
   @Column(name = "descripcion")
   private String descripcion;
+  @Lob
+  @Size(max = 65535)
+  @Column(name = "detalles")
+  private String detalles;
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
   @Column(name = "precio")
   private Double precio;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -101,20 +96,20 @@ public class Servicio implements Serializable {
     this.id = id;
   }
 
-  public String getServicio() {
-    return servicio;
-  }
-
-  public void setServicio(String servicio) {
-    this.servicio = servicio;
-  }
-
   public String getDescripcion() {
     return descripcion;
   }
 
   public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
+  }
+
+  public String getDetalles() {
+    return detalles;
+  }
+
+  public void setDetalles(String detalles) {
+    this.detalles = detalles;
   }
 
   public Double getPrecio() {
@@ -131,14 +126,6 @@ public class Servicio implements Serializable {
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {
@@ -165,7 +152,6 @@ public class Servicio implements Serializable {
     this.categoriaId = categoriaId;
   }
 
-  @XmlTransient
   public Collection<DetalleFactura> getDetalleFacturaCollection() {
     return detalleFacturaCollection;
   }

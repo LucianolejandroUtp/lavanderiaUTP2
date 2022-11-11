@@ -15,7 +15,10 @@
     <class>com.dto.Servicio</class>
     <class>com.dto.DetalleFactura</class>
     <class>com.dto.Telefono</class>
+    <class>com.dto.TipoDePrenda</class>
+    <class>com.dto.Prenda</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/lavanderiautpmigrations?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

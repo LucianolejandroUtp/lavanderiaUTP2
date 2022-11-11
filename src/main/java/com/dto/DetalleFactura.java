@@ -21,15 +21,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "detalle_factura")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "DetalleFactura.findAll", query = "SELECT d FROM DetalleFactura d"),
   @NamedQuery(name = "DetalleFactura.findById", query = "SELECT d FROM DetalleFactura d WHERE d.id = :id"),
@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
   @NamedQuery(name = "DetalleFactura.findByIgv", query = "SELECT d FROM DetalleFactura d WHERE d.igv = :igv"),
   @NamedQuery(name = "DetalleFactura.findByTotal", query = "SELECT d FROM DetalleFactura d WHERE d.total = :total"),
   @NamedQuery(name = "DetalleFactura.findByEstado", query = "SELECT d FROM DetalleFactura d WHERE d.estado = :estado"),
-  @NamedQuery(name = "DetalleFactura.findByDeletedAt", query = "SELECT d FROM DetalleFactura d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "DetalleFactura.findByCreatedAt", query = "SELECT d FROM DetalleFactura d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "DetalleFactura.findByUpdatedAt", query = "SELECT d FROM DetalleFactura d WHERE d.updatedAt = :updatedAt")})
 public class DetalleFactura implements Serializable {
@@ -63,12 +62,9 @@ public class DetalleFactura implements Serializable {
   private Double total;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -78,6 +74,9 @@ public class DetalleFactura implements Serializable {
   @JoinColumn(name = "factura_id", referencedColumnName = "id")
   @ManyToOne
   private Factura facturaId;
+  @JoinColumn(name = "prenda_id", referencedColumnName = "id")
+  @ManyToOne
+  private Prenda prendaId;
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
   @ManyToOne
   private Servicio servicioId;
@@ -150,14 +149,6 @@ public class DetalleFactura implements Serializable {
     this.estado = estado;
   }
 
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
-  }
-
   public Date getCreatedAt() {
     return createdAt;
   }
@@ -180,6 +171,14 @@ public class DetalleFactura implements Serializable {
 
   public void setFacturaId(Factura facturaId) {
     this.facturaId = facturaId;
+  }
+
+  public Prenda getPrendaId() {
+    return prendaId;
+  }
+
+  public void setPrendaId(Prenda prendaId) {
+    this.prendaId = prendaId;
   }
 
   public Servicio getServicioId() {

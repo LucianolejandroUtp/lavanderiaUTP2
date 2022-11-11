@@ -23,22 +23,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "distrito")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Distrito.findAll", query = "SELECT d FROM Distrito d"),
   @NamedQuery(name = "Distrito.findById", query = "SELECT d FROM Distrito d WHERE d.id = :id"),
-  @NamedQuery(name = "Distrito.findByDistrito", query = "SELECT d FROM Distrito d WHERE d.distrito = :distrito"),
+  @NamedQuery(name = "Distrito.findByDescripcion", query = "SELECT d FROM Distrito d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Distrito.findByEstado", query = "SELECT d FROM Distrito d WHERE d.estado = :estado"),
-  @NamedQuery(name = "Distrito.findByDeletedAt", query = "SELECT d FROM Distrito d WHERE d.deletedAt = :deletedAt"),
   @NamedQuery(name = "Distrito.findByCreatedAt", query = "SELECT d FROM Distrito d WHERE d.createdAt = :createdAt"),
   @NamedQuery(name = "Distrito.findByUpdatedAt", query = "SELECT d FROM Distrito d WHERE d.updatedAt = :updatedAt")})
 public class Distrito implements Serializable {
@@ -50,16 +48,13 @@ public class Distrito implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "distrito")
-  private String distrito;
+  @Column(name = "descripcion")
+  private String descripcion;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -92,12 +87,12 @@ public class Distrito implements Serializable {
     this.id = id;
   }
 
-  public String getDistrito() {
-    return distrito;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setDistrito(String distrito) {
-    this.distrito = distrito;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getEstado() {
@@ -106,14 +101,6 @@ public class Distrito implements Serializable {
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {
@@ -140,7 +127,6 @@ public class Distrito implements Serializable {
     this.departamentoId = departamentoId;
   }
 
-  @XmlTransient
   public Collection<Direccion> getDireccionCollection() {
     return direccionCollection;
   }

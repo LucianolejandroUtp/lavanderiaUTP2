@@ -19,22 +19,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "tipo_persona")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "TipoPersona.findAll", query = "SELECT t FROM TipoPersona t"),
   @NamedQuery(name = "TipoPersona.findById", query = "SELECT t FROM TipoPersona t WHERE t.id = :id"),
-  @NamedQuery(name = "TipoPersona.findByNombre", query = "SELECT t FROM TipoPersona t WHERE t.nombre = :nombre"),
-  @NamedQuery(name = "TipoPersona.findByDeletedAt", query = "SELECT t FROM TipoPersona t WHERE t.deletedAt = :deletedAt"),
+  @NamedQuery(name = "TipoPersona.findByDescripcion", query = "SELECT t FROM TipoPersona t WHERE t.descripcion = :descripcion"),
+  @NamedQuery(name = "TipoPersona.findByEstado", query = "SELECT t FROM TipoPersona t WHERE t.estado = :estado"),
   @NamedQuery(name = "TipoPersona.findByCreatedAt", query = "SELECT t FROM TipoPersona t WHERE t.createdAt = :createdAt"),
   @NamedQuery(name = "TipoPersona.findByUpdatedAt", query = "SELECT t FROM TipoPersona t WHERE t.updatedAt = :updatedAt")})
 public class TipoPersona implements Serializable {
@@ -46,11 +46,13 @@ public class TipoPersona implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "nombre")
-  private String nombre;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
+  @Column(name = "descripcion")
+  private String descripcion;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 9)
+  @Column(name = "estado")
+  private String estado;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -67,6 +69,11 @@ public class TipoPersona implements Serializable {
     this.id = id;
   }
 
+  public TipoPersona(Long id, String estado) {
+    this.id = id;
+    this.estado = estado;
+  }
+
   public Long getId() {
     return id;
   }
@@ -75,20 +82,20 @@ public class TipoPersona implements Serializable {
     this.id = id;
   }
 
-  public String getNombre() {
-    return nombre;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
-  public Date getDeletedAt() {
-    return deletedAt;
+  public String getEstado() {
+    return estado;
   }
 
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
+  public void setEstado(String estado) {
+    this.estado = estado;
   }
 
   public Date getCreatedAt() {
@@ -107,7 +114,6 @@ public class TipoPersona implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
   public Collection<Persona> getPersonaCollection() {
     return personaCollection;
   }

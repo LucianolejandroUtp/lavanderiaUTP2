@@ -23,16 +23,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "factura")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
   @NamedQuery(name = "Factura.findById", query = "SELECT f FROM Factura f WHERE f.id = :id"),
@@ -42,7 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
   @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
   @NamedQuery(name = "Factura.findByHora", query = "SELECT f FROM Factura f WHERE f.hora = :hora"),
   @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado"),
-  @NamedQuery(name = "Factura.findByDeletedAt", query = "SELECT f FROM Factura f WHERE f.deletedAt = :deletedAt"),
   @NamedQuery(name = "Factura.findByCreatedAt", query = "SELECT f FROM Factura f WHERE f.createdAt = :createdAt"),
   @NamedQuery(name = "Factura.findByUpdatedAt", query = "SELECT f FROM Factura f WHERE f.updatedAt = :updatedAt")})
 public class Factura implements Serializable {
@@ -70,12 +68,9 @@ public class Factura implements Serializable {
   private Date hora;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -156,14 +151,6 @@ public class Factura implements Serializable {
     this.estado = estado;
   }
 
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
-  }
-
   public Date getCreatedAt() {
     return createdAt;
   }
@@ -180,7 +167,6 @@ public class Factura implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  @XmlTransient
   public Collection<DetalleFactura> getDetalleFacturaCollection() {
     return detalleFacturaCollection;
   }

@@ -35,33 +35,32 @@ public class DepartamentoCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Bandera servlet create distrito");
+    System.out.println("Bandera Departamento Create Servlet");
     try {
-//	    LocalDate myObj = LocalDate.now(); // Create a date object
-//	    System.out.println(myObj); // Display the current date
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      Departamento mi_objeto = new Departamento();
+      
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
 
 //      Distrito mi_distrito = new Distrito();
-      Departamento mi_depa = new Departamento();
 //      mi_depa.setId(Long.valueOf(1));
 //      mi_depa.setDepartamento("Arequipa");
 
-//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_depa.setDepartamento(request.getParameter("departamento"));
-      mi_depa.setEstado("ACTIVO");
-      mi_depa.setCreatedAt(ts);
-      mi_depa.setUpdatedAt(ts);
+//      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
+      mi_objeto.setEstado("activo");
+      mi_objeto.setCreatedAt(ts);
+      mi_objeto.setUpdatedAt(ts);
 
-      DepartamentoJpaController djpac = new DepartamentoJpaController();
-      djpac.create(mi_depa);
+      jpac_object.create(mi_objeto);
 
       DepartamentoListServlet call = new DepartamentoListServlet();
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
-    } catch (Throwable theException) {
+    } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
   }

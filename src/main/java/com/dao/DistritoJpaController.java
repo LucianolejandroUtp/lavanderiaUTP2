@@ -29,12 +29,11 @@ public class DistritoJpaController implements Serializable {
   public DistritoJpaController(EntityManagerFactory emf) {
     this.emf = emf;
   }
+  private EntityManagerFactory emf = null;
 
   public DistritoJpaController() {
     emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
   }
-
-  private EntityManagerFactory emf = null;
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -82,6 +81,70 @@ public class DistritoJpaController implements Serializable {
   }
 
   public void edit(Distrito distrito) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Distrito persistentDistrito = em.find(Distrito.class, distrito.getId());
+      Departamento departamentoIdOld = persistentDistrito.getDepartamentoId();
+      Departamento departamentoIdNew = distrito.getDepartamentoId();
+      Collection<Direccion> direccionCollectionOld = persistentDistrito.getDireccionCollection();
+      Collection<Direccion> direccionCollectionNew = distrito.getDireccionCollection();
+      if (departamentoIdNew != null) {
+        departamentoIdNew = em.getReference(departamentoIdNew.getClass(), departamentoIdNew.getId());
+        distrito.setDepartamentoId(departamentoIdNew);
+      }
+      Collection<Direccion> attachedDireccionCollectionNew = new ArrayList<Direccion>();
+      for (Direccion direccionCollectionNewDireccionToAttach : direccionCollectionNew) {
+        direccionCollectionNewDireccionToAttach = em.getReference(direccionCollectionNewDireccionToAttach.getClass(), direccionCollectionNewDireccionToAttach.getId());
+        attachedDireccionCollectionNew.add(direccionCollectionNewDireccionToAttach);
+      }
+      direccionCollectionNew = attachedDireccionCollectionNew;
+      distrito.setDireccionCollection(direccionCollectionNew);
+      distrito = em.merge(distrito);
+      if (departamentoIdOld != null && !departamentoIdOld.equals(departamentoIdNew)) {
+        departamentoIdOld.getDistritoCollection().remove(distrito);
+        departamentoIdOld = em.merge(departamentoIdOld);
+      }
+      if (departamentoIdNew != null && !departamentoIdNew.equals(departamentoIdOld)) {
+        departamentoIdNew.getDistritoCollection().add(distrito);
+        departamentoIdNew = em.merge(departamentoIdNew);
+      }
+      for (Direccion direccionCollectionOldDireccion : direccionCollectionOld) {
+        if (!direccionCollectionNew.contains(direccionCollectionOldDireccion)) {
+          direccionCollectionOldDireccion.setDistritoId(null);
+          direccionCollectionOldDireccion = em.merge(direccionCollectionOldDireccion);
+        }
+      }
+      for (Direccion direccionCollectionNewDireccion : direccionCollectionNew) {
+        if (!direccionCollectionOld.contains(direccionCollectionNewDireccion)) {
+          Distrito oldDistritoIdOfDireccionCollectionNewDireccion = direccionCollectionNewDireccion.getDistritoId();
+          direccionCollectionNewDireccion.setDistritoId(distrito);
+          direccionCollectionNewDireccion = em.merge(direccionCollectionNewDireccion);
+          if (oldDistritoIdOfDireccionCollectionNewDireccion != null && !oldDistritoIdOfDireccionCollectionNewDireccion.equals(distrito)) {
+            oldDistritoIdOfDireccionCollectionNewDireccion.getDireccionCollection().remove(direccionCollectionNewDireccion);
+            oldDistritoIdOfDireccionCollectionNewDireccion = em.merge(oldDistritoIdOfDireccionCollectionNewDireccion);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = distrito.getId();
+        if (findDistrito(id) == null) {
+          throw new NonexistentEntityException("The distrito with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
+  public void softDelete(Distrito distrito) throws NonexistentEntityException, Exception {
     EntityManager em = null;
     try {
       em = getEntityManager();

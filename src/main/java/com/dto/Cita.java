@@ -21,23 +21,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "cita")
-@XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Cita.findAll", query = "SELECT c FROM Cita c"),
   @NamedQuery(name = "Cita.findById", query = "SELECT c FROM Cita c WHERE c.id = :id"),
   @NamedQuery(name = "Cita.findByFecha", query = "SELECT c FROM Cita c WHERE c.fecha = :fecha"),
   @NamedQuery(name = "Cita.findByHora", query = "SELECT c FROM Cita c WHERE c.hora = :hora"),
-  @NamedQuery(name = "Cita.findByNumero", query = "SELECT c FROM Cita c WHERE c.numero = :numero"),
   @NamedQuery(name = "Cita.findByEstado", query = "SELECT c FROM Cita c WHERE c.estado = :estado"),
-  @NamedQuery(name = "Cita.findByDeletedAt", query = "SELECT c FROM Cita c WHERE c.deletedAt = :deletedAt"),
   @NamedQuery(name = "Cita.findByCreatedAt", query = "SELECT c FROM Cita c WHERE c.createdAt = :createdAt"),
   @NamedQuery(name = "Cita.findByUpdatedAt", query = "SELECT c FROM Cita c WHERE c.updatedAt = :updatedAt")})
 public class Cita implements Serializable {
@@ -54,17 +52,11 @@ public class Cita implements Serializable {
   @Column(name = "hora")
   @Temporal(TemporalType.TIME)
   private Date hora;
-  @Size(max = 255)
-  @Column(name = "numero")
-  private String numero;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 8)
+  @Size(min = 1, max = 9)
   @Column(name = "estado")
   private String estado;
-  @Column(name = "deleted_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date deletedAt;
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdAt;
@@ -114,28 +106,12 @@ public class Cita implements Serializable {
     this.hora = hora;
   }
 
-  public String getNumero() {
-    return numero;
-  }
-
-  public void setNumero(String numero) {
-    this.numero = numero;
-  }
-
   public String getEstado() {
     return estado;
   }
 
   public void setEstado(String estado) {
     this.estado = estado;
-  }
-
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Date deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   public Date getCreatedAt() {

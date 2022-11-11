@@ -192,10 +192,33 @@
               </li>
 
               <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
                 <a href="../DistritoListServlet">
                   <i class="fas fa-map-marked-alt"></i>
                   <p>Distritos</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../TdPListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Tipo de Persona</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../PersonaListServlet">
+                  <i class="fas fa-user"></i>
+                  <p>Personas</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../CategoriaListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Categoría</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
@@ -252,37 +275,26 @@
     <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
-
     <!-- jQuery UI -->
     <script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
     <!-- jQuery Scrollbar -->
     <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
-    <!-- Chart JS -->
+<!--     Chart JS 
     <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
-
-    <!-- jQuery Sparkline -->
+     jQuery Sparkline 
     <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-    <!-- Chart Circle -->
-    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
-
+     Chart Circle 
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>-->
     <!-- Datatables -->
     <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- Bootstrap Notify -->
+<!--     Bootstrap Notify 
     <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-    <!-- jQuery Vector Maps -->
+     jQuery Vector Maps 
     <script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
     <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
-
-    <!-- Sweet Alert -->
-    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-
+     Sweet Alert 
+    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
     <!-- Atlantis JS -->
     <script src="../assets/js/atlantis.min.js"></script>
   </body>

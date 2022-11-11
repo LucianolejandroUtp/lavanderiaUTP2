@@ -4,7 +4,9 @@
  */
 package com.servlets;
 
+import com.dao.DepartamentoJpaController;
 import com.dao.DistritoJpaController;
+import com.dto.Departamento;
 import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,20 +39,28 @@ public class DistritoListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando al List Servlet");
     try {
-      DistritoJpaController listD = new DistritoJpaController();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
+      DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController();
       List<Distrito> mi_lista_de_distritos = new ArrayList<>();
+      List<Departamento> mi_lista_de_depas = new ArrayList<>();
 
-//      System.out.println(listD.findDistritoEntities());
-      mi_lista_de_distritos = listD.findDistritoEntities();
+//      System.out.println(jpacontroller_object.findDistritoEntities());
+      mi_lista_de_distritos = jpac_object_distrito.findDistritoEntities();
+      mi_lista_de_depas = jpac_object_departamento.findDepartamentoEntities();
 
       for (Distrito dis : mi_lista_de_distritos) {
-        System.out.println(dis.getId() + " - " + dis.getDistrito()+ " - " + dis.getDepartamentoId().getDepartamento());
+        System.out.println(dis.getId() + " - " + dis.getDescripcion()+ " - " + dis.getDepartamentoId().getDescripcion());
+      }
+      for (Departamento dep : mi_lista_de_depas) {
+        System.out.println(dep.getId() + " - " + dep.getDescripcion());
       }
 
+      
       request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
-      request.getRequestDispatcher("Distrito/List.jsp").forward(request, response);
+      request.setAttribute("mi_lista_de_departamentos", mi_lista_de_depas);
+      request.getRequestDispatcher("listDistrito.jsp").forward(request, response);
 
-    } catch (Throwable theException) {
+    } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
 
