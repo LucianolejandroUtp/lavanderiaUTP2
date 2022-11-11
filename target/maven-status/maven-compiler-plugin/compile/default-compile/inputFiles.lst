@@ -1,3 +1,4 @@
+C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\servlets\VehiculoListServlet.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dto\Servicio.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\servlets\DistritoDestroyServlet.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dto\Vehiculo.java
@@ -51,5 +52,6 @@ C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dto\Prenda.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dao\PrendaJpaController.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\servlets\CategoriaListServlet.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dto\Cita.java
+C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController1.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\dao\DistritoJpaController.java
 C:\Users\Acer\Documents\GitHub\lavanderiaUTP2\src\main\java\com\servlets\CategoriaDestroyServlet.java

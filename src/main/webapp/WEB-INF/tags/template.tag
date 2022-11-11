@@ -201,7 +201,7 @@
               <li class="nav-item">
                 <a href="../DistritoListServlet">
                   <i class="fas fa-user"></i>
-                  <p>Usuarios</p>
+                  <p>-------</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
@@ -210,7 +210,7 @@
                 <!--<a href="../Distrito/List.jsp">-->
                 <a href="../DistritoListServlet">
                   <i class="fas fa-car"></i>
-                  <p>Choferes</p>
+                  <p>Conductores</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
@@ -241,6 +241,15 @@
                 <a href="../DistritoListServlet">
                   <i class="fas fa-map-marked-alt"></i>
                   <p>Distritos</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../VehiculoListServlet">
+                  <i class="fas fa-car"></i>
+                  <p>Vehiculos</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
