@@ -189,95 +189,121 @@
 
               
               
+              
+              
               <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DepartamentoListServlet">
+                <a href="../CategoriaListServlet">
                   <i class="fas fa-map-marked-alt"></i>
-                  <p>Departamentos</p>
+                  <p>Categorías</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
-
+              
               <li class="nav-item">
-                <a href="../DistritoListServlet">
+                <a href="../ServicioListServlet">
                   <i class="fas fa-user"></i>
-                  <p>-------</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                  <p>Servicios</p>
+                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
               <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DistritoListServlet">
+                <a href="../DetalleFacturaListServlet">
                   <i class="fas fa-car"></i>
-                  <p>Conductores</p>
-                  <!--<span class="badge badge-success">4</span>-->
-                </a>
-              </li>
-              
-              
-              <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DistritoListServlet">
-                  <i class="fas fa-clock"></i>
-                  <p>Servicios Programados</p>
-                  <!--<span class="badge badge-success">4</span>-->
-                </a>
-              </li>
-              
-              
-              <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../CitaListServlet">
-                  <i class="fas fa-handshake"></i>
-                  <p>Citas Programadas</p>
-                  <!--<span class="badge badge-success">4</span>-->
-                </a>
-              </li>
-              
-              
-              <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DistritoListServlet">
-                  <i class="fas fa-map-marked-alt"></i>
-                  <p>Distritos</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                  <p>Detalle Factura</p>
+                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
               <li class="nav-item">
-                <!--<a href="../Distrito/List.jsp">-->
-                <a href="../VehiculoListServlet">
-                  <i class="fas fa-car"></i>
-                  <p>Vehiculos</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                <a href="../TdPrendaListServlet">
+                  <i class="fas fa-user"></i>
+                  <p>Tipo de Prenda</p>
+                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
-<!--<<<<<<< Updated upstream-->
+              <li class="nav-item">
+                <a href="../PrendaListServlet">
+                  <i class="fas fa-user"></i>
+                  <p>Prenda</p>
+                  <span class="badge badge-success">4</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../FacturaListServlet">
+                  <i class="fas fa-user"></i>
+                  <p>Factura</p>
+                  <span class="badge badge-success">4</span>
+                </a>
+              </li>
+              
               <li class="nav-item">
                 <a href="../TdPListServlet">
                   <i class="fas fa-map-marked-alt"></i>
                   <p>Tipo de Persona</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../TelefonoListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Telefono</p>
                 </a>
               </li>
               
               <li class="nav-item">
                 <a href="../PersonaListServlet">
                   <i class="fas fa-user"></i>
-                  <p>Personas</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                  <p>Persona</p>
                 </a>
               </li>
               
               <li class="nav-item">
-                <a href="../CategoriaListServlet">
-                  <i class="fas fa-map-marked-alt"></i>
-                  <p>Categoría</p>
-                  <!--<span class="badge badge-success">4</span>-->
+                <a href="../VehiculoListServlet">
+                  <i class="fas fa-car"></i>
+                  <p>Vehículo</p>
                 </a>
               </li>
+              
+              <li class="nav-item">
+                <a href="../CitaListServlet">
+                  <i class="fas fa-handshake"></i>
+                  <p>Cita Programada</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../DireccionPersonaListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Dirección Persona</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../DireccionListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Dirección</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../DistritoListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Distritos</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="../DepartamentoListServlet">
+                  <i class="fas fa-map-marked-alt"></i>
+                  <p>Departamentos</p>
+                </a>
+              </li>
+              
+<!--<<<<<<< Updated upstream-->
 <!--=======-->
               
               

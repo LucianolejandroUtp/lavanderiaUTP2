@@ -21,7 +21,10 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\Departame
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoDePrenda.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Categoria.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\VehiculoCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPrendaDestroyServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\VehiculoListServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\CitaCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\ServicioListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CitaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\VehiculoJpaController.java
@@ -37,6 +40,7 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\Direccion
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoPersona.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CategoriaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPEditServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController1.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoDePrendaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DistritoJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\CategoriaDestroyServlet.java
@@ -50,6 +54,7 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\Dist
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\NonexistentEntityException.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Telefono.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoPersonaJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\CitaListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\FacturaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DistritoEditServlet.java
