@@ -12,7 +12,7 @@
 
   </jsp:attribute>
   <jsp:attribute name="body_area">
-    <div class="row">
+<!--    <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -38,7 +38,7 @@
                     <div class="col-md-9 p-0">
                       <input name="apellido" type="text" class="form-control input-full" id="inlineinput" placeholder="Enter Input">
                     </div>
-                    <!--                                <label class="col-md-3 col-form-label" for="inlineinput">DNI</label>
+                                                    <label class="col-md-3 col-form-label" for="inlineinput">DNI</label>
                                                     <div class="col-md-9 p-0">
                                                         <input name="dni" type="text" class="form-control input-full" id="inlineinput" placeholder="Enter Input">
                                                     </div>
@@ -46,7 +46,7 @@
                                                     <label class="col-md-3 col-form-label" for="email2">Email Address</label>
                                                     <div class="col-md-9 p-0">
                                                         <input type="email" class="form-control" id="email2" placeholder="Enter Email">
-                                                    </div>-->
+                                                    </div>
                     <div class="col-md-3 col-form-label">
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </jsp:attribute>
 </t:template>
 
