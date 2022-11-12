@@ -4,8 +4,18 @@
  */
 package com.servlets;
 
+import com.dao.DepartamentoJpaController;
+import com.dao.DistritoJpaController;
+import com.dao.PersonaJpaController;
+import com.dao.VehiculoJpaController;
+import com.dto.Departamento;
+import com.dto.Distrito;
+import com.dto.Persona;
+import com.dto.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,18 +41,42 @@ public class VehiculoCreateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VehiculoCreateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VehiculoCreateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    System.out.println("Bandera servlet create vehiculo");
+    try {
+      VehiculoJpaController jpac_object_vehiculo = new VehiculoJpaController();
+      PersonaJpaController jpac_object_persona = new PersonaJpaController();
+      Vehiculo mi_objeto_vehiculo = new Vehiculo();
+      Persona mi_objeto_persona = new Persona();
+
+      Date dt = new Date();
+      Timestamp ts = new Timestamp(dt.getTime());
+      System.out.println(ts);
+      
+//      Obteniendo el Vehiculo en base al Id obtenido de la vista
+      mi_objeto_persona = jpac_object_persona.findPersona(Long.valueOf(request.getParameter("addNombreId")));
+      System.out.println("El Vehiculo obtenido fue: " + mi_objeto_vehiculo.getPlaca() +" - "+ mi_objeto_vehiculo.getModelo());
+
+//      Llenando los parámetros del vehiculo obtenidos de la vista
+//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_vehiculo.setPlaca(request.getParameter("addPlaca"));
+      mi_objeto_vehiculo.setMarca(request.getParameter("addMarca"));
+      mi_objeto_vehiculo.setModelo(request.getParameter("addModelo"));
+      mi_objeto_vehiculo.setEstado("activo");
+      mi_objeto_vehiculo.setPersonaId(mi_objeto_persona);
+      mi_objeto_vehiculo.setCreatedAt(ts);
+      mi_objeto_vehiculo.setUpdatedAt(ts);
+
+//      Llamando al método crear del controlador y pasándole el objeto Distrito
+      jpac_object_vehiculo.create(mi_objeto_vehiculo);
+
+//      Llamando al listALGO.jsp
+      VehiculoListServlet call = new VehiculoListServlet();
+      call.processRequest(request, response);
+//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
+
+    } catch (IOException | ServletException theException) {
+      System.out.println(theException);
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

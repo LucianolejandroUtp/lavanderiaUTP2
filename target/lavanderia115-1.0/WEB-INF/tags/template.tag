@@ -228,7 +228,7 @@
               
               <li class="nav-item">
                 <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DistritoListServlet">
+                <a href="../CitaListServlet">
                   <i class="fas fa-handshake"></i>
                   <p>Citas Programadas</p>
                   <!--<span class="badge badge-success">4</span>-->
