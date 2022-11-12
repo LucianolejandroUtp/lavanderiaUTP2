@@ -111,7 +111,7 @@
                 
                 
                 
-              <li class="nav-item">
+<!--              <li class="nav-item">
                 <a data-toggle="collapse" href="#submenu">
                   <i class="fas fa-bars"></i>
                   <p>Menu Levels</p>
@@ -161,11 +161,11 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li>-->
 
 
 
-              <li class="nav-item">
+<!--              <li class="nav-item">
                 <a data-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
                   <p>Tablas</p>
@@ -185,7 +185,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li>-->
 
               
               
@@ -203,7 +203,6 @@
                 <a href="../ServicioListServlet">
                   <i class="fas fa-user"></i>
                   <p>Servicios</p>
-                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
@@ -211,7 +210,6 @@
                 <a href="../DetalleFacturaListServlet">
                   <i class="fas fa-car"></i>
                   <p>Detalle Factura</p>
-                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
@@ -219,7 +217,6 @@
                 <a href="../TdPrendaListServlet">
                   <i class="fas fa-user"></i>
                   <p>Tipo de Prenda</p>
-                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
@@ -227,7 +224,6 @@
                 <a href="../PrendaListServlet">
                   <i class="fas fa-user"></i>
                   <p>Prenda</p>
-                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
@@ -235,7 +231,6 @@
                 <a href="../FacturaListServlet">
                   <i class="fas fa-user"></i>
                   <p>Factura</p>
-                  <span class="badge badge-success">4</span>
                 </a>
               </li>
               
