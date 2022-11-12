@@ -91,10 +91,8 @@ public class CitaCreateServlet extends HttpServlet {
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
       mi_objeto_cita.setFecha(testDate);
       mi_objeto_cita.setHora(time);
-      mi_objeto_cita.setHora(time);
       mi_objeto_cita.setVehiculoId(mi_objeto_vehiculo);
       mi_objeto_cita.setEstado("activo");
-      mi_objeto_cita.setPersonaId(mi_objeto_persona);
       mi_objeto_cita.setPersonaId(mi_objeto_persona);
       mi_objeto_cita.setCreatedAt(ts);
       mi_objeto_cita.setUpdatedAt(ts);
