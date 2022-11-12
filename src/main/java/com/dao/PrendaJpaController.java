@@ -163,6 +163,84 @@ public class PrendaJpaController implements Serializable {
     }
   }
 
+  public void softDelete(Prenda prenda) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Prenda persistentPrenda = em.find(Prenda.class, prenda.getId());
+      Persona personaIdOld = persistentPrenda.getPersonaId();
+      Persona personaIdNew = prenda.getPersonaId();
+      TipoDePrenda tipoDePrendaIdOld = persistentPrenda.getTipoDePrendaId();
+      TipoDePrenda tipoDePrendaIdNew = prenda.getTipoDePrendaId();
+      Collection<DetalleFactura> detalleFacturaCollectionOld = persistentPrenda.getDetalleFacturaCollection();
+      Collection<DetalleFactura> detalleFacturaCollectionNew = prenda.getDetalleFacturaCollection();
+      if (personaIdNew != null) {
+        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+        prenda.setPersonaId(personaIdNew);
+      }
+      if (tipoDePrendaIdNew != null) {
+        tipoDePrendaIdNew = em.getReference(tipoDePrendaIdNew.getClass(), tipoDePrendaIdNew.getId());
+        prenda.setTipoDePrendaId(tipoDePrendaIdNew);
+      }
+      Collection<DetalleFactura> attachedDetalleFacturaCollectionNew = new ArrayList<DetalleFactura>();
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFacturaToAttach : detalleFacturaCollectionNew) {
+        detalleFacturaCollectionNewDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionNewDetalleFacturaToAttach.getClass(), detalleFacturaCollectionNewDetalleFacturaToAttach.getId());
+        attachedDetalleFacturaCollectionNew.add(detalleFacturaCollectionNewDetalleFacturaToAttach);
+      }
+      detalleFacturaCollectionNew = attachedDetalleFacturaCollectionNew;
+      prenda.setDetalleFacturaCollection(detalleFacturaCollectionNew);
+      prenda = em.merge(prenda);
+      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+        personaIdOld.getPrendaCollection().remove(prenda);
+        personaIdOld = em.merge(personaIdOld);
+      }
+      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+        personaIdNew.getPrendaCollection().add(prenda);
+        personaIdNew = em.merge(personaIdNew);
+      }
+      if (tipoDePrendaIdOld != null && !tipoDePrendaIdOld.equals(tipoDePrendaIdNew)) {
+        tipoDePrendaIdOld.getPrendaCollection().remove(prenda);
+        tipoDePrendaIdOld = em.merge(tipoDePrendaIdOld);
+      }
+      if (tipoDePrendaIdNew != null && !tipoDePrendaIdNew.equals(tipoDePrendaIdOld)) {
+        tipoDePrendaIdNew.getPrendaCollection().add(prenda);
+        tipoDePrendaIdNew = em.merge(tipoDePrendaIdNew);
+      }
+      for (DetalleFactura detalleFacturaCollectionOldDetalleFactura : detalleFacturaCollectionOld) {
+        if (!detalleFacturaCollectionNew.contains(detalleFacturaCollectionOldDetalleFactura)) {
+          detalleFacturaCollectionOldDetalleFactura.setPrendaId(null);
+          detalleFacturaCollectionOldDetalleFactura = em.merge(detalleFacturaCollectionOldDetalleFactura);
+        }
+      }
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFactura : detalleFacturaCollectionNew) {
+        if (!detalleFacturaCollectionOld.contains(detalleFacturaCollectionNewDetalleFactura)) {
+          Prenda oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura = detalleFacturaCollectionNewDetalleFactura.getPrendaId();
+          detalleFacturaCollectionNewDetalleFactura.setPrendaId(prenda);
+          detalleFacturaCollectionNewDetalleFactura = em.merge(detalleFacturaCollectionNewDetalleFactura);
+          if (oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura != null && !oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura.equals(prenda)) {
+            oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionNewDetalleFactura);
+            oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura = em.merge(oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = prenda.getId();
+        if (findPrenda(id) == null) {
+          throw new NonexistentEntityException("The prenda with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {
