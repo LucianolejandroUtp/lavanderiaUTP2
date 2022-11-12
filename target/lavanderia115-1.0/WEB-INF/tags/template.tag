@@ -201,7 +201,7 @@
               <li class="nav-item">
                 <a href="../DistritoListServlet">
                   <i class="fas fa-user"></i>
-                  <p>Usuarios</p>
+                  <p>-------</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
@@ -210,7 +210,7 @@
                 <!--<a href="../Distrito/List.jsp">-->
                 <a href="../DistritoListServlet">
                   <i class="fas fa-car"></i>
-                  <p>Choferes</p>
+                  <p>Conductores</p>
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
@@ -228,7 +228,7 @@
               
               <li class="nav-item">
                 <!--<a href="../Distrito/List.jsp">-->
-                <a href="../DistritoListServlet">
+                <a href="../CitaListServlet">
                   <i class="fas fa-handshake"></i>
                   <p>Citas Programadas</p>
                   <!--<span class="badge badge-success">4</span>-->
@@ -245,7 +245,16 @@
                 </a>
               </li>
               
-<<<<<<< Updated upstream
+              <li class="nav-item">
+                <!--<a href="../Distrito/List.jsp">-->
+                <a href="../VehiculoListServlet">
+                  <i class="fas fa-car"></i>
+                  <p>Vehiculos</p>
+                  <!--<span class="badge badge-success">4</span>-->
+                </a>
+              </li>
+              
+<!--<<<<<<< Updated upstream-->
               <li class="nav-item">
                 <a href="../TdPListServlet">
                   <i class="fas fa-map-marked-alt"></i>
@@ -269,13 +278,13 @@
                   <!--<span class="badge badge-success">4</span>-->
                 </a>
               </li>
-=======
+<!--=======-->
               
               
               
               
 
->>>>>>> Stashed changes
+<!-->>>>>>> Stashed changes-->
             </ul>
           </div>
         </div>

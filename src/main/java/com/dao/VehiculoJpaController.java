@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -29,6 +30,10 @@ public class VehiculoJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
+  
+  public VehiculoJpaController() {
+    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -139,6 +144,72 @@ public class VehiculoJpaController implements Serializable {
     }
   }
 
+  
+  public void softDelete(Vehiculo vehiculo) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Vehiculo persistentVehiculo = em.find(Vehiculo.class, vehiculo.getId());
+      Persona personaIdOld = persistentVehiculo.getPersonaId();
+      Persona personaIdNew = vehiculo.getPersonaId();
+      Collection<Cita> citaCollectionOld = persistentVehiculo.getCitaCollection();
+      Collection<Cita> citaCollectionNew = vehiculo.getCitaCollection();
+      if (personaIdNew != null) {
+        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+        vehiculo.setPersonaId(personaIdNew);
+      }
+      Collection<Cita> attachedCitaCollectionNew = new ArrayList<Cita>();
+      for (Cita citaCollectionNewCitaToAttach : citaCollectionNew) {
+        citaCollectionNewCitaToAttach = em.getReference(citaCollectionNewCitaToAttach.getClass(), citaCollectionNewCitaToAttach.getId());
+        attachedCitaCollectionNew.add(citaCollectionNewCitaToAttach);
+      }
+      citaCollectionNew = attachedCitaCollectionNew;
+      vehiculo.setCitaCollection(citaCollectionNew);
+      vehiculo = em.merge(vehiculo);
+      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+        personaIdOld.getVehiculoCollection().remove(vehiculo);
+        personaIdOld = em.merge(personaIdOld);
+      }
+      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+        personaIdNew.getVehiculoCollection().add(vehiculo);
+        personaIdNew = em.merge(personaIdNew);
+      }
+      for (Cita citaCollectionOldCita : citaCollectionOld) {
+        if (!citaCollectionNew.contains(citaCollectionOldCita)) {
+          citaCollectionOldCita.setVehiculoId(null);
+          citaCollectionOldCita = em.merge(citaCollectionOldCita);
+        }
+      }
+      for (Cita citaCollectionNewCita : citaCollectionNew) {
+        if (!citaCollectionOld.contains(citaCollectionNewCita)) {
+          Vehiculo oldVehiculoIdOfCitaCollectionNewCita = citaCollectionNewCita.getVehiculoId();
+          citaCollectionNewCita.setVehiculoId(vehiculo);
+          citaCollectionNewCita = em.merge(citaCollectionNewCita);
+          if (oldVehiculoIdOfCitaCollectionNewCita != null && !oldVehiculoIdOfCitaCollectionNewCita.equals(vehiculo)) {
+            oldVehiculoIdOfCitaCollectionNewCita.getCitaCollection().remove(citaCollectionNewCita);
+            oldVehiculoIdOfCitaCollectionNewCita = em.merge(oldVehiculoIdOfCitaCollectionNewCita);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = vehiculo.getId();
+        if (findVehiculo(id) == null) {
+          throw new NonexistentEntityException("The vehiculo with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
+  
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {
