@@ -51,23 +51,23 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Número</label>
-                          <input name="addNumero" type="text" class="form-control"">
+                          <input required name="addNumero" type="text" class="form-control"">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Serie</label>
-                          <input name="addSerie" type="text" class="form-control">
+                          <input required name="addSerie" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Tipo</label>
-                          <input name="addTipo" type="text" class="form-control">
+                          <input required name="addTipo" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Fecha</label>
-                          <input name="addFecha" type="date" class="form-control">
+                          <input required name="addFecha" type="date" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Hora</label>
-                          <input name="addHora" type="time" class="form-control" step="1">
+                          <input required name="addHora" type="time" class="form-control" step="1">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -197,23 +197,23 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Número</label>
-                                <input name="editNumero" type="number" class="form-control" value="${tempObjeto.numero }">
+                                <input required name="editNumero" type="number" class="form-control" value="${tempObjeto.numero }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Serie</label>
-                                <input name="editSerie" type="text" class="form-control" value="${tempObjeto.serie }">
+                                <input required name="editSerie" type="text" class="form-control" value="${tempObjeto.serie }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Tipo</label>
-                                <input name="editTipo" type="number" class="form-control" value="${tempObjeto.tipo }">
+                                <input required name="editTipo" type="number" class="form-control" value="${tempObjeto.tipo }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Fecha</label>
-                                <input name="editFecha" type="number" class="form-control" value="${tempObjeto.fecha }">
+                                <input required name="editFecha" type="number" class="form-control" value="${tempObjeto.fecha }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Hora</label>
-                                <input name="editHora" type="number" class="form-control" value="${tempObjeto.hora }">
+                                <input required name="editHora" type="number" class="form-control" value="${tempObjeto.hora }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Categoría</label>

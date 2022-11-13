@@ -51,15 +51,15 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="addDescripcion" type="text" class="form-control" placeholder="Llene el servicio">
+                          <input required name="addDescripcion" type="text" class="form-control" placeholder="Llene el servicio">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Detalles</label>
-                          <input name="addDetalles" type="text" class="form-control" placeholder="Llene el detalle">
+                          <input required name="addDetalles" type="text" class="form-control" placeholder="Llene el detalle">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Precio</label>
-                          <input name="addPrecio" type="text" class="form-control" placeholder="Llene el Precio">
+                          <input required name="addPrecio" type="text" class="form-control" placeholder="Llene el Precio">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -185,15 +185,15 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input required name="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Detalles</label>
-                                <input name="editDetalles" type="text" class="form-control" value="${tempObjeto.detalles }">
+                                <input required name="editDetalles" type="text" class="form-control" value="${tempObjeto.detalles }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Precio</label>
-                                <input name="editPrecio" type="number" class="form-control" value="${tempObjeto.precio }">
+                                <input required name="editPrecio" type="number" class="form-control" value="${tempObjeto.precio }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Categoría</label>

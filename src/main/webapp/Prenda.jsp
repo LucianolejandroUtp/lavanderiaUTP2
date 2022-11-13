@@ -51,27 +51,27 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Cantidad</label>
-                          <input name="addCantidad" type="number" class="form-control" placeholder="Llene la cantidad">
+                          <input required name="addCantidad" type="number" class="form-control" placeholder="Llene la cantidad">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Color</label>
-                          <input name="addColor" type="text" class="form-control" placeholder="Llene el color">
+                          <input required name="addColor" type="text" class="form-control" placeholder="Llene el color">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Marca</label>
-                          <input name="addMarca" type="text" class="form-control" placeholder="Llene la marca">
+                          <input required name="addMarca" type="text" class="form-control" placeholder="Llene la marca">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Estado de prenda</label>
-                          <input name="addEstadoDePrenda" type="text" class="form-control" placeholder="Llene el estado de la prenda">
+                          <input required name="addEstadoDePrenda" type="text" class="form-control" placeholder="Llene el estado de la prenda">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Peso</label>
-                          <input name="addPeso" type="number" class="form-control" placeholder="Llene el peso">
+                          <input required name="addPeso" type="number" class="form-control" placeholder="Llene el peso">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Observación</label>
-                          <input name="addObservacion" type="text" class="form-control" placeholder="Llene la observación">
+                          <input required name="addObservacion" type="text" class="form-control" placeholder="Llene la observación">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -212,27 +212,27 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Cantidad</label>
-                                <input name="editCantidad" type="number" class="form-control" value="${tempObjeto.cantidad }">
+                                <input required name="editCantidad" type="number" class="form-control" value="${tempObjeto.cantidad }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Color</label>
-                                <input name="editColor" type="text" class="form-control" value="${tempObjeto.color }">
+                                <input required name="editColor" type="text" class="form-control" value="${tempObjeto.color }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Marca</label>
-                                <input name="editMarca" type="text" class="form-control" value="${tempObjeto.marca }">
+                                <input required name="editMarca" type="text" class="form-control" value="${tempObjeto.marca }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>EstadoP</label>
-                                <input name="editEstadoDePrenda" type="text" class="form-control" value="${tempObjeto.estadoDePrenda }">
+                                <label>Estado Prenda</label>
+                                <input required name="editEstadoDePrenda" type="text" class="form-control" value="${tempObjeto.estadoDePrenda }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Peso</label>
-                                <input name="editPeso" type="number" class="form-control" value="${tempObjeto.peso }">
+                                <input required name="editPeso" type="number" class="form-control" value="${tempObjeto.peso }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Observación</label>
-                                <input name="editObservacion" type="text" class="form-control" value="${tempObjeto.observacion }">
+                                <input required name="editObservacion" type="text" class="form-control" value="${tempObjeto.observacion }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Tipo de Prenda</label>

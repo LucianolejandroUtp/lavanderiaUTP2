@@ -57,7 +57,9 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exception
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Telefono.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoPersonaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\CitaListServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DetalleFacturaListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DetalleFacturaCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\FacturaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DistritoEditServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\ServicioJpaController.java

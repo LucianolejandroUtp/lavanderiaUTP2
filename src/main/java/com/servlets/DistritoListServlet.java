@@ -58,7 +58,7 @@ public class DistritoListServlet extends HttpServlet {
       
       request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
       request.setAttribute("mi_lista_de_departamentos", mi_lista_de_depas);
-      request.getRequestDispatcher("listDistrito.jsp").forward(request, response);
+      request.getRequestDispatcher("Distrito.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);

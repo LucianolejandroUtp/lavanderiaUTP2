@@ -51,23 +51,23 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombres</label>
-                          <input name="addNombres" id="addNombres" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addNombres" id="addNombres" type="text" class="form-control" placeholder="Llene">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Apellidos</label>
-                          <input name="addApellidos" id="addApellidos" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addApellidos" id="addApellidos" type="text" class="form-control" placeholder="Llene">
                         </div>
                         <div class="form-group form-group-default">
                           <label>DNI</label>
-                          <input name="addDni" id="addDni" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addDni" id="addDni" type="text" class="form-control" placeholder="Llene">
                         </div>
                         <div class="form-group">
                           <label>Email</label>
-                          <input name="addEmail" id="addEmail" type="email" class="form-control" placeholder="Llene">
+                          <input required name="addEmail" id="addEmail" type="email" class="form-control" placeholder="Llene">
                         </div>
                         <div class="form-group">
                           <label>Password</label>
-                          <input name="addPassword" id="addPassword" type="password" class="form-control" placeholder="Llene">
+                          <input required name="addPassword" id="addPassword" type="password" class="form-control" placeholder="Llene">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -197,7 +197,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.nombres }">
+                                <input required name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.nombres }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Departamento</label>

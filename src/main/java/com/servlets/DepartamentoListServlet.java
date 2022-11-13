@@ -50,7 +50,7 @@ public class DepartamentoListServlet extends HttpServlet {
       }
 
       request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
-      request.getRequestDispatcher("listDepartamento.jsp").forward(request, response);
+      request.getRequestDispatcher("Departamento.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);

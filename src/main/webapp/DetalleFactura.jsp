@@ -51,23 +51,23 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Cantidad</label>
-                          <input name="addCantidad" number="number" class="form-control">
+                          <input required name="addCantidad" number="number" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Precio</label>
-                          <input name="addPrecio" type="number" class="form-control">
+                          <input required name="addPrecio" type="number" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Subtotal</label>
-                          <input name="addSubtotal" type="number" class="form-control">
+                          <input required name="addSubtotal" type="number" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>IGV</label>
-                          <input name="addIgv" type="number" class="form-control">
+                          <input required name="addIgv" type="number" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Total</label>
-                          <input name="addTotal" type="number" class="form-control">
+                          <input required name="addTotal" type="number" class="form-control">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -216,23 +216,23 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Cantidad</label>
-                                <input name="editCantidad" type="number" class="form-control" value="${tempObjeto.cantidad }">
+                                <input required name="editCantidad" type="number" class="form-control" value="${tempObjeto.cantidad }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Precio</label>
-                                <input name="editPrecio" type="text" class="form-control" value="${tempObjeto.precio }">
+                                <input required name="editPrecio" type="text" class="form-control" value="${tempObjeto.precio }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Subtotal</label>
-                                <input name="editSubtotal" type="text" class="form-control" value="${tempObjeto.subtotal }">
+                                <input required name="editSubtotal" type="text" class="form-control" value="${tempObjeto.subtotal }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>IGV</label>
-                                <input name="editIgv" type="text" class="form-control" value="${tempObjeto.igv }">
+                                <input required name="editIgv" type="text" class="form-control" value="${tempObjeto.igv }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Total</label>
-                                <input name="editTotal" type="number" class="form-control" value="${tempObjeto.total }">
+                                <input required name="editTotal" type="number" class="form-control" value="${tempObjeto.total }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Factura</label>

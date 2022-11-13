@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listDistrito
-    Created on : 3 nov. 2022, 23:48:52
+    Document   : listDepartamento
+    Created on : 28 oct. 2022, 23:29:15
     Author     : desti
 --%>
 
@@ -10,25 +10,24 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<t:template title="Listar Distritos">
+
+<t:template title="Listar Departamentos">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
-
 
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Distritos</h4>
+            <h4 class="card-title">Departamentos</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Distrito
+              Añadir departamento
             </button>
           </div>
         </div>
         <div class="card-body">
-
           <!-- Modal Crear -->
           <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -38,7 +37,7 @@
                     <span class="fw-mediumbold">
                       Nuevo</span> 
                     <span class="fw-light">
-                      Distrito
+                      Departamento
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,22 +45,12 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="DistritoCreateServlet" method="post">
+                  <form  action="DepartamentoCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombre</label>
-                          <input name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el distrito">
-                        </div>
-
-                        <div class="form-group form-group-default">
-                          <label>Select</label>
-                          <select class="form-control" name="addDepartamentoId" id="addDepartamentoId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_departamentos }">
-                              <option value="${tempObjetoDepa.id }">${tempObjetoDepa.descripcion }</option>
-                            </c:forEach>
-
-                          </select>
+                          <input required="" name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -70,7 +59,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -81,32 +69,31 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Estado</th>
-                  <th>Departamento</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_distritos }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_objetos }">
                   <tr>
                     <td>${tempObjeto.descripcion }</td>
                     <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.departamentoId.descripcion}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
                       <div class="form-button-action">
-                        <button data-target="#${tempObjeto.id }" type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                data-target="#${tempObjeto.id }" id="submit">
                           <i class="fa fa-edit"></i>
                         </button>
-                        <button data-target="#${tempObjeto.id }${tempObjeto.id }" type="button" data-toggle="modal" class="btn btn-link btn-danger">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                data-target="#${tempObjeto.id }${tempObjeto.id }">
                           <i class="fa fa-times"></i>
                         </button>
                       </div>
                     </td>
                   </tr>
-
 
 
                   <!-- Modal Eliminar -->
@@ -115,16 +102,21 @@
                     <div class="modal-content">
                       <div class="modal-header no-bd">
                         <h5 class="modal-title">
-                          <span class="fw-light">¿Está relamente seguro de querer</span>
-                          <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">este distrito?</span>
+                          <span class="fw-light">
+                            ¿Está relamente seguro de querer 
+                          </span>
+                          <span class="fw-mediumbold">
+                            eliminar</span> 
+                          <span class="fw-light">
+                            este departamento?
+                          </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoDestroyServlet" method="post">
+                        <form  action="DepartamentoDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -133,7 +125,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="destroy_distrito_departamento" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <input name="destroyDepartamento" id="destroyDepartamento" type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
                               </div>
 
                             </div>
@@ -156,7 +148,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Distrito
+                            Departamento
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -164,7 +156,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoEditServlet" method="post">
+                        <form  action="DepartamentoEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -173,19 +165,11 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombre</label>
-                                <input name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input required name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
-                              <div class="form-group form-group-default">
-                                <label>Departamento</label>
-                                <select class="form-control" name="editDepaId" id="editDepaId">
-                                  <c:forEach var="tempObjetoDepa" items="${mi_lista_de_departamentos }">
-                                    <option value="${tempObjetoDepa.id }">${tempObjetoDepa.descripcion }</option>
-                                  </c:forEach>
-                                </select>
-                              </div>
+
                               <div class="form-group form-group-default">
                                 <label>Select</label>
-
                                 <select class="form-control" name="editEstado" id="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
@@ -212,8 +196,6 @@
         </div>
       </div>
     </div>
-
-
 
   </jsp:attribute>
 </t:template>

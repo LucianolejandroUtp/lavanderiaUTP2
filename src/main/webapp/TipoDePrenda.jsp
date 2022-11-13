@@ -48,7 +48,7 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Descripción</label>
-                          <input name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
+                          <input required name="addDescripcion" id="addName" type="text" class="form-control" placeholder="Llene el departamento">
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -164,7 +164,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Descripción</label>
-                                <input name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input required name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
                               </div>
 
                               <div class="form-group form-group-default">
