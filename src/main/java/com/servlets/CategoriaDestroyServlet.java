@@ -10,6 +10,7 @@ import com.dto.Categoria;
 import com.dto.Departamento;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class CategoriaDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Categoria Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      CategoriaJpaController jpac_object = new CategoriaJpaController();
+      CategoriaJpaController jpac_object = new CategoriaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Categoria objeto_archivado = new Categoria();
 
       objeto_archivado = jpac_object.findCategoria(Long.valueOf(request.getParameter("destroyId")));

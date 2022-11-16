@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +40,8 @@ public class DistritoListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Entrando al List Servlet");
     try {
-      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
-      DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DepartamentoJpaController jpac_object_departamento = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       List<Distrito> mi_lista_de_distritos = new ArrayList<>();
       List<Departamento> mi_lista_de_depas = new ArrayList<>();
 

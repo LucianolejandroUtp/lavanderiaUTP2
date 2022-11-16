@@ -33,6 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "DetalleFactura.findAll", query = "SELECT d FROM DetalleFactura d"),
   @NamedQuery(name = "DetalleFactura.findById", query = "SELECT d FROM DetalleFactura d WHERE d.id = :id"),
+  @NamedQuery(name = "DetalleFactura.findByUniqueId", query = "SELECT d FROM DetalleFactura d WHERE d.uniqueId = :uniqueId"),
   @NamedQuery(name = "DetalleFactura.findByCantidad", query = "SELECT d FROM DetalleFactura d WHERE d.cantidad = :cantidad"),
   @NamedQuery(name = "DetalleFactura.findByPrecio", query = "SELECT d FROM DetalleFactura d WHERE d.precio = :precio"),
   @NamedQuery(name = "DetalleFactura.findBySubtotal", query = "SELECT d FROM DetalleFactura d WHERE d.subtotal = :subtotal"),
@@ -49,6 +50,11 @@ public class DetalleFactura implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Column(name = "cantidad")
   private Integer cantidad;
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -88,8 +94,9 @@ public class DetalleFactura implements Serializable {
     this.id = id;
   }
 
-  public DetalleFactura(Long id, String estado) {
+  public DetalleFactura(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -99,6 +106,14 @@ public class DetalleFactura implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public Integer getCantidad() {

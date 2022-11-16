@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,8 +50,8 @@ public class DistritoEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editDepaId"));
     try {
 //      Inicialización de objetos
-      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
-      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Distrito oldObject_distrito;
       Departamento depa;
 

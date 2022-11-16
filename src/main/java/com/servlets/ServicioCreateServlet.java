@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,8 @@ public class ServicioCreateServlet extends HttpServlet {
     
     System.out.println("Bandera servlet create Servicio");
     try {
-      ServicioJpaController jpac_object_servicio = new ServicioJpaController();
-      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController();
+      ServicioJpaController jpac_object_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Servicio mi_objeto_servicio = new Servicio();
       Categoria mi_objeto_categoria = new Categoria();
 

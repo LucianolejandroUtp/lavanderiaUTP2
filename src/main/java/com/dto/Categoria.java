@@ -33,6 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
   @NamedQuery(name = "Categoria.findById", query = "SELECT c FROM Categoria c WHERE c.id = :id"),
+  @NamedQuery(name = "Categoria.findByUniqueId", query = "SELECT c FROM Categoria c WHERE c.uniqueId = :uniqueId"),
   @NamedQuery(name = "Categoria.findByDescripcion", query = "SELECT c FROM Categoria c WHERE c.descripcion = :descripcion"),
   @NamedQuery(name = "Categoria.findByEstado", query = "SELECT c FROM Categoria c WHERE c.estado = :estado"),
   @NamedQuery(name = "Categoria.findByCreatedAt", query = "SELECT c FROM Categoria c WHERE c.createdAt = :createdAt"),
@@ -45,6 +46,11 @@ public class Categoria implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "descripcion")
   private String descripcion;
@@ -69,8 +75,9 @@ public class Categoria implements Serializable {
     this.id = id;
   }
 
-  public Categoria(Long id, String estado) {
+  public Categoria(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -80,6 +87,14 @@ public class Categoria implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getDescripcion() {

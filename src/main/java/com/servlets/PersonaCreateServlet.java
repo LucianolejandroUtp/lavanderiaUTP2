@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,8 @@ public class PersonaCreateServlet extends HttpServlet {
     
     System.out.println("Bandera servlet create Persona");
     try {
-      PersonaJpaController jpac_object_persona = new PersonaJpaController();
-      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController();
+      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Persona mi_objeto_persona = new Persona();
       TipoPersona mi_objeto_TdP = new TipoPersona();
 

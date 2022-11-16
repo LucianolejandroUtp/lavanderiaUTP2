@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,8 @@ public class PersonaListServlet extends HttpServlet {
     
     System.out.println("Entrando a Persona List Servlet");
     try {
-      PersonaJpaController jpac_object_persona = new PersonaJpaController();
-      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController();
+      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       List<Persona> mi_lista_de_personas = new ArrayList<>();
       List<TipoPersona> mi_lista_de_TdP = new ArrayList<>();
 

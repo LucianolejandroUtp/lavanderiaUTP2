@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera Departamento Create Servlet");
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Departamento mi_objeto = new Departamento();
       
       Date dt = new Date();

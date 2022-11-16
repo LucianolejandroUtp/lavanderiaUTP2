@@ -10,6 +10,7 @@ import com.dto.Categoria;
 import com.dto.TipoDePrenda;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class TdPrendaDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Categoria Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      TipoDePrendaJpaController jpac_object = new TipoDePrendaJpaController();
+      TipoDePrendaJpaController jpac_object = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       TipoDePrenda objeto_archivado;
 
       objeto_archivado = jpac_object.findTipoDePrenda(Long.valueOf(request.getParameter("destroyId")));

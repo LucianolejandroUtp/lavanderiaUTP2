@@ -18,7 +18,6 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -30,10 +29,6 @@ public class VehiculoJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
-  
-  public VehiculoJpaController() {
-    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -144,7 +139,6 @@ public class VehiculoJpaController implements Serializable {
     }
   }
 
-  
   public void softDelete(Vehiculo vehiculo) throws NonexistentEntityException, Exception {
     EntityManager em = null;
     try {
@@ -209,7 +203,6 @@ public class VehiculoJpaController implements Serializable {
     }
   }
 
-  
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

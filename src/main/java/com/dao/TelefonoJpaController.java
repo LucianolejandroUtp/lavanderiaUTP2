@@ -92,6 +92,44 @@ public class TelefonoJpaController implements Serializable {
     }
   }
 
+  public void softDelete(Telefono telefono) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Telefono persistentTelefono = em.find(Telefono.class, telefono.getId());
+      Persona personaIdOld = persistentTelefono.getPersonaId();
+      Persona personaIdNew = telefono.getPersonaId();
+      if (personaIdNew != null) {
+        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+        telefono.setPersonaId(personaIdNew);
+      }
+      telefono = em.merge(telefono);
+      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+        personaIdOld.getTelefonoCollection().remove(telefono);
+        personaIdOld = em.merge(personaIdOld);
+      }
+      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+        personaIdNew.getTelefonoCollection().add(telefono);
+        personaIdNew = em.merge(personaIdNew);
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = telefono.getId();
+        if (findTelefono(id) == null) {
+          throw new NonexistentEntityException("The telefono with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

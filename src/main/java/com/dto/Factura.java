@@ -35,6 +35,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
   @NamedQuery(name = "Factura.findById", query = "SELECT f FROM Factura f WHERE f.id = :id"),
+  @NamedQuery(name = "Factura.findByUniqueId", query = "SELECT f FROM Factura f WHERE f.uniqueId = :uniqueId"),
   @NamedQuery(name = "Factura.findByNumero", query = "SELECT f FROM Factura f WHERE f.numero = :numero"),
   @NamedQuery(name = "Factura.findBySerie", query = "SELECT f FROM Factura f WHERE f.serie = :serie"),
   @NamedQuery(name = "Factura.findByTipo", query = "SELECT f FROM Factura f WHERE f.tipo = :tipo"),
@@ -51,6 +52,11 @@ public class Factura implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "numero")
   private String numero;
@@ -90,8 +96,9 @@ public class Factura implements Serializable {
     this.id = id;
   }
 
-  public Factura(Long id, String estado) {
+  public Factura(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -101,6 +108,14 @@ public class Factura implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getNumero() {

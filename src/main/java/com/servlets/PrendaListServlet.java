@@ -48,8 +48,8 @@ public class PrendaListServlet extends HttpServlet {
     System.out.println("Entrando a Prenda List Servlet");
     try {
       PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoDePrendaJpaController jpac_object_TdPrenda = new TipoDePrendaJpaController();
-      PersonaJpaController jpac_object_persona = new PersonaJpaController();
+      TipoDePrendaJpaController jpac_object_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       List<Prenda> mi_lista_de_prendas = new ArrayList<>();
       List<TipoDePrenda> mi_lista_de_TdPrendas = new ArrayList<>();
       List<Persona> mi_lista_de_personas = new ArrayList<>();

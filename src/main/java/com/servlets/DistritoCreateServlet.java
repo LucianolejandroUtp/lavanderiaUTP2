@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +41,8 @@ public class DistritoCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera servlet create distrito");
     try {
-      DistritoJpaController jpac_object_distrito = new DistritoJpaController();
-      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController();
+      DistritoJpaController jpac_object_distrito = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DepartamentoJpaController jpac_object_depa = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Distrito mi_objeto_distrito = new Distrito();
       Departamento mi_objeto_depa = new Departamento();
 

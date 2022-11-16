@@ -35,6 +35,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
   @NamedQuery(name = "Persona.findById", query = "SELECT p FROM Persona p WHERE p.id = :id"),
+  @NamedQuery(name = "Persona.findByUniqueId", query = "SELECT p FROM Persona p WHERE p.uniqueId = :uniqueId"),
   @NamedQuery(name = "Persona.findByNombres", query = "SELECT p FROM Persona p WHERE p.nombres = :nombres"),
   @NamedQuery(name = "Persona.findByApellidos", query = "SELECT p FROM Persona p WHERE p.apellidos = :apellidos"),
   @NamedQuery(name = "Persona.findByDni", query = "SELECT p FROM Persona p WHERE p.dni = :dni"),
@@ -51,6 +52,11 @@ public class Persona implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "nombres")
   private String nombres;
@@ -101,8 +107,9 @@ public class Persona implements Serializable {
     this.id = id;
   }
 
-  public Persona(Long id, String estado) {
+  public Persona(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -112,6 +119,14 @@ public class Persona implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getNombres() {

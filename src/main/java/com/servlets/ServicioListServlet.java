@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,8 @@ public class ServicioListServlet extends HttpServlet {
     
     System.out.println("Entrando a Servicio List Servlet");
     try {
-      ServicioJpaController jpac_object_servicio = new ServicioJpaController();
-      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController();
+      ServicioJpaController jpac_object_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       List<Servicio> mi_lista_de_servicios = new ArrayList<>();
       List<Categoria> mi_lista_de_categorias = new ArrayList<>();
 

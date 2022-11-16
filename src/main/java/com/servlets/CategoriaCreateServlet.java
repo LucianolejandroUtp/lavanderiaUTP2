@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +39,7 @@ public class CategoriaCreateServlet extends HttpServlet {
     
     System.out.println("Bandera Categoría Create Servlet");
     try {
-      CategoriaJpaController jpac_object = new CategoriaJpaController();
+      CategoriaJpaController jpac_object = new CategoriaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Categoria mi_objeto = new Categoria();
       
       Date dt = new Date();

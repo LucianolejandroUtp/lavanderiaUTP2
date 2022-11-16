@@ -35,6 +35,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Vehiculo.findAll", query = "SELECT v FROM Vehiculo v"),
   @NamedQuery(name = "Vehiculo.findById", query = "SELECT v FROM Vehiculo v WHERE v.id = :id"),
+  @NamedQuery(name = "Vehiculo.findByUniqueId", query = "SELECT v FROM Vehiculo v WHERE v.uniqueId = :uniqueId"),
   @NamedQuery(name = "Vehiculo.findByPlaca", query = "SELECT v FROM Vehiculo v WHERE v.placa = :placa"),
   @NamedQuery(name = "Vehiculo.findByMarca", query = "SELECT v FROM Vehiculo v WHERE v.marca = :marca"),
   @NamedQuery(name = "Vehiculo.findByModelo", query = "SELECT v FROM Vehiculo v WHERE v.modelo = :modelo"),
@@ -49,6 +50,11 @@ public class Vehiculo implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "placa")
   private String placa;
@@ -82,8 +88,9 @@ public class Vehiculo implements Serializable {
     this.id = id;
   }
 
-  public Vehiculo(Long id, String estado) {
+  public Vehiculo(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -93,6 +100,14 @@ public class Vehiculo implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getPlaca() {

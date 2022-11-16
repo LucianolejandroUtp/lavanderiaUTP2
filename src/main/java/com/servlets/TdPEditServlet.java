@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class TdPEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editDescripcion"));
     System.out.println(request.getParameter("editEstado"));
     try {
-      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       TipoPersona old_objet;
 
 //      Lo relacionado a la fecha

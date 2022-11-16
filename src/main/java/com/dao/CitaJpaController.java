@@ -16,7 +16,6 @@ import com.dto.Vehiculo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -28,10 +27,6 @@ public class CitaJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
-  
-  public CitaJpaController() {
-    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -120,7 +115,7 @@ public class CitaJpaController implements Serializable {
       }
     }
   }
-  
+
   public void softDelete(Cita cita) throws NonexistentEntityException, Exception {
     EntityManager em = null;
     try {

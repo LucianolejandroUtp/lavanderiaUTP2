@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +45,7 @@ public class DepartamentoEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editDescripcion"));
     System.out.println(request.getParameter("editEstado"));
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Departamento old_objet;
 
 //      Lo relacionado a la fecha

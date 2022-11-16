@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class TdPrendaCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     System.out.println("Bandera TdP Create Servlet");
     try {
-      TipoDePrendaJpaController jpac_object = new TipoDePrendaJpaController();
+      TipoDePrendaJpaController jpac_object = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       TipoDePrenda mi_objeto = new TipoDePrenda();
 
       Date dt = new Date();

@@ -36,6 +36,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d"),
   @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id"),
+  @NamedQuery(name = "Direccion.findByUniqueId", query = "SELECT d FROM Direccion d WHERE d.uniqueId = :uniqueId"),
   @NamedQuery(name = "Direccion.findByDescripcion", query = "SELECT d FROM Direccion d WHERE d.descripcion = :descripcion"),
   @NamedQuery(name = "Direccion.findByEstado", query = "SELECT d FROM Direccion d WHERE d.estado = :estado"),
   @NamedQuery(name = "Direccion.findByCreatedAt", query = "SELECT d FROM Direccion d WHERE d.createdAt = :createdAt"),
@@ -48,6 +49,11 @@ public class Direccion implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "descripcion")
   private String descripcion;
@@ -79,8 +85,9 @@ public class Direccion implements Serializable {
     this.id = id;
   }
 
-  public Direccion(Long id, String estado) {
+  public Direccion(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -90,6 +97,14 @@ public class Direccion implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getDescripcion() {

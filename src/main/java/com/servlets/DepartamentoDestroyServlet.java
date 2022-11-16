@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class DepartamentoDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Departamento Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController();
+      DepartamentoJpaController jpac_object = new DepartamentoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Departamento objeto_archivado = new Departamento();
 
       objeto_archivado = jpac_object.findDepartamento(Long.valueOf(request.getParameter("destroyId")));

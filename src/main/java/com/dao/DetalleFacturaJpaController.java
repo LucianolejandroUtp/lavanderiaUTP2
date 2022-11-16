@@ -140,6 +140,72 @@ public class DetalleFacturaJpaController implements Serializable {
     }
   }
 
+  public void softDelete(DetalleFactura detalleFactura) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      DetalleFactura persistentDetalleFactura = em.find(DetalleFactura.class, detalleFactura.getId());
+      Factura facturaIdOld = persistentDetalleFactura.getFacturaId();
+      Factura facturaIdNew = detalleFactura.getFacturaId();
+      Prenda prendaIdOld = persistentDetalleFactura.getPrendaId();
+      Prenda prendaIdNew = detalleFactura.getPrendaId();
+      Servicio servicioIdOld = persistentDetalleFactura.getServicioId();
+      Servicio servicioIdNew = detalleFactura.getServicioId();
+      if (facturaIdNew != null) {
+        facturaIdNew = em.getReference(facturaIdNew.getClass(), facturaIdNew.getId());
+        detalleFactura.setFacturaId(facturaIdNew);
+      }
+      if (prendaIdNew != null) {
+        prendaIdNew = em.getReference(prendaIdNew.getClass(), prendaIdNew.getId());
+        detalleFactura.setPrendaId(prendaIdNew);
+      }
+      if (servicioIdNew != null) {
+        servicioIdNew = em.getReference(servicioIdNew.getClass(), servicioIdNew.getId());
+        detalleFactura.setServicioId(servicioIdNew);
+      }
+      detalleFactura = em.merge(detalleFactura);
+      if (facturaIdOld != null && !facturaIdOld.equals(facturaIdNew)) {
+        facturaIdOld.getDetalleFacturaCollection().remove(detalleFactura);
+        facturaIdOld = em.merge(facturaIdOld);
+      }
+      if (facturaIdNew != null && !facturaIdNew.equals(facturaIdOld)) {
+        facturaIdNew.getDetalleFacturaCollection().add(detalleFactura);
+        facturaIdNew = em.merge(facturaIdNew);
+      }
+      if (prendaIdOld != null && !prendaIdOld.equals(prendaIdNew)) {
+        prendaIdOld.getDetalleFacturaCollection().remove(detalleFactura);
+        prendaIdOld = em.merge(prendaIdOld);
+      }
+      if (prendaIdNew != null && !prendaIdNew.equals(prendaIdOld)) {
+        prendaIdNew.getDetalleFacturaCollection().add(detalleFactura);
+        prendaIdNew = em.merge(prendaIdNew);
+      }
+      if (servicioIdOld != null && !servicioIdOld.equals(servicioIdNew)) {
+        servicioIdOld.getDetalleFacturaCollection().remove(detalleFactura);
+        servicioIdOld = em.merge(servicioIdOld);
+      }
+      if (servicioIdNew != null && !servicioIdNew.equals(servicioIdOld)) {
+        servicioIdNew.getDetalleFacturaCollection().add(detalleFactura);
+        servicioIdNew = em.merge(servicioIdNew);
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = detalleFactura.getId();
+        if (findDetalleFactura(id) == null) {
+          throw new NonexistentEntityException("The detalleFactura with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

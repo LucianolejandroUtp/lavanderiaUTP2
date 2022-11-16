@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,10 +46,10 @@ public class CitaListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Entrando al List Servlet");
     try {
-      CitaJpaController jpac_object_cita = new CitaJpaController();
-      PersonaJpaController jpac_object_persona = new PersonaJpaController();
+      CitaJpaController jpac_object_cita = new CitaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       
-      VehiculoJpaController jpac_object_vehiculo = new VehiculoJpaController();
+      VehiculoJpaController jpac_object_vehiculo = new VehiculoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       
       List<Cita> mi_lista_de_cita = new ArrayList<>();
       List<Persona> mi_lista_de_persona = new ArrayList<>();

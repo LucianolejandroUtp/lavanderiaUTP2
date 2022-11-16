@@ -10,6 +10,7 @@ import com.dto.Departamento;
 import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class TdPDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Tipo de Persona Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController();
+      TipoPersonaJpaController jpac_object = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       TipoPersona objeto_archivado = new TipoPersona();
 
       objeto_archivado = jpac_object.findTipoPersona(Long.valueOf(request.getParameter("destroyId")));

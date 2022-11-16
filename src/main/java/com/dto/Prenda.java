@@ -36,6 +36,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Prenda.findAll", query = "SELECT p FROM Prenda p"),
   @NamedQuery(name = "Prenda.findById", query = "SELECT p FROM Prenda p WHERE p.id = :id"),
+  @NamedQuery(name = "Prenda.findByUniqueId", query = "SELECT p FROM Prenda p WHERE p.uniqueId = :uniqueId"),
   @NamedQuery(name = "Prenda.findByCantidad", query = "SELECT p FROM Prenda p WHERE p.cantidad = :cantidad"),
   @NamedQuery(name = "Prenda.findByColor", query = "SELECT p FROM Prenda p WHERE p.color = :color"),
   @NamedQuery(name = "Prenda.findByMarca", query = "SELECT p FROM Prenda p WHERE p.marca = :marca"),
@@ -52,6 +53,11 @@ public class Prenda implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
   @Column(name = "cantidad")
   private Double cantidad;
@@ -97,8 +103,9 @@ public class Prenda implements Serializable {
     this.id = id;
   }
 
-  public Prenda(Long id, String estado) {
+  public Prenda(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -108,6 +115,14 @@ public class Prenda implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public Double getCantidad() {

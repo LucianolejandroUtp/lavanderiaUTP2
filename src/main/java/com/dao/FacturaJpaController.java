@@ -139,6 +139,70 @@ public class FacturaJpaController implements Serializable {
     }
   }
 
+  public void softDelete(Factura factura) throws NonexistentEntityException, Exception {
+    EntityManager em = null;
+    try {
+      em = getEntityManager();
+      em.getTransaction().begin();
+      Factura persistentFactura = em.find(Factura.class, factura.getId());
+      Persona personaIdOld = persistentFactura.getPersonaId();
+      Persona personaIdNew = factura.getPersonaId();
+      Collection<DetalleFactura> detalleFacturaCollectionOld = persistentFactura.getDetalleFacturaCollection();
+      Collection<DetalleFactura> detalleFacturaCollectionNew = factura.getDetalleFacturaCollection();
+      if (personaIdNew != null) {
+        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+        factura.setPersonaId(personaIdNew);
+      }
+      Collection<DetalleFactura> attachedDetalleFacturaCollectionNew = new ArrayList<DetalleFactura>();
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFacturaToAttach : detalleFacturaCollectionNew) {
+        detalleFacturaCollectionNewDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionNewDetalleFacturaToAttach.getClass(), detalleFacturaCollectionNewDetalleFacturaToAttach.getId());
+        attachedDetalleFacturaCollectionNew.add(detalleFacturaCollectionNewDetalleFacturaToAttach);
+      }
+      detalleFacturaCollectionNew = attachedDetalleFacturaCollectionNew;
+      factura.setDetalleFacturaCollection(detalleFacturaCollectionNew);
+      factura = em.merge(factura);
+      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+        personaIdOld.getFacturaCollection().remove(factura);
+        personaIdOld = em.merge(personaIdOld);
+      }
+      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+        personaIdNew.getFacturaCollection().add(factura);
+        personaIdNew = em.merge(personaIdNew);
+      }
+      for (DetalleFactura detalleFacturaCollectionOldDetalleFactura : detalleFacturaCollectionOld) {
+        if (!detalleFacturaCollectionNew.contains(detalleFacturaCollectionOldDetalleFactura)) {
+          detalleFacturaCollectionOldDetalleFactura.setFacturaId(null);
+          detalleFacturaCollectionOldDetalleFactura = em.merge(detalleFacturaCollectionOldDetalleFactura);
+        }
+      }
+      for (DetalleFactura detalleFacturaCollectionNewDetalleFactura : detalleFacturaCollectionNew) {
+        if (!detalleFacturaCollectionOld.contains(detalleFacturaCollectionNewDetalleFactura)) {
+          Factura oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura = detalleFacturaCollectionNewDetalleFactura.getFacturaId();
+          detalleFacturaCollectionNewDetalleFactura.setFacturaId(factura);
+          detalleFacturaCollectionNewDetalleFactura = em.merge(detalleFacturaCollectionNewDetalleFactura);
+          if (oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura != null && !oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura.equals(factura)) {
+            oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionNewDetalleFactura);
+            oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura = em.merge(oldFacturaIdOfDetalleFacturaCollectionNewDetalleFactura);
+          }
+        }
+      }
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      String msg = ex.getLocalizedMessage();
+      if (msg == null || msg.length() == 0) {
+        Long id = factura.getId();
+        if (findFactura(id) == null) {
+          throw new NonexistentEntityException("The factura with id " + id + " no longer exists.");
+        }
+      }
+      throw ex;
+    } finally {
+      if (em != null) {
+        em.close();
+      }
+    }
+  }
+
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

@@ -33,6 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Telefono.findAll", query = "SELECT t FROM Telefono t"),
   @NamedQuery(name = "Telefono.findById", query = "SELECT t FROM Telefono t WHERE t.id = :id"),
+  @NamedQuery(name = "Telefono.findByUniqueId", query = "SELECT t FROM Telefono t WHERE t.uniqueId = :uniqueId"),
   @NamedQuery(name = "Telefono.findByDescripcion", query = "SELECT t FROM Telefono t WHERE t.descripcion = :descripcion"),
   @NamedQuery(name = "Telefono.findByEstado", query = "SELECT t FROM Telefono t WHERE t.estado = :estado"),
   @NamedQuery(name = "Telefono.findByCreatedAt", query = "SELECT t FROM Telefono t WHERE t.createdAt = :createdAt"),
@@ -45,6 +46,11 @@ public class Telefono implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Size(max = 255)
   @Column(name = "descripcion")
   private String descripcion;
@@ -70,8 +76,9 @@ public class Telefono implements Serializable {
     this.id = id;
   }
 
-  public Telefono(Long id, String estado) {
+  public Telefono(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -81,6 +88,14 @@ public class Telefono implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public String getDescripcion() {

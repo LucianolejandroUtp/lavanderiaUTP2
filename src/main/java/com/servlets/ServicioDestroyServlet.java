@@ -10,6 +10,7 @@ import com.dto.Distrito;
 import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class ServicioDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Servicio Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      ServicioJpaController jpac_object = new ServicioJpaController();
+      ServicioJpaController jpac_object = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Servicio objeto_archivado;
 
       objeto_archivado = jpac_object.findServicio(Long.valueOf(request.getParameter("destroyId")));

@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,8 +52,8 @@ public class ServicioEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editCategoriaId"));
     try {
 //      Inicialización de objetos
-      ServicioJpaController jpac_object_servicio = new ServicioJpaController();
-      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController();
+      ServicioJpaController jpac_object_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      CategoriaJpaController jpac_object_categoria = new CategoriaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Servicio oldObject_servicio;
       Categoria categoria;
 

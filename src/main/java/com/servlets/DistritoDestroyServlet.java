@@ -10,6 +10,7 @@ import com.dto.Departamento;
 import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class DistritoDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Departamento Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      DistritoJpaController jpac_object = new DistritoJpaController();
+      DistritoJpaController jpac_object = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Distrito objeto_archivado;
 
       objeto_archivado = jpac_object.findDistrito(Long.valueOf(request.getParameter("destroyId")));

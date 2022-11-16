@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -29,10 +28,6 @@ public class TipoPersonaJpaController implements Serializable {
     this.emf = emf;
   }
   private EntityManagerFactory emf = null;
-
-  public TipoPersonaJpaController() {
-    emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-  }
 
   public EntityManager getEntityManager() {
     return emf.createEntityManager();
@@ -241,5 +236,5 @@ public class TipoPersonaJpaController implements Serializable {
       em.close();
     }
   }
-
+  
 }

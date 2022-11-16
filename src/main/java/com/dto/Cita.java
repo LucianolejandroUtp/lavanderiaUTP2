@@ -33,6 +33,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
 @NamedQueries({
   @NamedQuery(name = "Cita.findAll", query = "SELECT c FROM Cita c"),
   @NamedQuery(name = "Cita.findById", query = "SELECT c FROM Cita c WHERE c.id = :id"),
+  @NamedQuery(name = "Cita.findByUniqueId", query = "SELECT c FROM Cita c WHERE c.uniqueId = :uniqueId"),
   @NamedQuery(name = "Cita.findByFecha", query = "SELECT c FROM Cita c WHERE c.fecha = :fecha"),
   @NamedQuery(name = "Cita.findByHora", query = "SELECT c FROM Cita c WHERE c.hora = :hora"),
   @NamedQuery(name = "Cita.findByEstado", query = "SELECT c FROM Cita c WHERE c.estado = :estado"),
@@ -46,6 +47,11 @@ public class Cita implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Long id;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column(name = "unique_id")
+  private String uniqueId;
   @Column(name = "fecha")
   @Temporal(TemporalType.DATE)
   private Date fecha;
@@ -77,8 +83,9 @@ public class Cita implements Serializable {
     this.id = id;
   }
 
-  public Cita(Long id, String estado) {
+  public Cita(Long id, String uniqueId, String estado) {
     this.id = id;
+    this.uniqueId = uniqueId;
     this.estado = estado;
   }
 
@@ -88,6 +95,14 @@ public class Cita implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   public Date getFecha() {

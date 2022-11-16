@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,9 +45,9 @@ public class CitaCreateServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Bandera servlet create Cita");
     try {
-      CitaJpaController jpac_object_cita = new CitaJpaController();
-      PersonaJpaController jpac_object_persona = new PersonaJpaController();
-      VehiculoJpaController jpac_object_vehiculo = new VehiculoJpaController();
+      CitaJpaController jpac_object_cita = new CitaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      VehiculoJpaController jpac_object_vehiculo = new VehiculoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       
       Cita mi_objeto_cita = new Cita();
       Persona mi_objeto_persona = new Persona();
