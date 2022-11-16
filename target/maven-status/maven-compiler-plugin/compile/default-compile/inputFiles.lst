@@ -8,6 +8,7 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\Pers
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\PreexistingEntityException.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\DetalleFactura.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TelefonoCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DetalleFacturaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DistritoCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPDestroyServlet.java
@@ -40,13 +41,13 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\Direccion
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoPersona.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\CategoriaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPEditServlet.java
-D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PersonaJpaController1.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TipoDePrendaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DistritoJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\CategoriaDestroyServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\TelefonoJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TdPrendaCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\FacturaListServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TelefonoListServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DireccionPersonaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Departamento.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\DireccionPersona.java
