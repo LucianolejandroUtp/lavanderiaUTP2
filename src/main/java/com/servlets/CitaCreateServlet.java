@@ -90,6 +90,7 @@ public class CitaCreateServlet extends HttpServlet {
 
 //      Llenando los parámetros del vehiculo obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_cita.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_cita.setFecha(testDate);
       mi_objeto_cita.setHora(time);
       mi_objeto_cita.setVehiculoId(mi_objeto_vehiculo);

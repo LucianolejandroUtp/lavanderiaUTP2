@@ -61,6 +61,7 @@ public class PersonaCreateServlet extends HttpServlet {
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_persona.setNombres(request.getParameter("addNombres"));
       mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
       mi_objeto_persona.setDni(request.getParameter("addDni"));

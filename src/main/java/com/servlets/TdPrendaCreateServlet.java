@@ -48,6 +48,7 @@ public class TdPrendaCreateServlet extends HttpServlet {
       System.out.println(ts);
 
 //      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
       mi_objeto.setEstado("activo");
       mi_objeto.setCreatedAt(ts);

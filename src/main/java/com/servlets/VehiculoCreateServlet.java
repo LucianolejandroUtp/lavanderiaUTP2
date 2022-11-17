@@ -59,6 +59,7 @@ public class VehiculoCreateServlet extends HttpServlet {
 
 //      Llenando los parámetros del vehiculo obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_vehiculo.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_vehiculo.setPlaca(request.getParameter("addPlaca"));
       mi_objeto_vehiculo.setMarca(request.getParameter("addMarca"));
       mi_objeto_vehiculo.setModelo(request.getParameter("addModelo"));

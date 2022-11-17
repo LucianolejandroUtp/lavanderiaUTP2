@@ -50,6 +50,7 @@ public class DepartamentoCreateServlet extends HttpServlet {
 //      mi_depa.setDepartamento("Arequipa");
 
 //      mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto.setDescripcion(request.getParameter("addDescripcion"));
       mi_objeto.setEstado("activo");
       mi_objeto.setCreatedAt(ts);

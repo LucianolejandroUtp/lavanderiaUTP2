@@ -56,6 +56,7 @@ public class DistritoCreateServlet extends HttpServlet {
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_distrito.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_distrito.setDescripcion(request.getParameter("addDescripcion"));
       mi_objeto_distrito.setEstado("activo");
       mi_objeto_distrito.setDepartamentoId(mi_objeto_depa);

@@ -82,6 +82,8 @@ public class FacturaCreateServlet extends HttpServlet {
       date_fecha = sdf_fecha.parse(fecha1);
       date_hora = sdf_hora.parse(hora1);
       
+      
+      mi_objeto_factura.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_factura.setFecha(date_fecha);
       mi_objeto_factura.setHora(date_hora);
       mi_objeto_factura.setPersonaId(mi_objeto_persona);

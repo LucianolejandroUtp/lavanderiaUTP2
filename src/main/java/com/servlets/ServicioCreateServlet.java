@@ -60,6 +60,7 @@ public class ServicioCreateServlet extends HttpServlet {
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
+      mi_objeto_servicio.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_servicio.setDescripcion(request.getParameter("addDescripcion"));
       mi_objeto_servicio.setDetalles(request.getParameter("addDetalles"));
       mi_objeto_servicio.setPrecio(Double.valueOf(request.getParameter("addPrecio")));
