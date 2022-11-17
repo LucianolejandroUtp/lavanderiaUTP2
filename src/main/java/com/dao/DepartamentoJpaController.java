@@ -115,56 +115,6 @@ public class DepartamentoJpaController implements Serializable {
     }
   }
 
-  public void softDelete(Departamento departamento) throws NonexistentEntityException, Exception {
-    EntityManager em = null;
-    try {
-      em = getEntityManager();
-      em.getTransaction().begin();
-      Departamento persistentDepartamento = em.find(Departamento.class, departamento.getId());
-      Collection<Distrito> distritoCollectionOld = persistentDepartamento.getDistritoCollection();
-      Collection<Distrito> distritoCollectionNew = departamento.getDistritoCollection();
-      Collection<Distrito> attachedDistritoCollectionNew = new ArrayList<Distrito>();
-      for (Distrito distritoCollectionNewDistritoToAttach : distritoCollectionNew) {
-        distritoCollectionNewDistritoToAttach = em.getReference(distritoCollectionNewDistritoToAttach.getClass(), distritoCollectionNewDistritoToAttach.getId());
-        attachedDistritoCollectionNew.add(distritoCollectionNewDistritoToAttach);
-      }
-      distritoCollectionNew = attachedDistritoCollectionNew;
-      departamento.setDistritoCollection(distritoCollectionNew);
-      departamento = em.merge(departamento);
-      for (Distrito distritoCollectionOldDistrito : distritoCollectionOld) {
-        if (!distritoCollectionNew.contains(distritoCollectionOldDistrito)) {
-          distritoCollectionOldDistrito.setDepartamentoId(null);
-          distritoCollectionOldDistrito = em.merge(distritoCollectionOldDistrito);
-        }
-      }
-      for (Distrito distritoCollectionNewDistrito : distritoCollectionNew) {
-        if (!distritoCollectionOld.contains(distritoCollectionNewDistrito)) {
-          Departamento oldDepartamentoIdOfDistritoCollectionNewDistrito = distritoCollectionNewDistrito.getDepartamentoId();
-          distritoCollectionNewDistrito.setDepartamentoId(departamento);
-          distritoCollectionNewDistrito = em.merge(distritoCollectionNewDistrito);
-          if (oldDepartamentoIdOfDistritoCollectionNewDistrito != null && !oldDepartamentoIdOfDistritoCollectionNewDistrito.equals(departamento)) {
-            oldDepartamentoIdOfDistritoCollectionNewDistrito.getDistritoCollection().remove(distritoCollectionNewDistrito);
-            oldDepartamentoIdOfDistritoCollectionNewDistrito = em.merge(oldDepartamentoIdOfDistritoCollectionNewDistrito);
-          }
-        }
-      }
-      em.getTransaction().commit();
-    } catch (Exception ex) {
-      String msg = ex.getLocalizedMessage();
-      if (msg == null || msg.length() == 0) {
-        Long id = departamento.getId();
-        if (findDepartamento(id) == null) {
-          throw new NonexistentEntityException("The departamento with id " + id + " no longer exists.");
-        }
-      }
-      throw ex;
-    } finally {
-      if (em != null) {
-        em.close();
-      }
-    }
-  }
-
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

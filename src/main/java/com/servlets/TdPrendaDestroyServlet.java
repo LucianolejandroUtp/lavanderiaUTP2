@@ -46,7 +46,7 @@ public class TdPrendaDestroyServlet extends HttpServlet {
       objeto_archivado = jpac_object.findTipoDePrenda(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
-      jpac_object.softDelete(objeto_archivado);
+      jpac_object.edit(objeto_archivado);
 
       TdPrendaListServlet call = new TdPrendaListServlet();
       call.processRequest(request, response);

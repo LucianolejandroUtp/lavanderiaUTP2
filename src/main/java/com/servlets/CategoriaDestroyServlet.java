@@ -46,7 +46,7 @@ public class CategoriaDestroyServlet extends HttpServlet {
       objeto_archivado = jpac_object.findCategoria(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
-      jpac_object.softDelete(objeto_archivado);
+      jpac_object.edit(objeto_archivado);
 
       CategoriaListServlet call = new CategoriaListServlet();
       call.processRequest(request, response);

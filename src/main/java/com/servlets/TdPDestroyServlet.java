@@ -46,7 +46,7 @@ public class TdPDestroyServlet extends HttpServlet {
       objeto_archivado = jpac_object.findTipoPersona(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
-      jpac_object.softDelete(objeto_archivado);
+      jpac_object.edit(objeto_archivado);
 
       TdPListServlet call = new TdPListServlet();
       call.processRequest(request, response);

@@ -36,6 +36,7 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Servicio.
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\PrendaCreateServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\exceptions\IllegalOrphanException.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoListServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TelefonoDestroyServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\Distrito.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\DireccionJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dto\TipoPersona.java
@@ -69,5 +70,6 @@ D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\Pren
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoEditServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\DepartamentoDestroyServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\PrendaEditServlet.java
+D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\TelefonoEditServlet.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\dao\PrendaJpaController.java
 D:\estteciclo\Integrador\Proyecto\lavanderiaUTP2\src\main\java\com\servlets\ServicioCreateServlet.java

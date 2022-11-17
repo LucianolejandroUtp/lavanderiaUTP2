@@ -116,58 +116,6 @@ public class CitaJpaController implements Serializable {
     }
   }
 
-  public void softDelete(Cita cita) throws NonexistentEntityException, Exception {
-    EntityManager em = null;
-    try {
-      em = getEntityManager();
-      em.getTransaction().begin();
-      Cita persistentCita = em.find(Cita.class, cita.getId());
-      Persona personaIdOld = persistentCita.getPersonaId();
-      Persona personaIdNew = cita.getPersonaId();
-      Vehiculo vehiculoIdOld = persistentCita.getVehiculoId();
-      Vehiculo vehiculoIdNew = cita.getVehiculoId();
-      if (personaIdNew != null) {
-        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-        cita.setPersonaId(personaIdNew);
-      }
-      if (vehiculoIdNew != null) {
-        vehiculoIdNew = em.getReference(vehiculoIdNew.getClass(), vehiculoIdNew.getId());
-        cita.setVehiculoId(vehiculoIdNew);
-      }
-      cita = em.merge(cita);
-      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-        personaIdOld.getCitaCollection().remove(cita);
-        personaIdOld = em.merge(personaIdOld);
-      }
-      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-        personaIdNew.getCitaCollection().add(cita);
-        personaIdNew = em.merge(personaIdNew);
-      }
-      if (vehiculoIdOld != null && !vehiculoIdOld.equals(vehiculoIdNew)) {
-        vehiculoIdOld.getCitaCollection().remove(cita);
-        vehiculoIdOld = em.merge(vehiculoIdOld);
-      }
-      if (vehiculoIdNew != null && !vehiculoIdNew.equals(vehiculoIdOld)) {
-        vehiculoIdNew.getCitaCollection().add(cita);
-        vehiculoIdNew = em.merge(vehiculoIdNew);
-      }
-      em.getTransaction().commit();
-    } catch (Exception ex) {
-      String msg = ex.getLocalizedMessage();
-      if (msg == null || msg.length() == 0) {
-        Long id = cita.getId();
-        if (findCita(id) == null) {
-          throw new NonexistentEntityException("The cita with id " + id + " no longer exists.");
-        }
-      }
-      throw ex;
-    } finally {
-      if (em != null) {
-        em.close();
-      }
-    }
-  }
-
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

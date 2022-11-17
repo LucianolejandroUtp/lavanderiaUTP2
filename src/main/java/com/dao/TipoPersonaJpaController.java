@@ -115,56 +115,6 @@ public class TipoPersonaJpaController implements Serializable {
     }
   }
 
-  public void softDelete(TipoPersona tipoPersona) throws NonexistentEntityException, Exception {
-    EntityManager em = null;
-    try {
-      em = getEntityManager();
-      em.getTransaction().begin();
-      TipoPersona persistentTipoPersona = em.find(TipoPersona.class, tipoPersona.getId());
-      Collection<Persona> personaCollectionOld = persistentTipoPersona.getPersonaCollection();
-      Collection<Persona> personaCollectionNew = tipoPersona.getPersonaCollection();
-      Collection<Persona> attachedPersonaCollectionNew = new ArrayList<Persona>();
-      for (Persona personaCollectionNewPersonaToAttach : personaCollectionNew) {
-        personaCollectionNewPersonaToAttach = em.getReference(personaCollectionNewPersonaToAttach.getClass(), personaCollectionNewPersonaToAttach.getId());
-        attachedPersonaCollectionNew.add(personaCollectionNewPersonaToAttach);
-      }
-      personaCollectionNew = attachedPersonaCollectionNew;
-      tipoPersona.setPersonaCollection(personaCollectionNew);
-      tipoPersona = em.merge(tipoPersona);
-      for (Persona personaCollectionOldPersona : personaCollectionOld) {
-        if (!personaCollectionNew.contains(personaCollectionOldPersona)) {
-          personaCollectionOldPersona.setTipoPersonaId(null);
-          personaCollectionOldPersona = em.merge(personaCollectionOldPersona);
-        }
-      }
-      for (Persona personaCollectionNewPersona : personaCollectionNew) {
-        if (!personaCollectionOld.contains(personaCollectionNewPersona)) {
-          TipoPersona oldTipoPersonaIdOfPersonaCollectionNewPersona = personaCollectionNewPersona.getTipoPersonaId();
-          personaCollectionNewPersona.setTipoPersonaId(tipoPersona);
-          personaCollectionNewPersona = em.merge(personaCollectionNewPersona);
-          if (oldTipoPersonaIdOfPersonaCollectionNewPersona != null && !oldTipoPersonaIdOfPersonaCollectionNewPersona.equals(tipoPersona)) {
-            oldTipoPersonaIdOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
-            oldTipoPersonaIdOfPersonaCollectionNewPersona = em.merge(oldTipoPersonaIdOfPersonaCollectionNewPersona);
-          }
-        }
-      }
-      em.getTransaction().commit();
-    } catch (Exception ex) {
-      String msg = ex.getLocalizedMessage();
-      if (msg == null || msg.length() == 0) {
-        Long id = tipoPersona.getId();
-        if (findTipoPersona(id) == null) {
-          throw new NonexistentEntityException("The tipoPersona with id " + id + " no longer exists.");
-        }
-      }
-      throw ex;
-    } finally {
-      if (em != null) {
-        em.close();
-      }
-    }
-  }
-
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

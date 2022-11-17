@@ -115,56 +115,6 @@ public class TipoDePrendaJpaController implements Serializable {
     }
   }
 
-  public void softDelete(TipoDePrenda tipoDePrenda) throws NonexistentEntityException, Exception {
-    EntityManager em = null;
-    try {
-      em = getEntityManager();
-      em.getTransaction().begin();
-      TipoDePrenda persistentTipoDePrenda = em.find(TipoDePrenda.class, tipoDePrenda.getId());
-      Collection<Prenda> prendaCollectionOld = persistentTipoDePrenda.getPrendaCollection();
-      Collection<Prenda> prendaCollectionNew = tipoDePrenda.getPrendaCollection();
-      Collection<Prenda> attachedPrendaCollectionNew = new ArrayList<Prenda>();
-      for (Prenda prendaCollectionNewPrendaToAttach : prendaCollectionNew) {
-        prendaCollectionNewPrendaToAttach = em.getReference(prendaCollectionNewPrendaToAttach.getClass(), prendaCollectionNewPrendaToAttach.getId());
-        attachedPrendaCollectionNew.add(prendaCollectionNewPrendaToAttach);
-      }
-      prendaCollectionNew = attachedPrendaCollectionNew;
-      tipoDePrenda.setPrendaCollection(prendaCollectionNew);
-      tipoDePrenda = em.merge(tipoDePrenda);
-      for (Prenda prendaCollectionOldPrenda : prendaCollectionOld) {
-        if (!prendaCollectionNew.contains(prendaCollectionOldPrenda)) {
-          prendaCollectionOldPrenda.setTipoDePrendaId(null);
-          prendaCollectionOldPrenda = em.merge(prendaCollectionOldPrenda);
-        }
-      }
-      for (Prenda prendaCollectionNewPrenda : prendaCollectionNew) {
-        if (!prendaCollectionOld.contains(prendaCollectionNewPrenda)) {
-          TipoDePrenda oldTipoDePrendaIdOfPrendaCollectionNewPrenda = prendaCollectionNewPrenda.getTipoDePrendaId();
-          prendaCollectionNewPrenda.setTipoDePrendaId(tipoDePrenda);
-          prendaCollectionNewPrenda = em.merge(prendaCollectionNewPrenda);
-          if (oldTipoDePrendaIdOfPrendaCollectionNewPrenda != null && !oldTipoDePrendaIdOfPrendaCollectionNewPrenda.equals(tipoDePrenda)) {
-            oldTipoDePrendaIdOfPrendaCollectionNewPrenda.getPrendaCollection().remove(prendaCollectionNewPrenda);
-            oldTipoDePrendaIdOfPrendaCollectionNewPrenda = em.merge(oldTipoDePrendaIdOfPrendaCollectionNewPrenda);
-          }
-        }
-      }
-      em.getTransaction().commit();
-    } catch (Exception ex) {
-      String msg = ex.getLocalizedMessage();
-      if (msg == null || msg.length() == 0) {
-        Long id = tipoDePrenda.getId();
-        if (findTipoDePrenda(id) == null) {
-          throw new NonexistentEntityException("The tipoDePrenda with id " + id + " no longer exists.");
-        }
-      }
-      throw ex;
-    } finally {
-      if (em != null) {
-        em.close();
-      }
-    }
-  }
-
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {

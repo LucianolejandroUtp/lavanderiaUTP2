@@ -46,7 +46,7 @@ public class ServicioDestroyServlet extends HttpServlet {
       objeto_archivado = jpac_object.findServicio(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
-      jpac_object.softDelete(objeto_archivado);
+      jpac_object.edit(objeto_archivado);
 
       ServicioListServlet call = new ServicioListServlet();
       call.processRequest(request, response);

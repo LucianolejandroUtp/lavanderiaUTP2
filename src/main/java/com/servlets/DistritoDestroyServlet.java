@@ -46,7 +46,7 @@ public class DistritoDestroyServlet extends HttpServlet {
       objeto_archivado = jpac_object.findDistrito(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
-      jpac_object.softDelete(objeto_archivado);
+      jpac_object.edit(objeto_archivado);
 
       DistritoListServlet call = new DistritoListServlet();
       call.processRequest(request, response);

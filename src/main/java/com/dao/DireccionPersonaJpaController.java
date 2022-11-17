@@ -116,58 +116,6 @@ public class DireccionPersonaJpaController implements Serializable {
     }
   }
 
-  public void softDelete(DireccionPersona direccionPersona) throws NonexistentEntityException, Exception {
-    EntityManager em = null;
-    try {
-      em = getEntityManager();
-      em.getTransaction().begin();
-      DireccionPersona persistentDireccionPersona = em.find(DireccionPersona.class, direccionPersona.getId());
-      Direccion direccionIdOld = persistentDireccionPersona.getDireccionId();
-      Direccion direccionIdNew = direccionPersona.getDireccionId();
-      Persona personaIdOld = persistentDireccionPersona.getPersonaId();
-      Persona personaIdNew = direccionPersona.getPersonaId();
-      if (direccionIdNew != null) {
-        direccionIdNew = em.getReference(direccionIdNew.getClass(), direccionIdNew.getId());
-        direccionPersona.setDireccionId(direccionIdNew);
-      }
-      if (personaIdNew != null) {
-        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-        direccionPersona.setPersonaId(personaIdNew);
-      }
-      direccionPersona = em.merge(direccionPersona);
-      if (direccionIdOld != null && !direccionIdOld.equals(direccionIdNew)) {
-        direccionIdOld.getDireccionPersonaCollection().remove(direccionPersona);
-        direccionIdOld = em.merge(direccionIdOld);
-      }
-      if (direccionIdNew != null && !direccionIdNew.equals(direccionIdOld)) {
-        direccionIdNew.getDireccionPersonaCollection().add(direccionPersona);
-        direccionIdNew = em.merge(direccionIdNew);
-      }
-      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-        personaIdOld.getDireccionPersonaCollection().remove(direccionPersona);
-        personaIdOld = em.merge(personaIdOld);
-      }
-      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-        personaIdNew.getDireccionPersonaCollection().add(direccionPersona);
-        personaIdNew = em.merge(personaIdNew);
-      }
-      em.getTransaction().commit();
-    } catch (Exception ex) {
-      String msg = ex.getLocalizedMessage();
-      if (msg == null || msg.length() == 0) {
-        Long id = direccionPersona.getId();
-        if (findDireccionPersona(id) == null) {
-          throw new NonexistentEntityException("The direccionPersona with id " + id + " no longer exists.");
-        }
-      }
-      throw ex;
-    } finally {
-      if (em != null) {
-        em.close();
-      }
-    }
-  }
-
   public void destroy(Long id) throws NonexistentEntityException {
     EntityManager em = null;
     try {
