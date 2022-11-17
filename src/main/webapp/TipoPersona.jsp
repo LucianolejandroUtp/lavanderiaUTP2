@@ -96,10 +96,12 @@
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
                       <div class="form-button-action">
-                        <button data-target="#${tempObjeto.id }" type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                data-target="#${tempObjeto.uniqueId}">
                           <i class="fa fa-edit"></i>
                         </button>
-                        <button data-target="#${tempObjeto.id }${tempObjeto.id }" type="button" data-toggle="modal" class="btn btn-link btn-danger">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
                           <i class="fa fa-times"></i>
                         </button>
                       </div>
@@ -109,7 +111,7 @@
 
 
                   <!-- Modal Eliminar -->
-                <div class="modal fade" id="${tempObjeto.id }${tempObjeto.id }" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -147,7 +149,7 @@
                 </div>
 
                 <!-- Modal Editar -->
-                <div class="modal fade" id="${tempObjeto.id }" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">

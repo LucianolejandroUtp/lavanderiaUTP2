@@ -84,11 +84,11 @@
                     <td>
                       <div class="form-button-action">
                         <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
-                                data-target="#${tempObjeto.id}${tempObjeto.descripcion}" id="submit">
+                                data-target="#${tempObjeto.uniqueId}">
                           <i class="fa fa-edit"></i>
                         </button>
                         <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
-                                data-target="#${tempObjeto.id }${tempObjeto.id }${tempObjeto.descripcion}">
+                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
                           <i class="fa fa-times"></i>
                         </button>
                       </div>
@@ -97,7 +97,7 @@
 
 
                   <!-- Modal Eliminar -->
-                <div class="modal fade" id="${tempObjeto.id }${tempObjeto.id }${tempObjeto.descripcion}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -140,7 +140,7 @@
                 </div>
 
                 <!-- Modal Editar -->
-                <div class="modal fade" id="${tempObjeto.id }${tempObjeto.descripcion}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -169,7 +169,7 @@
                               </div>
 
                               <div class="form-group form-group-default">
-                                <label>Select</label>
+                                <label>Estado</label>
                                 <select class="form-control" name="editEstado" id="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>

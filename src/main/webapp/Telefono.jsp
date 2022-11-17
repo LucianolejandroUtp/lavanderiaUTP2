@@ -97,10 +97,12 @@
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
                       <div class="form-button-action">
-                        <button data-target="#${tempObjeto.uniqueId}" type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                data-target="#${tempObjeto.uniqueId}">
                           <i class="fa fa-edit"></i>
                         </button>
-                        <button data-target="#${tempObjeto.id}${tempObjeto.uniqueId}" type="button" data-toggle="modal" class="btn btn-link btn-danger">
+                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
                           <i class="fa fa-times"></i>
                         </button>
                       </div>
