@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group form-group-default">
                           <label>Hora</label>
-                          <input required name="addHora" type="time" class="form-control" step="1">
+                          <input required name="addHora" type="time" class="form-control">
                         </div>
 
                         <div class="form-group form-group-default">
@@ -199,7 +199,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Número</label>
-                                <input required name="editNumero" type="number" class="form-control" value="${tempObjeto.numero }">
+                                <input required name="editNumero" type="text" class="form-control" value="${tempObjeto.numero }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Serie</label>
@@ -207,18 +207,18 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Tipo</label>
-                                <input required name="editTipo" type="number" class="form-control" value="${tempObjeto.tipo }">
+                                <input required name="editTipo" type="text" class="form-control" value="${tempObjeto.tipo }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Fecha</label>
-                                <input required name="editFecha" type="number" class="form-control" value="${tempObjeto.fecha }">
+                                <input required name="editFecha" type="date" class="form-control" value="${tempObjeto.fecha }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Hora</label>
-                                <input required name="editHora" type="number" class="form-control" value="${tempObjeto.hora }">
+                                <input required name="editHora" type="time" class="form-control" value="${tempObjeto.hora }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Categoría</label>
+                                <label>Persona</label>
                                 <select class="form-control" name="editPersonaId">
                                   <c:forEach var="tempObjetoEdit" items="${mi_lista_de_personas }">
                                     <option value="${tempObjetoEdit.id }">${tempObjetoEdit.nombres }</option>
@@ -227,8 +227,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
-
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <select class="form-control" name="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->

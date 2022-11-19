@@ -55,7 +55,7 @@ public class FacturaCreateServlet extends HttpServlet {
       Persona mi_objeto_persona = new Persona();
 
       SimpleDateFormat sdf_fecha = new SimpleDateFormat("yyyy-MM-dd");
-      SimpleDateFormat sdf_hora = new SimpleDateFormat("HH:mm:ss");
+      SimpleDateFormat sdf_hora = new SimpleDateFormat("HH:mm");
       
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());

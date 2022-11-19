@@ -4,8 +4,13 @@
  */
 package com.servlets;
 
+import com.dao.PrendaJpaController;
+import com.dao.ServicioJpaController;
+import com.dto.Prenda;
+import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +36,24 @@ public class PrendaDestroyServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+
+    System.out.println("Entrando a Prenda Destroy Servlet");
+    System.out.println(request.getParameter("destroyId"));
+    try {
+      PrendaJpaController jpac_object = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      Prenda objeto_archivado;
+
+      objeto_archivado = jpac_object.findPrenda(Long.valueOf(request.getParameter("destroyId")));
+
+      objeto_archivado.setEstado("eliminado");
+      jpac_object.edit(objeto_archivado);
+
+      PrendaListServlet call = new PrendaListServlet();
+      call.processRequest(request, response);
+
+    } catch (Exception theException) {
+      System.out.println(theException);
+    }
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

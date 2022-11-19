@@ -74,24 +74,34 @@ public class ServicioEditServlet extends HttpServlet {
       oldObject_servicio = jpac_object_servicio.findServicio(Long.valueOf(request.getParameter("editId")));
       System.out.println("El Servicio obtenido es: " + oldObject_servicio);
 
+      
+//      if(oldObject_servicio.getDescripcion().isBlank()){
+//        System.out.println("Descripción vacía o con espacios en blanco");
+//      }
+      
 //      Comparando y asignando nuevos valores al objeto
-      if (!oldObject_servicio.getDescripcion().equals(request.getParameter("editDescripcion"))) {
+      if (oldObject_servicio.getDescripcion() == null || !oldObject_servicio.getDescripcion().equals(request.getParameter("editDescripcion"))) {
         oldObject_servicio.setDescripcion(request.getParameter("editDescripcion"));
       }
-      if (!oldObject_servicio.getDetalles().equals(request.getParameter("editDetalles"))) {
+      if (oldObject_servicio.getDetalles() == null || !oldObject_servicio.getDetalles().equals(request.getParameter("editDetalles"))) {
+        
         oldObject_servicio.setDetalles(request.getParameter("editDetalles"));
       }
       
-      BigDecimal old = new BigDecimal(oldObject_servicio.getPrecio());
-      BigDecimal nuevo = new BigDecimal(request.getParameter("editPrecio"));
+//      BigDecimal old = new BigDecimal(oldObject_servicio.getPrecio());
+//      BigDecimal nuevo = new BigDecimal(request.getParameter("editPrecio"));
       
-      if(old.compareTo(nuevo) != 0){
+      if(oldObject_servicio.getPrecio() == null || oldObject_servicio.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio"))) != 0){
         oldObject_servicio.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
       }
+      
+//      if(old.compareTo(nuevo) != 0){
+//        oldObject_servicio.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
+//      }
 //      if (oldObject_servicio.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio")))!=0) {
 //        oldObject_servicio.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
 //      }
-      if (!oldObject_servicio.getEstado().equals(request.getParameter("editEstado"))) {
+      if (oldObject_servicio.getEstado() == null || !oldObject_servicio.getEstado().equals(request.getParameter("editEstado"))) {
         oldObject_servicio.setEstado(request.getParameter("editEstado"));
       }
       if (!oldObject_servicio.getCategoriaId().equals(categoria)) {
@@ -112,6 +122,7 @@ public class ServicioEditServlet extends HttpServlet {
       call.processRequest(request, response);
 
     } catch (Exception theException) {
+
       System.out.println(theException);
     }
   }

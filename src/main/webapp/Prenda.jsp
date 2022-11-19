@@ -10,7 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<t:template title="Listar Servicios">
+<t:template title="Listar Prendas">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
@@ -113,9 +113,9 @@
                   <th>Peso</th>
                   <th>Observación</th>
                   <th>Estado</th>
-                  <th>Peso</th>
-                  <th>Tipo de Prenda</th>
+                  <th>Tipo</th>
                   <th>Persona</th>
+                  <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
@@ -158,7 +158,7 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">este servicio?</span>
+                          <span class="fw-light">esta prenda?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
@@ -173,8 +173,12 @@
                                 <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input name="destroyObject" id="destroyObject" type="text" class="form-control" value="${tempObjeto.marca }" readonly>
+                                <label>Tipo</label>
+                                <input type="text" class="form-control" value="${tempObjeto.tipoDePrendaId.descripcion}" readonly>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Marca</label>
+                                <input type="text" class="form-control" value="${tempObjeto.marca}" readonly>
                               </div>
 
                             </div>
@@ -197,7 +201,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Servicio
+                            Prenda
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -255,7 +259,7 @@
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
 
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <select class="form-control" name="editEstado"">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->
