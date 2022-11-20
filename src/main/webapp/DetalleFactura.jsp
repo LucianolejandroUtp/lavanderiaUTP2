@@ -72,7 +72,7 @@
 
                         <div class="form-group form-group-default">
                           <label>Factura</label>
-                          <select class="form-control" name="addTdPrendaId" id="addFacturaId">
+                          <select class="form-control" name="addFacturaId">
                             <c:forEach var="tempObjetoCreate" items="${mi_lista_de_facturas }">
                               <option value="${tempObjetoCreate.id }">${tempObjetoCreate.numero } - ${tempObjetoCreate.serie}</option>
                             </c:forEach>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group form-group-default">
                           <label>Servicio</label>
-                          <select class="form-control" name="addPersonaId" id="addServicioId">
+                          <select class="form-control" name="addServicioId">
                             <c:forEach var="tempObjetoCreate2" items="${mi_lista_de_servicios }">
                               <option value="${tempObjetoCreate2.id }">${tempObjetoCreate2.descripcion} - ${tempObjetoCreate2.precio}</option>
                             </c:forEach>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="form-group form-group-default">
                           <label>Prenda</label>
-                          <select class="form-control" name="addTdPrendaId" id="addPrendaId">
+                          <select class="form-control" name="addPrendaId">
                             <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_prendas }">
                               <option value="${tempObjetoCreate3.id }">${tempObjetoCreate3.cantidad } - ${tempObjetoCreate3.peso} - ${tempObjetoCreate3.marca }</option>
                             </c:forEach>
@@ -178,7 +178,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Total</label>
-                                <input name="destroyObject" id="destroyObject" type="text" class="form-control" value="${tempObjeto.total }" readonly>
+                                <input type="text" class="form-control" value="${tempObjeto.total }" readonly>
                               </div>
 
                             </div>
