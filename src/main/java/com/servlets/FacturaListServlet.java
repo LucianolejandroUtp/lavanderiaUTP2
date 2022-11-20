@@ -14,6 +14,7 @@ import com.dto.Persona;
 import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -42,8 +43,7 @@ public class FacturaListServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
-    
+
     System.out.println("Entrando a Factura List Servlet");
     try {
       FacturaJpaController jpac_object_factura = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
@@ -55,7 +55,10 @@ public class FacturaListServlet extends HttpServlet {
       mi_lista_de_facturas = jpac_object_factura.findFacturaEntities();
       mi_lista_de_personas = jpac_object_persona.findPersonaEntities();
 
+      DateTimeFormatter myFormatFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//      LocalDateTime mi_fecha = LocalDateTime.now();
       for (Factura temp1 : mi_lista_de_facturas) {
+        temp1.setFecha(temp1.getFecha());
         System.out.println(temp1.getId() + " - " + temp1.getNumero());
       }
       for (Persona temp2 : mi_lista_de_personas) {

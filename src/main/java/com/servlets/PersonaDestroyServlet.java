@@ -4,18 +4,12 @@
  */
 package com.servlets;
 
-import com.dao.DepartamentoJpaController;
-import com.dao.DistritoJpaController;
+import com.dao.FacturaJpaController;
 import com.dao.PersonaJpaController;
-import com.dao.TipoPersonaJpaController;
-import com.dto.Departamento;
-import com.dto.Distrito;
+import com.dto.Factura;
 import com.dto.Persona;
-import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.util.Date;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "PersonaCreateServlet", urlPatterns = {"/PersonaCreateServlet"})
-public class PersonaCreateServlet extends HttpServlet {
+@WebServlet(name = "PersonaDestroyServlet", urlPatterns = {"/PersonaDestroyServlet"})
+public class PersonaDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,48 +37,23 @@ public class PersonaCreateServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     
-    System.out.println("Bandera servlet create Persona");
+    System.out.println("Entrando a Persona Destroy Servlet");
+    System.out.println(request.getParameter("destroyId"));
     try {
-      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Persona mi_objeto_persona = new Persona();
-      TipoPersona mi_objeto_TdP = new TipoPersona();
+      PersonaJpaController jpac_object = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      Persona objeto_archivado;
 
-      Date dt = new Date();
-      Timestamp ts = new Timestamp(dt.getTime());
-      System.out.println(ts);
+      objeto_archivado = jpac_object.findPersona(Long.valueOf(request.getParameter("destroyId")));
 
-      
-//      Obteniendo el Tipo dePpersona en base al Id obtenido de la vista
-      mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(request.getParameter("addTdPersonaId")));
-      System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() +" - "+ mi_objeto_TdP.getId());
+      objeto_archivado.setEstado("eliminado");
+      jpac_object.edit(objeto_archivado);
 
-//      Llenando los parámetros del distrito obtenidos de la vista
-//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      mi_objeto_persona.setNombres(request.getParameter("addNombres"));
-      mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
-      mi_objeto_persona.setDni(request.getParameter("addDni"));
-      mi_objeto_persona.setEmail(request.getParameter("addEmail"));
-      mi_objeto_persona.setPassword(request.getParameter("addPassword"));
-      mi_objeto_persona.setEstado("activo");
-      mi_objeto_persona.setTipoPersonaId(mi_objeto_TdP);
-      mi_objeto_persona.setCreatedAt(ts);
-      mi_objeto_persona.setUpdatedAt(ts);
-
-//      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpac_object_persona.create(mi_objeto_persona);
-
-//      Llamando al listALGO.jsp
       PersonaListServlet call = new PersonaListServlet();
       call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
-    } catch (IOException | ServletException theException) {
+    } catch (Exception theException) {
       System.out.println(theException);
     }
-    
-    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

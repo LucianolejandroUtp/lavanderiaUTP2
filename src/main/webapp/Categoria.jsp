@@ -196,5 +196,16 @@
       </div>
     </div>
 
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script>
+      // Add Row
+      $('#add-row').DataTable({
+        "pageLength": 5,
+      });
+    </script>
+
   </jsp:attribute>
 </t:template>

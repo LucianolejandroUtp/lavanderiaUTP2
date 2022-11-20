@@ -16,6 +16,7 @@
   <jsp:attribute name="body_area">
 
 
+
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -72,9 +73,9 @@
 
                         <div class="form-group form-group-default">
                           <label>Tipo de Persona</label>
-                          <select class="form-control" name="addTdP" id="addTdP">
-                            <c:forEach var="TdPObjetoTemp" items="${mi_lista_de_TdP }">
-                              <option value="${TdPObjetoTemp.id }">${TdPObjetoTemp.descripcion }</option>
+                          <select class="form-control" name="addTdPersonaId">
+                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_TdP }">
+                              <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
                             </c:forEach>
 
                           </select>
@@ -92,7 +93,7 @@
           </div>
 
           <div class="table-responsive">
-            <table id="add-row" class="display table table-striped table-hover" >
+            <table id="add-row" class="display table table-striped table-hover" cellspacing="0" width="100%">
               <thead>
                 <tr>
                   <th>Nombres</th>
@@ -114,7 +115,7 @@
                     <td>${tempObjeto.apellidos}</td>
                     <td>${tempObjeto.dni}</td>
                     <td>${tempObjeto.email}</td>
-                    <td>${tempObjeto.password}</td>
+                    <td>******</td>
                     <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.tipoPersonaId.descripcion}</td>
                     <td>${tempObjeto.createdAt }</td>
@@ -143,23 +144,27 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">este distrito?</span>
+                          <span class="fw-light">esta Persona?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoDestroyServlet" method="post">
+                        <form  action="PersonaDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroy_distrito_id" id="destroy_distrito_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input name="destroy_distrito_departamento" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.nombres }" readonly>
+                                <label>Nombres</label>
+                                <input type="text" class="form-control" value="${tempObjeto.nombres }" readonly>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control" value="${tempObjeto.apellidos }" readonly>
                               </div>
 
                             </div>
@@ -182,7 +187,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Distrito
+                            Persona
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -190,29 +195,44 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoEditServlet" method="post">
+                        <form  action="PersonaEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="edit_distrito_id" id="edit_distrito_id" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input required name="edit_distrito_descripcion" id="edit_distrito_descripcion" type="text" class="form-control" value="${tempObjeto.nombres }">
+                                <label>Nombres</label>
+                                <input required name="editNombres" type="text" class="form-control" value="${tempObjeto.nombres }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Departamento</label>
-                                <select class="form-control" name="edit_distrito_depaId" id="edit_distrito_depaId">
-                                  <c:forEach var="departamentoObjetoTemp" items="${mi_lista_de_departamentos }">
-                                    <option value="${departamentoObjetoTemp.id }">${departamentoObjetoTemp.descripcion }</option>
+                                <label>Apellidos</label>
+                                <input required name="editApellidos" type="text" class="form-control" value="${tempObjeto.apellidos }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>DNI</label>
+                                <input required name="editDni" type="text" class="form-control" value="${tempObjeto.dni }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Email</label>
+                                <input required name="editEmail" type="text" class="form-control" value="${tempObjeto.email }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Password</label>
+                                <input required name="editPassword" type="text" class="form-control" value="${tempObjeto.password }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Tipo de Persona</label>
+                                <select class="form-control" name="editTdPersonaId">
+                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_TdP }">
+                                    <option value="${tempObjetoEdit.id }">${tempObjetoEdit.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Select</label>
-
-                                <select class="form-control" name="edit_distrito_estado" id="edit_distrito_estado">
+                                <label>Estado</label>
+                                <select class="form-control" name="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->
@@ -233,13 +253,23 @@
               </c:forEach>
 
               </tbody>
+
             </table>
           </div>
         </div>
       </div>
     </div>
 
-
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script>
+      // Add Row
+      $('#add-row').DataTable({
+        "pageLength": 5,
+      });
+    </script>
 
   </jsp:attribute>
 </t:template>

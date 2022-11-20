@@ -113,7 +113,7 @@
                     <td>${tempObjeto.numero }</td>
                     <td>${tempObjeto.serie}</td>
                     <td>${tempObjeto.tipo}</td>
-                    <td>${tempObjeto.fecha}</td>
+                    <td><time>${tempObjeto.fecha}</time></td>
                     <td>${tempObjeto.hora}</td>
                     <td>${tempObjeto.personaId.nombres}</td>
                     <td>${tempObjeto.estado}</td>
@@ -155,7 +155,7 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Número</label>
@@ -253,6 +253,17 @@
         </div>
       </div>
     </div>
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script>
+      // Add Row
+      $('#add-row').DataTable({
+        "pageLength": 5,
+      });
+    </script>
 
   </jsp:attribute>
 </t:template>
