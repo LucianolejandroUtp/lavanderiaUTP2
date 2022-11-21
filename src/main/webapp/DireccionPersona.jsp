@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Direccion
-    Created on : 20 nov. 2022, 11:27:18
+    Document   : DireccionPersona
+    Created on : 21 nov. 2022, 00:24:53
     Author     : desti
 --%>
 
@@ -10,7 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<t:template title="Listar Direcciones">
+<t:template title="Listar DireccionPersona">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
@@ -20,10 +20,10 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Direcciones</h4>
+            <h4 class="card-title">Prendas</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Dirección
+              Añadir DireccionPersona
             </button>
           </div>
         </div>
@@ -38,7 +38,7 @@
                     <span class="fw-mediumbold">
                       Nueva</span> 
                     <span class="fw-light">
-                      Dirección
+                      DireccionPersona
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,25 +46,27 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="DireccionCreateServlet" method="post">
+                  <form  action="DireccionPersonaCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
+<!--                        <div class="form-group form-group-default">
+                          <label>Cantidad</label>
+                          <input required name="addCantidad" type="number" class="form-control">
+                        </div>-->
                         <div class="form-group form-group-default">
                           <label>Dirección</label>
-                          <input required name="addDireccion" type="text" class="form-control">
-                        </div>
-                        <div class="form-group form-group-default">
-                          <label>Referencia</label>
-                          <input required name="addReferencia" type="text" class="form-control">
-                        </div>
-                        
-                        <div class="form-group form-group-default">
-                          <label>Distritos</label>
-                          <select class="form-control" name="addDistritoId">
-                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_distritos }">
+                          <select class="form-control" name="addDireccionId">
+                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_direcciones }">
                               <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
                             </c:forEach>
-
+                          </select>
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Persona</label>
+                          <select class="form-control" name="addPersonaId">
+                            <c:forEach var="tempObjetoCreate2" items="${mi_lista_de_personas }">
+                              <option value="${tempObjetoCreate2.id }">${tempObjetoCreate2.nombres }</option>
+                            </c:forEach>
                           </select>
                         </div>
                       </div>
@@ -83,22 +85,20 @@
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
                 <tr>
-                  <th>Dirección</th>
-                  <th>Referencia</th>
-                  <th>Distrito</th>
                   <th>Estado</th>
+                  <th>Dirección</th>
+                  <th>Persona</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_direcciones }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_dirPer }">
                   <tr>
-                    <td>${tempObjeto.descripcion }</td>
-                    <td>${tempObjeto.referencia}</td>
-                    <td>${tempObjeto.distritoId.descripcion}</td>
                     <td>${tempObjeto.estado}</td>
+                    <td>${tempObjeto.direccionId.descripcion}</td>
+                    <td>${tempObjeto.personaId.nombres}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
@@ -125,25 +125,24 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">esta dirección?</span>
+                          <span class="fw-light">esta DirecciónPersona?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DireccionDestroyServlet" method="post">
+                        <form  action="DireccionPersonaDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Dirección</label>
-                                <input type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <label>UniqueId</label>
+                                <input type="text" class="form-control" value="${tempObjeto.uniqueId}" readonly>
                               </div>
-
                             </div>
                             <div class="col-md-6">
                               <button type="submit" class="btn btn-danger">Borrar</button>
@@ -164,7 +163,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Dirección
+                            Prenda
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -172,7 +171,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DireccionEditServlet" method="post">
+                        <form  action="DireccionPersonaEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -180,24 +179,28 @@
                                 <input name="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
+                                <label>UniqueId</label>
+                                <input type="text" class="form-control" value="${tempObjeto.uniqueId }" readonly>
+                              </div>
+                              <div class="form-group form-group-default">
                                 <label>Dirección</label>
-                                <input required name="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
-                              </div>
-                              <div class="form-group form-group-default">
-                                <label>Referencia</label>
-                                <input required name="editReferencia" type="text" class="form-control" value="${tempObjeto.referencia }">
-                              </div>
-                              <div class="form-group form-group-default">
-                                <label>Distrito</label>
-                                <select class="form-control" name="editDistritoId">
-                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_distritos }">
+                                <select class="form-control" name="editDireccionId">
+                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_direcciones }">
                                     <option value="${tempObjetoEdit.id }">${tempObjetoEdit.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
+                                <label>Persona</label>
+                                <select class="form-control" name="editPersonaId">
+                                  <c:forEach var="tempObjetoEdit2" items="${mi_lista_de_personas }">
+                                    <option value="${tempObjetoEdit2.id }">${tempObjetoEdit2.nombres }</option>
+                                  </c:forEach>
+                                </select>
+                              </div>
+                              <div class="form-group form-group-default">
                                 <label>Estado</label>
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <select class="form-control" name="editEstado"">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->
