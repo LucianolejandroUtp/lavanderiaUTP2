@@ -42,7 +42,7 @@ public class PersonaCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
+
     System.out.println("Bandera servlet create Persona");
     try {
       PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
@@ -54,17 +54,26 @@ public class PersonaCreateServlet extends HttpServlet {
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
 
-      
-//      Obteniendo el Tipo dePpersona en base al Id obtenido de la vista
-      mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(request.getParameter("addTdPersonaId")));
-      System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() +" - "+ mi_objeto_TdP.getId());
+//      System.out.println("Tipo de persona: "+request.getParameter("addTdPersonaId"));
+      if (request.getParameter("addTdPersonaId") == null) {
+        System.out.println("Tipo de persona vacío, viene del register");
+        mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(2));
+        System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() + " - " + mi_objeto_TdP.getId());
 
-//      Llenando los parámetros del distrito obtenidos de la vista
+      } else {
+//        Llenando datos  que únicamente se reciben desde Persona.jsp
+//      Obteniendo el Tipo dePpersona en base al Id obtenido de la vista
+        mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(request.getParameter("addTdPersonaId")));
+        System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() + " - " + mi_objeto_TdP.getId());
+
+        mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
+        mi_objeto_persona.setDni(request.getParameter("addDni"));
+      }
+
+//      Llenando los parámetros independientes del tipo de persona obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
       mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_persona.setNombres(request.getParameter("addNombres"));
-      mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
-      mi_objeto_persona.setDni(request.getParameter("addDni"));
       mi_objeto_persona.setEmail(request.getParameter("addEmail"));
       mi_objeto_persona.setPassword(request.getParameter("addPassword"));
       mi_objeto_persona.setEstado("activo");
@@ -75,16 +84,18 @@ public class PersonaCreateServlet extends HttpServlet {
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
       jpac_object_persona.create(mi_objeto_persona);
 
+      if (request.getParameter("addTdPersonaId") == null) {
+        response.sendRedirect("index.jsp");
+      } else {
 //      Llamando al listALGO.jsp
-      PersonaListServlet call = new PersonaListServlet();
-      call.processRequest(request, response);
+        PersonaListServlet call = new PersonaListServlet();
+        call.processRequest(request, response);
+      }
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
-    
-    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

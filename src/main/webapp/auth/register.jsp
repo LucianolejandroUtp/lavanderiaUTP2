@@ -36,9 +36,9 @@
         <div class="card-body register-card-body">
           <p class="login-box-msg">Registrar un nuevo miembro</p>
 
-          <form action="#" method="post">
+          <form action="../PersonaCreateServlet" method="post">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Nombres">
+              <input required name="addNombres" type="text" class="form-control" placeholder="Nombres">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email">
+              <input required name="addEmail" type="email" class="form-control" placeholder="Email">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Contraseña">
+              <input required name="addPassword" type="password" class="form-control" placeholder="Contraseña">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
