@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 /**
  *
@@ -49,7 +50,9 @@ public class PersonaCreateServlet extends HttpServlet {
       TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Persona mi_objeto_persona = new Persona();
       TipoPersona mi_objeto_TdP = new TipoPersona();
-
+      String contrasenia = null;
+      BasicPasswordEncryptor bpe = new BasicPasswordEncryptor();
+      
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
@@ -75,7 +78,10 @@ public class PersonaCreateServlet extends HttpServlet {
       mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
       mi_objeto_persona.setNombres(request.getParameter("addNombres"));
       mi_objeto_persona.setEmail(request.getParameter("addEmail"));
-      mi_objeto_persona.setPassword(request.getParameter("addPassword"));
+
+      contrasenia = bpe.encryptPassword(String.valueOf(request.getParameter("addPassword")));
+      mi_objeto_persona.setPassword(contrasenia);
+
       mi_objeto_persona.setEstado("activo");
       mi_objeto_persona.setTipoPersonaId(mi_objeto_TdP);
       mi_objeto_persona.setCreatedAt(ts);

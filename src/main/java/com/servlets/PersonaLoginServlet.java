@@ -18,6 +18,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jasypt.util.password.BasicPasswordEncryptor;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  *
@@ -46,13 +48,16 @@ public class PersonaLoginServlet extends HttpServlet {
       List<Persona> mi_lista_de_personas = new ArrayList<>();
       List<TipoPersona> mi_lista_de_TdP = new ArrayList<>();
       int banderaLogin = 0;
+      BasicPasswordEncryptor passEnc = new BasicPasswordEncryptor();
+
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
       mi_lista_de_personas = jpac_obj_persona.findPersonaEntities();
       mi_lista_de_TdP = jpac_obj_TdP.findTipoPersonaEntities();
       for (Persona per : mi_lista_de_personas) {
         System.out.println(per.getId() + " - " + per.getNombres() + " - " + per.getEmail() + " - " + per.getPassword() + " - " + per.getTipoPersonaId().getDescripcion());
-        if (per.getEmail().equals(request.getParameter("loginEmail")) && per.getPassword().equals(request.getParameter("loginPassword"))) {
+        
+        if (per.getEmail().equals(request.getParameter("loginEmail")) && passEnc.checkPassword(request.getParameter("loginPassword"), per.getPassword())) {
           banderaLogin = 1;
         }
       }
@@ -64,7 +69,6 @@ public class PersonaLoginServlet extends HttpServlet {
     } catch (IOException theException) {
       System.out.println(theException);
     }
-
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,5 +109,5 @@ public class PersonaLoginServlet extends HttpServlet {
   public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
-
+  
 }

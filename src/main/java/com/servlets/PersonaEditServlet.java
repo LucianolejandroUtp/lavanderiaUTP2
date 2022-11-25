@@ -21,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 /**
  *
@@ -57,6 +58,7 @@ public class PersonaEditServlet extends HttpServlet {
       TipoPersonaJpaController jpac_obj_TdPersona = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Persona oldObject_persona;
       TipoPersona mi_TdPersona;
+      BasicPasswordEncryptor passEnc = new BasicPasswordEncryptor();
 
 //      Lo relacionado a la fecha
       
@@ -89,8 +91,8 @@ public class PersonaEditServlet extends HttpServlet {
       if (oldObject_persona.getEmail()== null || !oldObject_persona.getEmail().equals(request.getParameter("editEmail"))) {
         oldObject_persona.setEmail(request.getParameter("editEmail"));
       }
-      if (oldObject_persona.getPassword()== null || !oldObject_persona.getPassword().equals(request.getParameter("editPassword"))) {
-        oldObject_persona.setPassword(request.getParameter("editPassword"));
+      if (oldObject_persona.getPassword()== null || !passEnc.checkPassword(request.getParameter("editPassword"), oldObject_persona.getPassword())) {
+        oldObject_persona.setPassword(passEnc.encryptPassword(request.getParameter("editPassword")));
       }
       
       

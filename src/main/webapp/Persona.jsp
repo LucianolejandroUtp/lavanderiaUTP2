@@ -220,7 +220,7 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Password</label>
-                                <input required name="editPassword" type="text" class="form-control" value="${tempObjeto.password }">
+                                <input required name="editPassword" type="text" class="form-control">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Tipo de Persona</label>
