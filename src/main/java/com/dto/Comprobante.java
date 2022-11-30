@@ -31,20 +31,20 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
  */
 @Entity
 @AdditionalCriteria("this.estado <> 'eliminado'")
-@Table(name = "factura")
+@Table(name = "comprobante")
 @NamedQueries({
-  @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
-  @NamedQuery(name = "Factura.findById", query = "SELECT f FROM Factura f WHERE f.id = :id"),
-  @NamedQuery(name = "Factura.findByUniqueId", query = "SELECT f FROM Factura f WHERE f.uniqueId = :uniqueId"),
-  @NamedQuery(name = "Factura.findByNumero", query = "SELECT f FROM Factura f WHERE f.numero = :numero"),
-  @NamedQuery(name = "Factura.findBySerie", query = "SELECT f FROM Factura f WHERE f.serie = :serie"),
-  @NamedQuery(name = "Factura.findByTipo", query = "SELECT f FROM Factura f WHERE f.tipo = :tipo"),
-  @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
-  @NamedQuery(name = "Factura.findByHora", query = "SELECT f FROM Factura f WHERE f.hora = :hora"),
-  @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado"),
-  @NamedQuery(name = "Factura.findByCreatedAt", query = "SELECT f FROM Factura f WHERE f.createdAt = :createdAt"),
-  @NamedQuery(name = "Factura.findByUpdatedAt", query = "SELECT f FROM Factura f WHERE f.updatedAt = :updatedAt")})
-public class Factura implements Serializable {
+  @NamedQuery(name = "Comprobante.findAll", query = "SELECT c FROM Comprobante c"),
+  @NamedQuery(name = "Comprobante.findById", query = "SELECT c FROM Comprobante c WHERE c.id = :id"),
+  @NamedQuery(name = "Comprobante.findByUniqueId", query = "SELECT c FROM Comprobante c WHERE c.uniqueId = :uniqueId"),
+  @NamedQuery(name = "Comprobante.findByNumero", query = "SELECT c FROM Comprobante c WHERE c.numero = :numero"),
+  @NamedQuery(name = "Comprobante.findBySerie", query = "SELECT c FROM Comprobante c WHERE c.serie = :serie"),
+  @NamedQuery(name = "Comprobante.findByTipo", query = "SELECT c FROM Comprobante c WHERE c.tipo = :tipo"),
+  @NamedQuery(name = "Comprobante.findByFecha", query = "SELECT c FROM Comprobante c WHERE c.fecha = :fecha"),
+  @NamedQuery(name = "Comprobante.findByHora", query = "SELECT c FROM Comprobante c WHERE c.hora = :hora"),
+  @NamedQuery(name = "Comprobante.findByEstado", query = "SELECT c FROM Comprobante c WHERE c.estado = :estado"),
+  @NamedQuery(name = "Comprobante.findByCreatedAt", query = "SELECT c FROM Comprobante c WHERE c.createdAt = :createdAt"),
+  @NamedQuery(name = "Comprobante.findByUpdatedAt", query = "SELECT c FROM Comprobante c WHERE c.updatedAt = :updatedAt")})
+public class Comprobante implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -63,7 +63,9 @@ public class Factura implements Serializable {
   @Size(max = 255)
   @Column(name = "serie")
   private String serie;
-  @Size(max = 255)
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 7)
   @Column(name = "tipo")
   private String tipo;
   @Column(name = "fecha")
@@ -83,22 +85,23 @@ public class Factura implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "facturaId")
-  private Collection<DetalleFactura> detalleFacturaCollection;
+  @OneToMany(mappedBy = "comprobanteId")
+  private Collection<DetalleComprobante> detalleComprobanteCollection;
   @JoinColumn(name = "persona_id", referencedColumnName = "id")
   @ManyToOne
   private Persona personaId;
 
-  public Factura() {
+  public Comprobante() {
   }
 
-  public Factura(Long id) {
+  public Comprobante(Long id) {
     this.id = id;
   }
 
-  public Factura(Long id, String uniqueId, String estado) {
+  public Comprobante(Long id, String uniqueId, String tipo, String estado) {
     this.id = id;
     this.uniqueId = uniqueId;
+    this.tipo = tipo;
     this.estado = estado;
   }
 
@@ -182,12 +185,12 @@ public class Factura implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Collection<DetalleFactura> getDetalleFacturaCollection() {
-    return detalleFacturaCollection;
+  public Collection<DetalleComprobante> getDetalleComprobanteCollection() {
+    return detalleComprobanteCollection;
   }
 
-  public void setDetalleFacturaCollection(Collection<DetalleFactura> detalleFacturaCollection) {
-    this.detalleFacturaCollection = detalleFacturaCollection;
+  public void setDetalleComprobanteCollection(Collection<DetalleComprobante> detalleComprobanteCollection) {
+    this.detalleComprobanteCollection = detalleComprobanteCollection;
   }
 
   public Persona getPersonaId() {
@@ -208,10 +211,10 @@ public class Factura implements Serializable {
   @Override
   public boolean equals(Object object) {
     // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Factura)) {
+    if (!(object instanceof Comprobante)) {
       return false;
     }
-    Factura other = (Factura) object;
+    Comprobante other = (Comprobante) object;
     if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
       return false;
     }
@@ -220,7 +223,7 @@ public class Factura implements Serializable {
 
   @Override
   public String toString() {
-    return "com.dto.Factura[ id=" + id + " ]";
+    return "com.dto.Comprobante[ id=" + id + " ]";
   }
   
 }

@@ -10,7 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<t:template title="Listar DetalleFactura">
+<t:template title="Listar DetalleComprobante">
   <jsp:attribute name="head_area">
   </jsp:attribute>
   <jsp:attribute name="body_area">
@@ -23,7 +23,7 @@
             <h4 class="card-title">Detalle de Factura</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Detalle de Factura
+              Añadir Detalle de Comprobante
             </button>
           </div>
         </div>
@@ -38,7 +38,7 @@
                     <span class="fw-mediumbold">
                       Nuevo</span> 
                     <span class="fw-light">
-                      Detalle de Factura
+                      Detalle de Comprobante
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,7 +46,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="DetalleFacturaCreateServlet" method="post">
+                  <form  action="DetalleComprobanteCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
@@ -72,8 +72,8 @@
 
                         <div class="form-group form-group-default">
                           <label>Factura</label>
-                          <select class="form-control" name="addFacturaId">
-                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_facturas }">
+                          <select class="form-control" name="addComprobanteId">
+                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_comprobantes }">
                               <option value="${tempObjetoCreate.id }">${tempObjetoCreate.numero } - ${tempObjetoCreate.serie}</option>
                             </c:forEach>
                           </select>
@@ -86,14 +86,17 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="form-group form-group-default">
-                          <label>Prenda</label>
-                          <select class="form-control" name="addPrendaId">
-                            <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_prendas }">
-                              <option value="${tempObjetoCreate3.id }">${tempObjetoCreate3.cantidad } - ${tempObjetoCreate3.peso} - ${tempObjetoCreate3.marca }</option>
-                            </c:forEach>
-                          </select>
-                        </div>
+
+                        <%--
+                                                <div class="form-group form-group-default">
+                                                  <label>Prenda</label>
+                                                  <select class="form-control" name="addPrendaId">
+                                                    <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_prendas }">
+                                                      <option value="${tempObjetoCreate3.id }">N°: ${tempObjetoCreate3.cantidad } - Peso: ${tempObjetoCreate3.peso} - ${tempObjetoCreate3.tipoDePrendaId.descripcion }</option>
+                                                    </c:forEach>
+                                                  </select>
+                                                </div>
+                        --%>
                       </div>
                       <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -125,7 +128,7 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_dfs }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_dcs }">
                   <tr>
                     <td>${tempObjeto.cantidad }</td>
                     <td>${tempObjeto.precio}</td>
@@ -162,14 +165,14 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">este Detalle de Factura?</span>
+                          <span class="fw-light">este Detalle de Comprobante?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DetalleFacturaDestroyServlet" method="post">
+                        <form  action="DetalleComprobanteDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -201,7 +204,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Detalle de Factura
+                            Detalle de Comprobante
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -209,7 +212,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DetalleFacturaEditServlet" method="post">
+                        <form  action="DetalleComprobanteEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -237,9 +240,9 @@
                                 <input required name="editTotal" type="number" class="form-control" value="${tempObjeto.total }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Factura</label>
-                                <select class="form-control" name="editFacturaId">
-                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_facturas}">
+                                <label>Comprobante</label>
+                                <select class="form-control" name="editComprobanteId">
+                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_comprobantes}">
                                     <option value="${tempObjetoEdit.id }">${tempObjetoEdit.numero}</option>
                                   </c:forEach>
                                 </select>
@@ -252,6 +255,7 @@
                                   </c:forEach>
                                 </select>
                               </div>
+                              <%--                             
                               <div class="form-group form-group-default">
                                 <label>Prenda</label>
                                 <select class="form-control" name="editPrendaId">
@@ -260,9 +264,9 @@
                                   </c:forEach>
                                 </select>
                               </div>
+                              --%>
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
-
                                 <select class="form-control" name="editEstado" id="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
@@ -276,13 +280,10 @@
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
             </table>
           </div>

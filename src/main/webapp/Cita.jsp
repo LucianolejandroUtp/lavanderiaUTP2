@@ -36,9 +36,9 @@
                 <div class="modal-header no-bd">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      Nuevo</span> 
+                      Nueva</span> 
                     <span class="fw-light">
-                      Citas
+                      Cita
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -51,59 +51,31 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Fecha Cita  AA-MM-DD </label>
-                          <input required name="addFecha" id="addFecha" type="text" class="form-control" placeholder="Ingrese Fecha en recojo">
+                          <input required name="addFecha" type="date" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Hora Cita HH:MM:ss</label>
-                          <input required name="addHora" id="addHora" type="text" class="form-control" placeholder="Ingrese hora de recojo">
+                          <input required name="addHora" type="time" class="form-control">
                         </div>
 
                         <div class="form-group form-group-default">
                           <label>Placa Vehiculos</label>
-                          <select class="form-control" name="addPlacaId" id="addPlacaId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_vehiculos }">
-
-                              <option value="${tempObjetoDepa.id}">${tempObjetoDepa.placa }</option>
-
+                          <select class="form-control" name="addPlacaId">
+                            <c:forEach var="tempObjAdd" items="${mi_lista_de_vehiculos }">
+                              <option value="${tempObjAdd.id}">${tempObjAdd.placa }</option>
                             </c:forEach>
-
                           </select>
                         </div>
-
                         <div class="form-group form-group-default">
-                          <label>Nombre Cliente</label>
-                          <select class="form-control" name="addNombreId" id="addNombreId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_personas }">
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('Cliente')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.nombres }</option>
+                          <label>Cliente</label>
+                          <select class="form-control" name="addNombreId">
+                            <c:forEach var="tempObjAdd" items="${mi_lista_de_personas}">
+                              <c:if test="${tempObjAdd.tipoPersonaId.descripcion.equalsIgnoreCase('Cliente')}">  
+                                <option value="${tempObjAdd.id}">${tempObjAdd.nombres} - ${tempObjAdd.apellidos}</option>
                               </c:if>
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('cliente')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.nombres }</option>
-                              </c:if>     
-
                             </c:forEach>
-
                           </select>
                         </div>
-
-                        <div class="form-group form-group-default">
-                          <label>Apellido Cliente</label>
-                          <select class="form-control" name="addApellidoId" id="addApellidoId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_personas }">
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('Cliente')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.apellidos }</option>
-                              </c:if>
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('cliente')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.apellidos }</option>
-                              </c:if>     
-
-                            </c:forEach>
-
-                          </select>
-                        </div>
-
-
-
                       </div>
                       <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -111,7 +83,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -140,8 +111,6 @@
                     <td>${tempObjeto.personaId.nombres}</td>
                     <td>${tempObjeto.personaId.apellidos}</td>
                     <td>${tempObjeto.vehiculoId.placa}</td>
-
-
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
@@ -158,8 +127,6 @@
                     </td>
                   </tr>
 
-
-
                   <!-- Modal Eliminar -->
                 <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -175,18 +142,21 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoDestroyServlet" method="post">
+                        <form  action="CitaDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input name="destroy_objeto" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.estado }" readonly>
+                                <label>Persona</label>
+                                <input type="text" class="form-control" value="${tempObjeto.personaId.nombres} - ${tempObjeto.personaId.apellidos}" readonly>
                               </div>
-
+                              <div class="form-group form-group-default">
+                                <label>Vehículo</label>
+                                <input type="text" class="form-control" value="${tempObjeto.vehiculoId.placa} - ${tempObjeto.vehiculoId.marca} - ${tempObjeto.vehiculoId.modelo}" readonly>
+                              </div>
                             </div>
                             <div class="col-md-6">
                               <button type="submit" class="btn btn-danger">Borrar</button>
@@ -207,7 +177,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Persona
+                            Cita
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -215,7 +185,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoEditServlet" method="post">
+                        <form  action="CitaEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -236,8 +206,7 @@
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Select</label>
-
+                                <label>Estado</label>
                                 <select class="form-control" name="editEstado" id="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
@@ -255,9 +224,7 @@
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
             </table>
           </div>

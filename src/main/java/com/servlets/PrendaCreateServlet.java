@@ -44,25 +44,29 @@ public class PrendaCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
+
     System.out.println("Bandera servlet create Prenda");
     try {
       PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       TipoDePrendaJpaController jpac_object_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       PersonaJpaController jpac_object_Persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Prenda mi_objeto_prenda = new Prenda();
       TipoDePrenda mi_objeto_TdPrenda = new TipoDePrenda();
       Persona mi_objeto_Persona = new Persona();
+      Servicio mi_obj_servicio = new Servicio();
 
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
-      
+
 //      Obteniendo el objeto en base al Id obtenido de la vista
       mi_objeto_TdPrenda = jpac_object_TdPrenda.findTipoDePrenda(Long.valueOf(request.getParameter("addTdPrendaId")));
       mi_objeto_Persona = jpac_object_Persona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
-      System.out.println("El tipo de prenda obtenido fue: " + mi_objeto_TdPrenda.getDescripcion() +" - "+ mi_objeto_TdPrenda.getId());
-      System.out.println("La Persona obtenida fue: " + mi_objeto_Persona.getNombres()+" - "+ mi_objeto_Persona.getId());
+      mi_obj_servicio = jpac_obj_servicio.findServicio(Long.valueOf(request.getParameter("addServicioId")));
+      System.out.println("El tipo de prenda obtenido fue: " + mi_objeto_TdPrenda.getDescripcion() + " - " + mi_objeto_TdPrenda.getId());
+      System.out.println("La Persona obtenida fue: " + mi_objeto_Persona.getNombres() + " - " + mi_objeto_Persona.getId());
+      System.out.println("El Servicio obtenido fue: " + mi_obj_servicio.getDescripcion() + " - " + mi_obj_servicio.getId());
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
@@ -78,6 +82,7 @@ public class PrendaCreateServlet extends HttpServlet {
       mi_objeto_prenda.setUpdatedAt(ts);
       mi_objeto_prenda.setTipoDePrendaId(mi_objeto_TdPrenda);
       mi_objeto_prenda.setPersonaId(mi_objeto_Persona);
+      mi_objeto_prenda.setServicioId(mi_obj_servicio);
 
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
       jpac_object_prenda.create(mi_objeto_prenda);

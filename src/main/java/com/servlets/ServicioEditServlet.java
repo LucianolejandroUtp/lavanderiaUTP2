@@ -43,6 +43,7 @@ public class ServicioEditServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+    
     System.out.println("Entrando a Servicio Edit Servlet");
     System.out.println(request.getParameter("editId"));
     System.out.println(request.getParameter("editDescripcion"));
@@ -114,7 +115,7 @@ public class ServicioEditServlet extends HttpServlet {
           + oldObject_servicio.getId() + " - " + oldObject_servicio.getDescripcion() + " - "
           + oldObject_servicio.getEstado() + " - " + oldObject_servicio.getCategoriaId().getDescripcion() + " - "
           + oldObject_servicio.getCreatedAt() + " - " + oldObject_servicio.getUpdatedAt() + " - "
-          + oldObject_servicio.getDetalleFacturaCollection());
+          + oldObject_servicio.getDetalleComprobanteCollection());
 
       jpac_object_servicio.edit(oldObject_servicio);
 

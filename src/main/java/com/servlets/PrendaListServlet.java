@@ -47,17 +47,20 @@ public class PrendaListServlet extends HttpServlet {
     
     System.out.println("Entrando a Prenda List Servlet");
     try {
-      PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoDePrendaJpaController jpac_object_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      TipoDePrendaJpaController jpac_obj_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       List<Prenda> mi_lista_de_prendas = new ArrayList<>();
       List<TipoDePrenda> mi_lista_de_TdPrendas = new ArrayList<>();
       List<Persona> mi_lista_de_personas = new ArrayList<>();
+      List<Servicio> mi_lista_de_servicios = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_prendas = jpac_object_prenda.findPrendaEntities();
-      mi_lista_de_TdPrendas = jpac_object_TdPrenda.findTipoDePrendaEntities();
-      mi_lista_de_personas =jpac_object_persona.findPersonaEntities();
+      mi_lista_de_prendas = jpac_obj_prenda.findPrendaEntities();
+      mi_lista_de_TdPrendas = jpac_obj_TdPrenda.findTipoDePrendaEntities();
+      mi_lista_de_personas =jpac_obj_persona.findPersonaEntities();
+      mi_lista_de_servicios =jpac_obj_servicio.findServicioEntities();
 
       for (Prenda temp1 : mi_lista_de_prendas) {
         System.out.println(temp1.getId() +" - "+ temp1.getColor()+" - "+ temp1.getTipoDePrendaId().getDescripcion()+" - "+temp1.getPersonaId().getDni());
@@ -68,10 +71,14 @@ public class PrendaListServlet extends HttpServlet {
       for (Persona temp3 : mi_lista_de_personas) {
         System.out.println(temp3.getId() + " - " + temp3.getNombres());
       }
+      for (Servicio temp4 : mi_lista_de_servicios) {
+        System.out.println(temp4.getId() + " - " + temp4.getDescripcion());
+      }
 
       request.setAttribute("mi_lista_de_prendas", mi_lista_de_prendas);
       request.setAttribute("mi_lista_de_TdPrendas", mi_lista_de_TdPrendas);
       request.setAttribute("mi_lista_de_personas", mi_lista_de_personas);
+      request.setAttribute("mi_lista_de_servicios", mi_lista_de_servicios);
       request.getRequestDispatcher("Prenda.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {

@@ -4,14 +4,14 @@
  */
 package com.servlets;
 
-import com.dao.DetalleFacturaJpaController;
-import com.dao.FacturaJpaController;
+import com.dao.DetalleComprobanteJpaController;
+import com.dao.ComprobanteJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.PrendaJpaController;
 import com.dao.ServicioJpaController;
 import com.dao.TipoDePrendaJpaController;
-import com.dto.DetalleFactura;
-import com.dto.Factura;
+import com.dto.DetalleComprobante;
+import com.dto.Comprobante;
 import com.dto.Persona;
 import com.dto.Prenda;
 import com.dto.Servicio;
@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DetalleFacturaListServlet", urlPatterns = {"/DetalleFacturaListServlet"})
-public class DetalleFacturaListServlet extends HttpServlet {
+@WebServlet(name = "DetalleComprobanteListServlet", urlPatterns = {"/DetalleComprobanteListServlet"})
+public class DetalleComprobanteListServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,39 +49,39 @@ public class DetalleFacturaListServlet extends HttpServlet {
     
     System.out.println("Entrando a DetalleFactura List Servlet");
     try {
-      DetalleFacturaJpaController jpac_object_df = new DetalleFacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      FacturaJpaController jpac_object_factura = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DetalleComprobanteJpaController jpac_obj_detComp = new DetalleComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ComprobanteJpaController jpac_obj_comp = new ComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       ServicioJpaController jpac_object_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      List<DetalleFactura> mi_lista_de_dfs = new ArrayList<>();
-      List<Factura> mi_lista_de_facturas = new ArrayList<>();
+//      PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      List<DetalleComprobante> mi_lista_de_dcs = new ArrayList<>();
+      List<Comprobante> mi_lista_de_comprobantes = new ArrayList<>();
       List<Servicio> mi_lista_de_servicios = new ArrayList<>();
-      List<Prenda> mi_lista_de_prendas = new ArrayList<>();
+//      List<Prenda> mi_lista_de_prendas = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_dfs = jpac_object_df.findDetalleFacturaEntities();
-      mi_lista_de_facturas = jpac_object_factura.findFacturaEntities();
+      mi_lista_de_dcs = jpac_obj_detComp.findDetalleComprobanteEntities();
+      mi_lista_de_comprobantes = jpac_obj_comp.findComprobanteEntities();
       mi_lista_de_servicios = jpac_object_servicio.findServicioEntities();
-      mi_lista_de_prendas = jpac_object_prenda.findPrendaEntities();
+//      mi_lista_de_prendas = jpac_object_prenda.findPrendaEntities();
 
-      for (DetalleFactura temp1 : mi_lista_de_dfs) {
+      for (DetalleComprobante temp1 : mi_lista_de_dcs) {
         System.out.println(temp1.getId() +" - "+ temp1.getCantidad());
       }
-      for (Factura temp2 : mi_lista_de_facturas) {
+      for (Comprobante temp2 : mi_lista_de_comprobantes) {
         System.out.println(temp2.getId() + " - " + temp2.getNumero());
       }
       for (Servicio temp3 : mi_lista_de_servicios) {
         System.out.println(temp3.getId() + " - " + temp3.getDescripcion());
       }
-      for (Prenda temp4 : mi_lista_de_prendas) {
-        System.out.println(temp4.getId() + " - " + temp4.getObservacion());
-      }
+//      for (Prenda temp4 : mi_lista_de_prendas) {
+//        System.out.println(temp4.getId() + " - " + temp4.getObservacion());
+//      }
 
-      request.setAttribute("mi_lista_de_dfs", mi_lista_de_dfs);
-      request.setAttribute("mi_lista_de_facturas", mi_lista_de_facturas);
+      request.setAttribute("mi_lista_de_dcs", mi_lista_de_dcs);
+      request.setAttribute("mi_lista_de_comprobantes", mi_lista_de_comprobantes);
       request.setAttribute("mi_lista_de_servicios", mi_lista_de_servicios);
-      request.setAttribute("mi_lista_de_prendas", mi_lista_de_prendas);
-      request.getRequestDispatcher("DetalleFactura.jsp").forward(request, response);
+//      request.setAttribute("mi_lista_de_prendas", mi_lista_de_prendas);
+      request.getRequestDispatcher("DetalleComprobante.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);

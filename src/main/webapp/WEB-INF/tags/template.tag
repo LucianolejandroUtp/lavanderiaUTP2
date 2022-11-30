@@ -207,9 +207,9 @@
               </li>
               
               <li class="nav-item">
-                <a href="../DetalleFacturaListServlet">
+                <a href="../DetalleComprobanteListServlet">
                   <i class="fas fa-car"></i>
-                  <p>Detalle Factura</p>
+                  <p>Detalle Comprobante</p>
                 </a>
               </li>
               
@@ -228,9 +228,9 @@
               </li>
               
               <li class="nav-item">
-                <a href="../FacturaListServlet">
+                <a href="../ComprobanteListServlet">
                   <i class="fas fa-user"></i>
-                  <p>Factura</p>
+                  <p>Comprobante</p>
                 </a>
               </li>
               

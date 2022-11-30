@@ -4,18 +4,18 @@
  */
 package com.servlets;
 
-import com.dao.DetalleFacturaJpaController;
-import com.dao.FacturaJpaController;
-import com.dao.PrendaJpaController;
-import com.dao.ServicioJpaController;
-import com.dto.DetalleFactura;
-import com.dto.Factura;
-import com.dto.Prenda;
-import com.dto.Servicio;
+import com.dao.ComprobanteJpaController;
+import com.dao.PersonaJpaController;
+import com.dto.Comprobante;
+import com.dto.Persona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DetalleFacturaCreateServlet", urlPatterns = {"/DetalleFacturaCreateServlet"})
-public class DetalleFacturaCreateServlet extends HttpServlet {
+@WebServlet(name = "ComprobanteCreateServlet", urlPatterns = {"/ComprobanteCreateServlet"})
+public class ComprobanteCreateServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,56 +42,62 @@ public class DetalleFacturaCreateServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-
-    System.out.println("Bandera servlet create DetalleFactura");
+    
+    System.out.println("Bandera servlet create Comprobante");
     try {
-      DetalleFacturaJpaController jpac_obj_detF = new DetalleFacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      FacturaJpaController jpac_obj_factura = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ComprobanteJpaController jpac_obj_comprobante = new ComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      Comprobante mi_objeto_comprobante = new Comprobante();
+      Persona mi_objeto_persona = new Persona();
 
-      DetalleFactura mi_objeto_detF = new DetalleFactura();
-      Factura mi_objeto_factura = new Factura();
-      Servicio mi_objeto_servicio = new Servicio();
-      Prenda mi_objeto_prenda = new Prenda();
-
+      SimpleDateFormat sdf_fecha = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat sdf_hora = new SimpleDateFormat("HH:mm");
+      
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
-
-//      Obteniendo el objeto en base al Id obtenido de la vista
-      mi_objeto_factura = jpac_obj_factura.findFactura(Long.valueOf(request.getParameter("addFacturaId")));
-      mi_objeto_servicio = jpac_obj_servicio.findServicio(Long.valueOf(request.getParameter("addServicioId")));
-      mi_objeto_prenda = jpac_object_prenda.findPrenda(Long.valueOf(request.getParameter("addPrendaId")));
-      System.out.println("La factura obtenida fue: " + mi_objeto_factura.getNumero()+ " - " + mi_objeto_factura.getId());
-      System.out.println("El servicio obtenido fue: " + mi_objeto_servicio.getDescripcion()+ " - " + mi_objeto_servicio.getId());
-      System.out.println("La prenda obtenida fue: " + mi_objeto_prenda.getMarca()+" - "+ mi_objeto_prenda.getId());
       
+//      Obteniendo el departamento en base al Id obtenido de la vista
+      mi_objeto_persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
+      System.out.println("La Persona obtenida fue: " + mi_objeto_persona.getNombres()+" - "+ mi_objeto_persona.getId());
+
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto_detF.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      mi_objeto_detF.setCantidad(Integer.valueOf(request.getParameter("addCantidad")));
-      mi_objeto_detF.setPrecio(Double.valueOf(request.getParameter("addPrecio")));
-      mi_objeto_detF.setSubtotal(Double.valueOf(request.getParameter("addSubtotal")));
-      mi_objeto_detF.setIgv(Double.valueOf(request.getParameter("addIgv")));
-      mi_objeto_detF.setTotal(Double.valueOf(request.getParameter("addTotal")));
-      mi_objeto_detF.setEstado("activo");
-      mi_objeto_detF.setCreatedAt(ts);
-      mi_objeto_detF.setUpdatedAt(ts);
-      mi_objeto_detF.setFacturaId(mi_objeto_factura);
-      mi_objeto_detF.setServicioId(mi_objeto_servicio);
-      mi_objeto_detF.setPrendaId(mi_objeto_prenda);
+      mi_objeto_comprobante.setNumero(request.getParameter("addNumero"));
+      mi_objeto_comprobante.setSerie(request.getParameter("addSerie"));
+      mi_objeto_comprobante.setTipo(request.getParameter("addTipo"));
+      
+      System.out.println(request.getParameter("addFecha"));
+      System.out.println(request.getParameter("addHora"));
+      
+      String fecha1, hora1;
+      fecha1 = request.getParameter("addFecha");
+      hora1 = request.getParameter("addHora");
+      
+      Date date_fecha, date_hora;
+      date_fecha = sdf_fecha.parse(fecha1);
+      date_hora = sdf_hora.parse(hora1);
+      
+      mi_objeto_comprobante.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+      mi_objeto_comprobante.setFecha(date_fecha);
+      mi_objeto_comprobante.setHora(date_hora);
+      mi_objeto_comprobante.setPersonaId(mi_objeto_persona);
+      mi_objeto_comprobante.setEstado("activo");
+      mi_objeto_comprobante.setCreatedAt(ts);
+      mi_objeto_comprobante.setUpdatedAt(ts);
 
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpac_obj_detF.create(mi_objeto_detF);
+      jpac_obj_comprobante.create(mi_objeto_comprobante);
 
 //      Llamando al listALGO.jsp
-      DetalleFacturaListServlet call = new DetalleFacturaListServlet();
+      ComprobanteListServlet call = new ComprobanteListServlet();
       call.processRequest(request, response);
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
       System.out.println(theException);
+    } catch (ParseException ex) {
+      Logger.getLogger(ComprobanteCreateServlet.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 

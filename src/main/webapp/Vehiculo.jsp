@@ -23,7 +23,7 @@
             <h4 class="card-title">Vehiculos</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Vehiculo
+              Añadir Vehículo
             </button>
           </div>
         </div>
@@ -38,7 +38,7 @@
                     <span class="fw-mediumbold">
                       Nuevo</span> 
                     <span class="fw-light">
-                      Vehiculo
+                      Vehículo
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -51,35 +51,27 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Placa</label>
-                          <input required name="addPlaca" id="addPlaca" type="text" class="form-control" placeholder="Ingrese placa vehiculo">
+                          <input required name="addPlaca" type="text" class="form-control" placeholder="Ingrese placa vehiculo">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Marca</label>
-                          <input required name="addMarca" id="addMarca" type="text" class="form-control" placeholder="Ingrese Marca del vehiculo">
+                          <input required name="addMarca" type="text" class="form-control" placeholder="Ingrese Marca del vehiculo">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Modelo</label>
-                          <input required name="addModelo" id="addModelo" type="text" class="form-control" placeholder="Ingrese el modelo del vehiculo">
+                          <input required name="addModelo" type="text" class="form-control" placeholder="Ingrese el modelo del vehiculo">
                         </div>
 
                         <div class="form-group form-group-default">
                           <label>Nombre Conductor</label>
-                          <select class="form-control" name="addNombreId" id="addNombreId">
-                            <c:forEach var="tempObjetoDepa" items="${mi_lista_de_personas }">
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('chofer')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.nombres }</option>
+                          <select class="form-control" name="addNombreId">
+                            <c:forEach var="tempObjPersona" items="${mi_lista_de_personas }">
+                              <c:if test="${tempObjPersona.tipoPersonaId.descripcion.equalsIgnoreCase('chofer')}">  
+                                <option value="${tempObjPersona.id}">${tempObjPersona.nombres} - ${tempObjPersona.apellidos}</option>
                               </c:if>
-                              <c:if test="${tempObjetoDepa.tipoPersonaId.descripcion.equals('Chofer')}">  
-                                <option value="${tempObjetoDepa.id}">${tempObjetoDepa.nombres }</option>
-                              </c:if>     
-
                             </c:forEach>
-
                           </select>
                         </div>
-
-
-
                       </div>
                       <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -87,7 +79,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -143,23 +134,31 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">esta persona?</span>
+                          <span class="fw-light">este Vehículo?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoDestroyServlet" method="post">
+                        <form  action="VehiculoDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" id="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input name="destroy_objeto" id="destroy_distrito_departamento" type="text" class="form-control" value="${tempObjeto.placa }" readonly>
+                                <label>Placa</label>
+                                <input type="text" class="form-control" value="${tempObjeto.placa }" readonly>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Marca</label>
+                                <input type="text" class="form-control" value="${tempObjeto.marca }" readonly>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Modelo</label>
+                                <input type="text" class="form-control" value="${tempObjeto.modelo }" readonly>
                               </div>
 
                             </div>
@@ -182,7 +181,7 @@
                           <span class="fw-mediumbold">
                             Editar</span> 
                           <span class="fw-light">
-                            Persona
+                            Vehículo
                           </span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -190,29 +189,38 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="DistritoEditServlet" method="post">
+                        <form  action="VehiculoEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="editId" id="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <input required name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.placa }">
+                                <label>Placa</label>
+                                <input required name="editPlaca" type="text" class="form-control" value="${tempObjeto.placa }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Departamento</label>
-                                <select class="form-control" name="editDepaId" id="editDepaId">
-                                  <c:forEach var="tempObjetoDepa" items="${mi_lista_de_personas }">
-                                    <option value="${tempObjetoDepa.id }">${tempObjetoDepa.nombres }</option>
+                                <label>Marca</label>
+                                <input required name="editMarca" type="text" class="form-control" value="${tempObjeto.marca }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Modelo</label>
+                                <input required name="editModelo" type="text" class="form-control" value="${tempObjeto.modelo }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Chofer</label>
+                                <select class="form-control" name="editPersonaId">
+                                  <c:forEach var="tempObj2" items="${mi_lista_de_personas }">
+                                    <c:if test="${tempObj2.tipoPersonaId.descripcion.equalsIgnoreCase('chofer')}">  
+                                      <option value="${tempObj2.id}">${tempObj2.nombres} - ${tempObj2.apellidos}</option>
+                                    </c:if>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Select</label>
-
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <label>Estado</label>
+                                <select class="form-control" name="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->

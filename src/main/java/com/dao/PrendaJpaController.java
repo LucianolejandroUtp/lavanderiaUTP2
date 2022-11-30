@@ -11,11 +11,9 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.dto.Persona;
-import com.dto.TipoDePrenda;
-import com.dto.DetalleFactura;
 import com.dto.Prenda;
-import java.util.ArrayList;
-import java.util.Collection;
+import com.dto.Servicio;
+import com.dto.TipoDePrenda;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,9 +34,6 @@ public class PrendaJpaController implements Serializable {
   }
 
   public void create(Prenda prenda) {
-    if (prenda.getDetalleFacturaCollection() == null) {
-      prenda.setDetalleFacturaCollection(new ArrayList<DetalleFactura>());
-    }
     EntityManager em = null;
     try {
       em = getEntityManager();
@@ -48,34 +43,28 @@ public class PrendaJpaController implements Serializable {
         personaId = em.getReference(personaId.getClass(), personaId.getId());
         prenda.setPersonaId(personaId);
       }
+      Servicio servicioId = prenda.getServicioId();
+      if (servicioId != null) {
+        servicioId = em.getReference(servicioId.getClass(), servicioId.getId());
+        prenda.setServicioId(servicioId);
+      }
       TipoDePrenda tipoDePrendaId = prenda.getTipoDePrendaId();
       if (tipoDePrendaId != null) {
         tipoDePrendaId = em.getReference(tipoDePrendaId.getClass(), tipoDePrendaId.getId());
         prenda.setTipoDePrendaId(tipoDePrendaId);
       }
-      Collection<DetalleFactura> attachedDetalleFacturaCollection = new ArrayList<DetalleFactura>();
-      for (DetalleFactura detalleFacturaCollectionDetalleFacturaToAttach : prenda.getDetalleFacturaCollection()) {
-        detalleFacturaCollectionDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionDetalleFacturaToAttach.getClass(), detalleFacturaCollectionDetalleFacturaToAttach.getId());
-        attachedDetalleFacturaCollection.add(detalleFacturaCollectionDetalleFacturaToAttach);
-      }
-      prenda.setDetalleFacturaCollection(attachedDetalleFacturaCollection);
       em.persist(prenda);
       if (personaId != null) {
         personaId.getPrendaCollection().add(prenda);
         personaId = em.merge(personaId);
       }
+      if (servicioId != null) {
+        servicioId.getPrendaCollection().add(prenda);
+        servicioId = em.merge(servicioId);
+      }
       if (tipoDePrendaId != null) {
         tipoDePrendaId.getPrendaCollection().add(prenda);
         tipoDePrendaId = em.merge(tipoDePrendaId);
-      }
-      for (DetalleFactura detalleFacturaCollectionDetalleFactura : prenda.getDetalleFacturaCollection()) {
-        Prenda oldPrendaIdOfDetalleFacturaCollectionDetalleFactura = detalleFacturaCollectionDetalleFactura.getPrendaId();
-        detalleFacturaCollectionDetalleFactura.setPrendaId(prenda);
-        detalleFacturaCollectionDetalleFactura = em.merge(detalleFacturaCollectionDetalleFactura);
-        if (oldPrendaIdOfDetalleFacturaCollectionDetalleFactura != null) {
-          oldPrendaIdOfDetalleFacturaCollectionDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionDetalleFactura);
-          oldPrendaIdOfDetalleFacturaCollectionDetalleFactura = em.merge(oldPrendaIdOfDetalleFacturaCollectionDetalleFactura);
-        }
       }
       em.getTransaction().commit();
     } finally {
@@ -93,25 +82,22 @@ public class PrendaJpaController implements Serializable {
       Prenda persistentPrenda = em.find(Prenda.class, prenda.getId());
       Persona personaIdOld = persistentPrenda.getPersonaId();
       Persona personaIdNew = prenda.getPersonaId();
+      Servicio servicioIdOld = persistentPrenda.getServicioId();
+      Servicio servicioIdNew = prenda.getServicioId();
       TipoDePrenda tipoDePrendaIdOld = persistentPrenda.getTipoDePrendaId();
       TipoDePrenda tipoDePrendaIdNew = prenda.getTipoDePrendaId();
-      Collection<DetalleFactura> detalleFacturaCollectionOld = persistentPrenda.getDetalleFacturaCollection();
-      Collection<DetalleFactura> detalleFacturaCollectionNew = prenda.getDetalleFacturaCollection();
       if (personaIdNew != null) {
         personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
         prenda.setPersonaId(personaIdNew);
+      }
+      if (servicioIdNew != null) {
+        servicioIdNew = em.getReference(servicioIdNew.getClass(), servicioIdNew.getId());
+        prenda.setServicioId(servicioIdNew);
       }
       if (tipoDePrendaIdNew != null) {
         tipoDePrendaIdNew = em.getReference(tipoDePrendaIdNew.getClass(), tipoDePrendaIdNew.getId());
         prenda.setTipoDePrendaId(tipoDePrendaIdNew);
       }
-      Collection<DetalleFactura> attachedDetalleFacturaCollectionNew = new ArrayList<DetalleFactura>();
-      for (DetalleFactura detalleFacturaCollectionNewDetalleFacturaToAttach : detalleFacturaCollectionNew) {
-        detalleFacturaCollectionNewDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionNewDetalleFacturaToAttach.getClass(), detalleFacturaCollectionNewDetalleFacturaToAttach.getId());
-        attachedDetalleFacturaCollectionNew.add(detalleFacturaCollectionNewDetalleFacturaToAttach);
-      }
-      detalleFacturaCollectionNew = attachedDetalleFacturaCollectionNew;
-      prenda.setDetalleFacturaCollection(detalleFacturaCollectionNew);
       prenda = em.merge(prenda);
       if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
         personaIdOld.getPrendaCollection().remove(prenda);
@@ -121,6 +107,14 @@ public class PrendaJpaController implements Serializable {
         personaIdNew.getPrendaCollection().add(prenda);
         personaIdNew = em.merge(personaIdNew);
       }
+      if (servicioIdOld != null && !servicioIdOld.equals(servicioIdNew)) {
+        servicioIdOld.getPrendaCollection().remove(prenda);
+        servicioIdOld = em.merge(servicioIdOld);
+      }
+      if (servicioIdNew != null && !servicioIdNew.equals(servicioIdOld)) {
+        servicioIdNew.getPrendaCollection().add(prenda);
+        servicioIdNew = em.merge(servicioIdNew);
+      }
       if (tipoDePrendaIdOld != null && !tipoDePrendaIdOld.equals(tipoDePrendaIdNew)) {
         tipoDePrendaIdOld.getPrendaCollection().remove(prenda);
         tipoDePrendaIdOld = em.merge(tipoDePrendaIdOld);
@@ -128,23 +122,6 @@ public class PrendaJpaController implements Serializable {
       if (tipoDePrendaIdNew != null && !tipoDePrendaIdNew.equals(tipoDePrendaIdOld)) {
         tipoDePrendaIdNew.getPrendaCollection().add(prenda);
         tipoDePrendaIdNew = em.merge(tipoDePrendaIdNew);
-      }
-      for (DetalleFactura detalleFacturaCollectionOldDetalleFactura : detalleFacturaCollectionOld) {
-        if (!detalleFacturaCollectionNew.contains(detalleFacturaCollectionOldDetalleFactura)) {
-          detalleFacturaCollectionOldDetalleFactura.setPrendaId(null);
-          detalleFacturaCollectionOldDetalleFactura = em.merge(detalleFacturaCollectionOldDetalleFactura);
-        }
-      }
-      for (DetalleFactura detalleFacturaCollectionNewDetalleFactura : detalleFacturaCollectionNew) {
-        if (!detalleFacturaCollectionOld.contains(detalleFacturaCollectionNewDetalleFactura)) {
-          Prenda oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura = detalleFacturaCollectionNewDetalleFactura.getPrendaId();
-          detalleFacturaCollectionNewDetalleFactura.setPrendaId(prenda);
-          detalleFacturaCollectionNewDetalleFactura = em.merge(detalleFacturaCollectionNewDetalleFactura);
-          if (oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura != null && !oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura.equals(prenda)) {
-            oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionNewDetalleFactura);
-            oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura = em.merge(oldPrendaIdOfDetalleFacturaCollectionNewDetalleFactura);
-          }
-        }
       }
       em.getTransaction().commit();
     } catch (Exception ex) {
@@ -180,15 +157,15 @@ public class PrendaJpaController implements Serializable {
         personaId.getPrendaCollection().remove(prenda);
         personaId = em.merge(personaId);
       }
+      Servicio servicioId = prenda.getServicioId();
+      if (servicioId != null) {
+        servicioId.getPrendaCollection().remove(prenda);
+        servicioId = em.merge(servicioId);
+      }
       TipoDePrenda tipoDePrendaId = prenda.getTipoDePrendaId();
       if (tipoDePrendaId != null) {
         tipoDePrendaId.getPrendaCollection().remove(prenda);
         tipoDePrendaId = em.merge(tipoDePrendaId);
-      }
-      Collection<DetalleFactura> detalleFacturaCollection = prenda.getDetalleFacturaCollection();
-      for (DetalleFactura detalleFacturaCollectionDetalleFactura : detalleFacturaCollection) {
-        detalleFacturaCollectionDetalleFactura.setPrendaId(null);
-        detalleFacturaCollectionDetalleFactura = em.merge(detalleFacturaCollectionDetalleFactura);
       }
       em.remove(prenda);
       em.getTransaction().commit();

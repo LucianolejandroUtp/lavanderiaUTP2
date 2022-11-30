@@ -5,11 +5,11 @@
 package com.servlets;
 
 import com.dao.CategoriaJpaController;
-import com.dao.FacturaJpaController;
+import com.dao.ComprobanteJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.ServicioJpaController;
 import com.dto.Categoria;
-import com.dto.Factura;
+import com.dto.Comprobante;
 import com.dto.Persona;
 import com.dto.Servicio;
 import java.io.IOException;
@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "FacturaEditServlet", urlPatterns = {"/FacturaEditServlet"})
-public class FacturaEditServlet extends HttpServlet {
+@WebServlet(name = "ComprobanteEditServlet", urlPatterns = {"/ComprobanteEditServlet"})
+public class ComprobanteEditServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,9 +56,9 @@ public class FacturaEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editEstado"));
     try {
 //      Inicialización de objetos
-      FacturaJpaController jpac_obj_factura = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ComprobanteJpaController jpac_obj_comprobante = new ComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Factura oldObject_factura;
+      Comprobante oldObject_comprobante;
       Persona mi_persona;
 
 //      Lo relacionado a la fecha
@@ -81,8 +81,8 @@ public class FacturaEditServlet extends HttpServlet {
       mi_persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("editPersonaId")));
 
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      oldObject_factura = jpac_obj_factura.findFactura(Long.valueOf(request.getParameter("editId")));
-      System.out.println("La Factura obtenida es: " + oldObject_factura);
+      oldObject_comprobante = jpac_obj_comprobante.findComprobante(Long.valueOf(request.getParameter("editId")));
+      System.out.println("El Comprobante obtenido es: " + oldObject_comprobante);
 
       
 //      if(oldObject_servicio.getDescripcion().isBlank()){
@@ -90,43 +90,43 @@ public class FacturaEditServlet extends HttpServlet {
 //      }
       
 //      Comparando y asignando nuevos valores al objeto
-      if (oldObject_factura.getNumero()== null || !oldObject_factura.getNumero().equals(request.getParameter("editNumero"))) {
-        oldObject_factura.setNumero(request.getParameter("editNumero"));
+      if (oldObject_comprobante.getNumero()== null || !oldObject_comprobante.getNumero().equals(request.getParameter("editNumero"))) {
+        oldObject_comprobante.setNumero(request.getParameter("editNumero"));
       }
-      if (oldObject_factura.getSerie()== null || !oldObject_factura.getSerie().equals(request.getParameter("editSerie"))) {
-        oldObject_factura.setSerie(request.getParameter("editSerie"));
+      if (oldObject_comprobante.getSerie()== null || !oldObject_comprobante.getSerie().equals(request.getParameter("editSerie"))) {
+        oldObject_comprobante.setSerie(request.getParameter("editSerie"));
       }
-      if (oldObject_factura.getTipo()== null || !oldObject_factura.getTipo().equals(request.getParameter("editTipo"))) {
-        oldObject_factura.setTipo(request.getParameter("editTipo"));
+      if (oldObject_comprobante.getTipo()== null || !oldObject_comprobante.getTipo().equals(request.getParameter("editTipo"))) {
+        oldObject_comprobante.setTipo(request.getParameter("editTipo"));
       }
       
       //Comparando fecha y hora por separado
-      if(oldObject_factura.getFecha() == null || oldObject_factura.getFecha().compareTo(fecha) != 0){
-        oldObject_factura.setFecha(fecha);
+      if(oldObject_comprobante.getFecha() == null || oldObject_comprobante.getFecha().compareTo(fecha) != 0){
+        oldObject_comprobante.setFecha(fecha);
       }
-      if(oldObject_factura.getHora() == null || oldObject_factura.getHora().compareTo(hora) != 0){
-        oldObject_factura.setHora(hora);
+      if(oldObject_comprobante.getHora() == null || oldObject_comprobante.getHora().compareTo(hora) != 0){
+        oldObject_comprobante.setHora(hora);
       }
       
       
-      if (!oldObject_factura.getPersonaId().equals(mi_persona)) {
-        oldObject_factura.setPersonaId(mi_persona);
+      if (!oldObject_comprobante.getPersonaId().equals(mi_persona)) {
+        oldObject_comprobante.setPersonaId(mi_persona);
       }
-      if (oldObject_factura.getEstado() == null || !oldObject_factura.getEstado().equals(request.getParameter("editEstado"))) {
-        oldObject_factura.setEstado(request.getParameter("editEstado"));
+      if (oldObject_comprobante.getEstado() == null || !oldObject_comprobante.getEstado().equals(request.getParameter("editEstado"))) {
+        oldObject_comprobante.setEstado(request.getParameter("editEstado"));
       }
-      oldObject_factura.setUpdatedAt(ts);
+      oldObject_comprobante.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);
 
       System.out.println("La Factura actualizada es: "
-          + oldObject_factura.getId() + " - " + oldObject_factura.getNumero()+ " - "
-          + oldObject_factura.getEstado() + " - " + oldObject_factura.getPersonaId().getNombres()+ " - "
-          + oldObject_factura.getCreatedAt() + " - " + oldObject_factura.getUpdatedAt() + " - "
-          + oldObject_factura.getDetalleFacturaCollection());
+          + oldObject_comprobante.getId() + " - " + oldObject_comprobante.getNumero()+ " - "
+          + oldObject_comprobante.getEstado() + " - " + oldObject_comprobante.getPersonaId().getNombres()+ " - "
+          + oldObject_comprobante.getCreatedAt() + " - " + oldObject_comprobante.getUpdatedAt() + " - "
+          + oldObject_comprobante.getDetalleComprobanteCollection());
 
-      jpac_obj_factura.edit(oldObject_factura);
+      jpac_obj_comprobante.edit(oldObject_comprobante);
 
-      FacturaListServlet call = new FacturaListServlet();
+      ComprobanteListServlet call = new ComprobanteListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {

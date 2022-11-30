@@ -4,10 +4,8 @@
  */
 package com.servlets;
 
-import com.dao.FacturaJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.TipoPersonaJpaController;
-import com.dto.Factura;
 import com.dto.Persona;
 import com.dto.TipoPersona;
 import java.io.IOException;

@@ -4,8 +4,10 @@
  */
 package com.servlets;
 
-import com.dao.PersonaJpaController;
-import com.dto.Persona;
+import com.dao.ServicioJpaController;
+import com.dao.VehiculoJpaController;
+import com.dto.Servicio;
+import com.dto.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.Persistence;
@@ -19,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "PersonaDestroyServlet", urlPatterns = {"/PersonaDestroyServlet"})
-public class PersonaDestroyServlet extends HttpServlet {
+@WebServlet(name = "VehiculoDestroyServlet", urlPatterns = {"/VehiculoDestroyServlet"})
+public class VehiculoDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,23 +37,24 @@ public class PersonaDestroyServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     
-    System.out.println("Entrando a Persona Destroy Servlet");
+    System.out.println("Entrando a Vehiculo Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      PersonaJpaController jpac_object = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Persona objeto_archivado;
+      VehiculoJpaController jpac_object = new VehiculoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      Vehiculo objeto_archivado;
 
-      objeto_archivado = jpac_object.findPersona(Long.valueOf(request.getParameter("destroyId")));
+      objeto_archivado = jpac_object.findVehiculo(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
       jpac_object.edit(objeto_archivado);
 
-      PersonaListServlet call = new PersonaListServlet();
+      VehiculoListServlet call = new VehiculoListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {
       System.out.println(theException);
     }
+    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -20,10 +20,10 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Facturas</h4>
+            <h4 class="card-title">Comprobantes</h4>
             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
               <i class="fa fa-plus"></i>
-              Añadir Factura
+              Añadir Comprobante
             </button>
           </div>
         </div>
@@ -36,9 +36,9 @@
                 <div class="modal-header no-bd">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      Nueva</span> 
+                      Nuevo</span> 
                     <span class="fw-light">
-                      Factura
+                      Comprobante
                     </span>
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,7 +46,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form  action="FacturaCreateServlet" method="post">
+                  <form  action="ComprobanteCreateServlet" method="post">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
@@ -69,14 +69,12 @@
                           <label>Hora</label>
                           <input required name="addHora" type="time" class="form-control">
                         </div>
-
                         <div class="form-group form-group-default">
                           <label>Persona</label>
                           <select class="form-control" name="addPersonaId">
                             <c:forEach var="tempObjetoCreate" items="${mi_lista_de_personas }">
                               <option value="${tempObjetoCreate.id }">${tempObjetoCreate.nombres }</option>
                             </c:forEach>
-
                           </select>
                         </div>
                       </div>
@@ -86,7 +84,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -108,7 +105,7 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_facturas }">
+                <c:forEach var="tempObjeto" items="${mi_lista_de_comprobantes }">
                   <tr>
                     <td>${tempObjeto.numero }</td>
                     <td>${tempObjeto.serie}</td>
@@ -143,14 +140,14 @@
                         <h5 class="modal-title">
                           <span class="fw-light">¿Está relamente seguro de querer</span>
                           <span class="fw-mediumbold"> eliminar </span>
-                          <span class="fw-light">esta factura?</span>
+                          <span class="fw-light">este comprobante?</span>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="FacturaDestroyServlet" method="post">
+                        <form  action="ComprobanteDestroyServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -159,9 +156,8 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Número</label>
-                                <input name="destroyObject" id="destroyObject" type="text" class="form-control" value="${tempObjeto.numero }" readonly>
+                                <input type="text" class="form-control" value="${tempObjeto.numero }" readonly>
                               </div>
-
                             </div>
                             <div class="col-md-6">
                               <button type="submit" class="btn btn-danger">Borrar</button>
@@ -190,7 +186,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form  action="FacturaEditServlet" method="post">
+                        <form  action="ComprobanteEditServlet" method="post">
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
@@ -244,9 +240,7 @@
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
             </table>
           </div>

@@ -11,11 +11,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.dto.TipoPersona;
-import com.dto.Vehiculo;
+import com.dto.Comprobante;
 import java.util.ArrayList;
 import java.util.Collection;
+import com.dto.Vehiculo;
 import com.dto.DireccionPersona;
-import com.dto.Factura;
 import com.dto.Prenda;
 import com.dto.Telefono;
 import com.dto.Cita;
@@ -40,14 +40,14 @@ public class PersonaJpaController implements Serializable {
   }
 
   public void create(Persona persona) {
+    if (persona.getComprobanteCollection() == null) {
+      persona.setComprobanteCollection(new ArrayList<Comprobante>());
+    }
     if (persona.getVehiculoCollection() == null) {
       persona.setVehiculoCollection(new ArrayList<Vehiculo>());
     }
     if (persona.getDireccionPersonaCollection() == null) {
       persona.setDireccionPersonaCollection(new ArrayList<DireccionPersona>());
-    }
-    if (persona.getFacturaCollection() == null) {
-      persona.setFacturaCollection(new ArrayList<Factura>());
     }
     if (persona.getPrendaCollection() == null) {
       persona.setPrendaCollection(new ArrayList<Prenda>());
@@ -67,6 +67,12 @@ public class PersonaJpaController implements Serializable {
         tipoPersonaId = em.getReference(tipoPersonaId.getClass(), tipoPersonaId.getId());
         persona.setTipoPersonaId(tipoPersonaId);
       }
+      Collection<Comprobante> attachedComprobanteCollection = new ArrayList<Comprobante>();
+      for (Comprobante comprobanteCollectionComprobanteToAttach : persona.getComprobanteCollection()) {
+        comprobanteCollectionComprobanteToAttach = em.getReference(comprobanteCollectionComprobanteToAttach.getClass(), comprobanteCollectionComprobanteToAttach.getId());
+        attachedComprobanteCollection.add(comprobanteCollectionComprobanteToAttach);
+      }
+      persona.setComprobanteCollection(attachedComprobanteCollection);
       Collection<Vehiculo> attachedVehiculoCollection = new ArrayList<Vehiculo>();
       for (Vehiculo vehiculoCollectionVehiculoToAttach : persona.getVehiculoCollection()) {
         vehiculoCollectionVehiculoToAttach = em.getReference(vehiculoCollectionVehiculoToAttach.getClass(), vehiculoCollectionVehiculoToAttach.getId());
@@ -79,12 +85,6 @@ public class PersonaJpaController implements Serializable {
         attachedDireccionPersonaCollection.add(direccionPersonaCollectionDireccionPersonaToAttach);
       }
       persona.setDireccionPersonaCollection(attachedDireccionPersonaCollection);
-      Collection<Factura> attachedFacturaCollection = new ArrayList<Factura>();
-      for (Factura facturaCollectionFacturaToAttach : persona.getFacturaCollection()) {
-        facturaCollectionFacturaToAttach = em.getReference(facturaCollectionFacturaToAttach.getClass(), facturaCollectionFacturaToAttach.getId());
-        attachedFacturaCollection.add(facturaCollectionFacturaToAttach);
-      }
-      persona.setFacturaCollection(attachedFacturaCollection);
       Collection<Prenda> attachedPrendaCollection = new ArrayList<Prenda>();
       for (Prenda prendaCollectionPrendaToAttach : persona.getPrendaCollection()) {
         prendaCollectionPrendaToAttach = em.getReference(prendaCollectionPrendaToAttach.getClass(), prendaCollectionPrendaToAttach.getId());
@@ -108,6 +108,15 @@ public class PersonaJpaController implements Serializable {
         tipoPersonaId.getPersonaCollection().add(persona);
         tipoPersonaId = em.merge(tipoPersonaId);
       }
+      for (Comprobante comprobanteCollectionComprobante : persona.getComprobanteCollection()) {
+        Persona oldPersonaIdOfComprobanteCollectionComprobante = comprobanteCollectionComprobante.getPersonaId();
+        comprobanteCollectionComprobante.setPersonaId(persona);
+        comprobanteCollectionComprobante = em.merge(comprobanteCollectionComprobante);
+        if (oldPersonaIdOfComprobanteCollectionComprobante != null) {
+          oldPersonaIdOfComprobanteCollectionComprobante.getComprobanteCollection().remove(comprobanteCollectionComprobante);
+          oldPersonaIdOfComprobanteCollectionComprobante = em.merge(oldPersonaIdOfComprobanteCollectionComprobante);
+        }
+      }
       for (Vehiculo vehiculoCollectionVehiculo : persona.getVehiculoCollection()) {
         Persona oldPersonaIdOfVehiculoCollectionVehiculo = vehiculoCollectionVehiculo.getPersonaId();
         vehiculoCollectionVehiculo.setPersonaId(persona);
@@ -124,15 +133,6 @@ public class PersonaJpaController implements Serializable {
         if (oldPersonaIdOfDireccionPersonaCollectionDireccionPersona != null) {
           oldPersonaIdOfDireccionPersonaCollectionDireccionPersona.getDireccionPersonaCollection().remove(direccionPersonaCollectionDireccionPersona);
           oldPersonaIdOfDireccionPersonaCollectionDireccionPersona = em.merge(oldPersonaIdOfDireccionPersonaCollectionDireccionPersona);
-        }
-      }
-      for (Factura facturaCollectionFactura : persona.getFacturaCollection()) {
-        Persona oldPersonaIdOfFacturaCollectionFactura = facturaCollectionFactura.getPersonaId();
-        facturaCollectionFactura.setPersonaId(persona);
-        facturaCollectionFactura = em.merge(facturaCollectionFactura);
-        if (oldPersonaIdOfFacturaCollectionFactura != null) {
-          oldPersonaIdOfFacturaCollectionFactura.getFacturaCollection().remove(facturaCollectionFactura);
-          oldPersonaIdOfFacturaCollectionFactura = em.merge(oldPersonaIdOfFacturaCollectionFactura);
         }
       }
       for (Prenda prendaCollectionPrenda : persona.getPrendaCollection()) {
@@ -178,12 +178,12 @@ public class PersonaJpaController implements Serializable {
       Persona persistentPersona = em.find(Persona.class, persona.getId());
       TipoPersona tipoPersonaIdOld = persistentPersona.getTipoPersonaId();
       TipoPersona tipoPersonaIdNew = persona.getTipoPersonaId();
+      Collection<Comprobante> comprobanteCollectionOld = persistentPersona.getComprobanteCollection();
+      Collection<Comprobante> comprobanteCollectionNew = persona.getComprobanteCollection();
       Collection<Vehiculo> vehiculoCollectionOld = persistentPersona.getVehiculoCollection();
       Collection<Vehiculo> vehiculoCollectionNew = persona.getVehiculoCollection();
       Collection<DireccionPersona> direccionPersonaCollectionOld = persistentPersona.getDireccionPersonaCollection();
       Collection<DireccionPersona> direccionPersonaCollectionNew = persona.getDireccionPersonaCollection();
-      Collection<Factura> facturaCollectionOld = persistentPersona.getFacturaCollection();
-      Collection<Factura> facturaCollectionNew = persona.getFacturaCollection();
       Collection<Prenda> prendaCollectionOld = persistentPersona.getPrendaCollection();
       Collection<Prenda> prendaCollectionNew = persona.getPrendaCollection();
       Collection<Telefono> telefonoCollectionOld = persistentPersona.getTelefonoCollection();
@@ -194,6 +194,13 @@ public class PersonaJpaController implements Serializable {
         tipoPersonaIdNew = em.getReference(tipoPersonaIdNew.getClass(), tipoPersonaIdNew.getId());
         persona.setTipoPersonaId(tipoPersonaIdNew);
       }
+      Collection<Comprobante> attachedComprobanteCollectionNew = new ArrayList<Comprobante>();
+      for (Comprobante comprobanteCollectionNewComprobanteToAttach : comprobanteCollectionNew) {
+        comprobanteCollectionNewComprobanteToAttach = em.getReference(comprobanteCollectionNewComprobanteToAttach.getClass(), comprobanteCollectionNewComprobanteToAttach.getId());
+        attachedComprobanteCollectionNew.add(comprobanteCollectionNewComprobanteToAttach);
+      }
+      comprobanteCollectionNew = attachedComprobanteCollectionNew;
+      persona.setComprobanteCollection(comprobanteCollectionNew);
       Collection<Vehiculo> attachedVehiculoCollectionNew = new ArrayList<Vehiculo>();
       for (Vehiculo vehiculoCollectionNewVehiculoToAttach : vehiculoCollectionNew) {
         vehiculoCollectionNewVehiculoToAttach = em.getReference(vehiculoCollectionNewVehiculoToAttach.getClass(), vehiculoCollectionNewVehiculoToAttach.getId());
@@ -208,13 +215,6 @@ public class PersonaJpaController implements Serializable {
       }
       direccionPersonaCollectionNew = attachedDireccionPersonaCollectionNew;
       persona.setDireccionPersonaCollection(direccionPersonaCollectionNew);
-      Collection<Factura> attachedFacturaCollectionNew = new ArrayList<Factura>();
-      for (Factura facturaCollectionNewFacturaToAttach : facturaCollectionNew) {
-        facturaCollectionNewFacturaToAttach = em.getReference(facturaCollectionNewFacturaToAttach.getClass(), facturaCollectionNewFacturaToAttach.getId());
-        attachedFacturaCollectionNew.add(facturaCollectionNewFacturaToAttach);
-      }
-      facturaCollectionNew = attachedFacturaCollectionNew;
-      persona.setFacturaCollection(facturaCollectionNew);
       Collection<Prenda> attachedPrendaCollectionNew = new ArrayList<Prenda>();
       for (Prenda prendaCollectionNewPrendaToAttach : prendaCollectionNew) {
         prendaCollectionNewPrendaToAttach = em.getReference(prendaCollectionNewPrendaToAttach.getClass(), prendaCollectionNewPrendaToAttach.getId());
@@ -244,6 +244,23 @@ public class PersonaJpaController implements Serializable {
       if (tipoPersonaIdNew != null && !tipoPersonaIdNew.equals(tipoPersonaIdOld)) {
         tipoPersonaIdNew.getPersonaCollection().add(persona);
         tipoPersonaIdNew = em.merge(tipoPersonaIdNew);
+      }
+      for (Comprobante comprobanteCollectionOldComprobante : comprobanteCollectionOld) {
+        if (!comprobanteCollectionNew.contains(comprobanteCollectionOldComprobante)) {
+          comprobanteCollectionOldComprobante.setPersonaId(null);
+          comprobanteCollectionOldComprobante = em.merge(comprobanteCollectionOldComprobante);
+        }
+      }
+      for (Comprobante comprobanteCollectionNewComprobante : comprobanteCollectionNew) {
+        if (!comprobanteCollectionOld.contains(comprobanteCollectionNewComprobante)) {
+          Persona oldPersonaIdOfComprobanteCollectionNewComprobante = comprobanteCollectionNewComprobante.getPersonaId();
+          comprobanteCollectionNewComprobante.setPersonaId(persona);
+          comprobanteCollectionNewComprobante = em.merge(comprobanteCollectionNewComprobante);
+          if (oldPersonaIdOfComprobanteCollectionNewComprobante != null && !oldPersonaIdOfComprobanteCollectionNewComprobante.equals(persona)) {
+            oldPersonaIdOfComprobanteCollectionNewComprobante.getComprobanteCollection().remove(comprobanteCollectionNewComprobante);
+            oldPersonaIdOfComprobanteCollectionNewComprobante = em.merge(oldPersonaIdOfComprobanteCollectionNewComprobante);
+          }
+        }
       }
       for (Vehiculo vehiculoCollectionOldVehiculo : vehiculoCollectionOld) {
         if (!vehiculoCollectionNew.contains(vehiculoCollectionOldVehiculo)) {
@@ -276,23 +293,6 @@ public class PersonaJpaController implements Serializable {
           if (oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona != null && !oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona.equals(persona)) {
             oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona.getDireccionPersonaCollection().remove(direccionPersonaCollectionNewDireccionPersona);
             oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona = em.merge(oldPersonaIdOfDireccionPersonaCollectionNewDireccionPersona);
-          }
-        }
-      }
-      for (Factura facturaCollectionOldFactura : facturaCollectionOld) {
-        if (!facturaCollectionNew.contains(facturaCollectionOldFactura)) {
-          facturaCollectionOldFactura.setPersonaId(null);
-          facturaCollectionOldFactura = em.merge(facturaCollectionOldFactura);
-        }
-      }
-      for (Factura facturaCollectionNewFactura : facturaCollectionNew) {
-        if (!facturaCollectionOld.contains(facturaCollectionNewFactura)) {
-          Persona oldPersonaIdOfFacturaCollectionNewFactura = facturaCollectionNewFactura.getPersonaId();
-          facturaCollectionNewFactura.setPersonaId(persona);
-          facturaCollectionNewFactura = em.merge(facturaCollectionNewFactura);
-          if (oldPersonaIdOfFacturaCollectionNewFactura != null && !oldPersonaIdOfFacturaCollectionNewFactura.equals(persona)) {
-            oldPersonaIdOfFacturaCollectionNewFactura.getFacturaCollection().remove(facturaCollectionNewFactura);
-            oldPersonaIdOfFacturaCollectionNewFactura = em.merge(oldPersonaIdOfFacturaCollectionNewFactura);
           }
         }
       }
@@ -381,6 +381,11 @@ public class PersonaJpaController implements Serializable {
         tipoPersonaId.getPersonaCollection().remove(persona);
         tipoPersonaId = em.merge(tipoPersonaId);
       }
+      Collection<Comprobante> comprobanteCollection = persona.getComprobanteCollection();
+      for (Comprobante comprobanteCollectionComprobante : comprobanteCollection) {
+        comprobanteCollectionComprobante.setPersonaId(null);
+        comprobanteCollectionComprobante = em.merge(comprobanteCollectionComprobante);
+      }
       Collection<Vehiculo> vehiculoCollection = persona.getVehiculoCollection();
       for (Vehiculo vehiculoCollectionVehiculo : vehiculoCollection) {
         vehiculoCollectionVehiculo.setPersonaId(null);
@@ -390,11 +395,6 @@ public class PersonaJpaController implements Serializable {
       for (DireccionPersona direccionPersonaCollectionDireccionPersona : direccionPersonaCollection) {
         direccionPersonaCollectionDireccionPersona.setPersonaId(null);
         direccionPersonaCollectionDireccionPersona = em.merge(direccionPersonaCollectionDireccionPersona);
-      }
-      Collection<Factura> facturaCollection = persona.getFacturaCollection();
-      for (Factura facturaCollectionFactura : facturaCollection) {
-        facturaCollectionFactura.setPersonaId(null);
-        facturaCollectionFactura = em.merge(facturaCollectionFactura);
       }
       Collection<Prenda> prendaCollection = persona.getPrendaCollection();
       for (Prenda prendaCollectionPrenda : prendaCollection) {

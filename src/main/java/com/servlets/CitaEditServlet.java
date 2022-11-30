@@ -6,18 +6,14 @@ package com.servlets;
 
 import com.dao.PersonaJpaController;
 import com.dao.PrendaJpaController;
-import com.dao.ServicioJpaController;
 import com.dao.TipoDePrendaJpaController;
 import com.dto.Persona;
 import com.dto.Prenda;
-import com.dto.Servicio;
 import com.dto.TipoDePrenda;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "PrendaEditServlet", urlPatterns = {"/PrendaEditServlet"})
-public class PrendaEditServlet extends HttpServlet {
+@WebServlet(name = "CitaEditServlet", urlPatterns = {"/CitaEditServlet"})
+public class CitaEditServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,19 +52,14 @@ public class PrendaEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editEstado"));
     System.out.println(request.getParameter("editTdPrendaId"));
     System.out.println(request.getParameter("editPersonaId"));
-    System.out.println(request.getParameter("editServicioId"));
-    
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
     try {
 //      Inicialización de objetos
-      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(emf);
-      TipoDePrendaJpaController jpac_obj_tipo_prenda = new TipoDePrendaJpaController(emf);
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
-      ServicioJpaController jpa_obj_servicio = new ServicioJpaController(emf);
+      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      TipoDePrendaJpaController jpac_obj_tipo_prenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       Prenda oldObject_prenda;
-      TipoDePrenda mi_tipo_prenda;
-      Persona mi_persona;
-      Servicio mi_servicio;
+      TipoDePrenda tipo_prenda;
+      Persona persona;
 
 //      Lo relacionado a la fecha
       Date dt = new Date();
@@ -80,10 +71,9 @@ public class PrendaEditServlet extends HttpServlet {
 //      List<Direccion> mi_lista_de_Direcciones = new ArrayList<>();
 //      mi_lista_de_Direcciones = jpac_xa_lista_de_Direcciones.findDireccionEntities();
 //      Obteniendo el objeto con foreign key en base al Id que nos da la vista
-      mi_tipo_prenda = jpac_obj_tipo_prenda.findTipoDePrenda(Long.valueOf(request.getParameter("editTdPrendaId")));
-      mi_persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("editPersonaId")));
-      mi_servicio = jpa_obj_servicio.findServicio(Long.valueOf(request.getParameter("editServicioId")));
-      
+      tipo_prenda = jpac_obj_tipo_prenda.findTipoDePrenda(Long.valueOf(request.getParameter("editTdPrendaId")));
+      persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("editPersonaId")));
+
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
       oldObject_prenda = jpac_obj_prenda.findPrenda(Long.valueOf(request.getParameter("editId")));
       System.out.println("La prenda obtenida es: " + oldObject_prenda);
@@ -122,14 +112,11 @@ public class PrendaEditServlet extends HttpServlet {
 //      if (oldObject_servicio.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio")))!=0) {
 //        oldObject_servicio.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
 //      }
-      if (!oldObject_prenda.getTipoDePrendaId().equals(mi_tipo_prenda)) {
-        oldObject_prenda.setTipoDePrendaId(mi_tipo_prenda);
+      if (!oldObject_prenda.getTipoDePrendaId().equals(tipo_prenda)) {
+        oldObject_prenda.setTipoDePrendaId(tipo_prenda);
       }
-      if (!oldObject_prenda.getPersonaId().equals(mi_persona)) {
-        oldObject_prenda.setPersonaId(mi_persona);
-      }
-      if (!oldObject_prenda.getServicioId().equals(mi_servicio)) {
-        oldObject_prenda.setServicioId(mi_servicio);
+      if (!oldObject_prenda.getPersonaId().equals(persona)) {
+        oldObject_prenda.setPersonaId(persona);
       }
       oldObject_prenda.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);

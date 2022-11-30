@@ -39,6 +39,7 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
   @NamedQuery(name = "Vehiculo.findByPlaca", query = "SELECT v FROM Vehiculo v WHERE v.placa = :placa"),
   @NamedQuery(name = "Vehiculo.findByMarca", query = "SELECT v FROM Vehiculo v WHERE v.marca = :marca"),
   @NamedQuery(name = "Vehiculo.findByModelo", query = "SELECT v FROM Vehiculo v WHERE v.modelo = :modelo"),
+  @NamedQuery(name = "Vehiculo.findByColor", query = "SELECT v FROM Vehiculo v WHERE v.color = :color"),
   @NamedQuery(name = "Vehiculo.findByEstado", query = "SELECT v FROM Vehiculo v WHERE v.estado = :estado"),
   @NamedQuery(name = "Vehiculo.findByCreatedAt", query = "SELECT v FROM Vehiculo v WHERE v.createdAt = :createdAt"),
   @NamedQuery(name = "Vehiculo.findByUpdatedAt", query = "SELECT v FROM Vehiculo v WHERE v.updatedAt = :updatedAt")})
@@ -64,6 +65,9 @@ public class Vehiculo implements Serializable {
   @Size(max = 255)
   @Column(name = "modelo")
   private String modelo;
+  @Size(max = 255)
+  @Column(name = "color")
+  private String color;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 9)
@@ -132,6 +136,14 @@ public class Vehiculo implements Serializable {
 
   public void setModelo(String modelo) {
     this.modelo = modelo;
+  }
+
+  public String getColor() {
+    return color;
+  }
+
+  public void setColor(String color) {
+    this.color = color;
   }
 
   public String getEstado() {

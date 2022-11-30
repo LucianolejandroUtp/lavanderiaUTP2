@@ -76,7 +76,7 @@
 
                         <div class="form-group form-group-default">
                           <label>Tipo de Prenda</label>
-                          <select class="form-control" name="addTdPrendaId" id="addTdPrendaId">
+                          <select class="form-control" name="addTdPrendaId">
                             <c:forEach var="tempObjetoCreate" items="${mi_lista_de_TdPrendas }">
                               <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
                             </c:forEach>
@@ -84,9 +84,17 @@
                         </div>
                         <div class="form-group form-group-default">
                           <label>Persona</label>
-                          <select class="form-control" name="addPersonaId" id="addPersonaId">
+                          <select class="form-control" name="addPersonaId">
                             <c:forEach var="tempObjetoCreate2" items="${mi_lista_de_personas }">
                               <option value="${tempObjetoCreate2.id }">${tempObjetoCreate2.nombres }</option>
+                            </c:forEach>
+                          </select>
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Servicio</label>
+                          <select class="form-control" name="addServicioId">
+                            <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_servicios }">
+                              <option value="${tempObjetoCreate3.id }">${tempObjetoCreate3.descripcion }</option>
                             </c:forEach>
                           </select>
                         </div>
@@ -115,6 +123,7 @@
                   <th>Estado</th>
                   <th>Tipo</th>
                   <th>Persona</th>
+                  <th>Servicio</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
@@ -132,6 +141,7 @@
                     <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
                     <td>${tempObjeto.personaId.nombres}</td>
+                    <td>${tempObjeto.servicioId.descripcion}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
@@ -253,6 +263,14 @@
                                 <select class="form-control" name="editPersonaId">
                                   <c:forEach var="tempObjetoEdit2" items="${mi_lista_de_personas }">
                                     <option value="${tempObjetoEdit2.id }">${tempObjetoEdit2.nombres }</option>
+                                  </c:forEach>
+                                </select>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Servicio</label>
+                                <select class="form-control" name="editServicioId">
+                                  <c:forEach var="tempObjetoEdit3" items="${mi_lista_de_servicios }">
+                                    <option value="${tempObjetoEdit3.id }">${tempObjetoEdit3.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>

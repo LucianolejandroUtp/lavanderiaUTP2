@@ -76,11 +76,13 @@ public class Servicio implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
+  @OneToMany(mappedBy = "servicioId")
+  private Collection<DetalleComprobante> detalleComprobanteCollection;
   @JoinColumn(name = "categoria_id", referencedColumnName = "id")
   @ManyToOne
   private Categoria categoriaId;
   @OneToMany(mappedBy = "servicioId")
-  private Collection<DetalleFactura> detalleFacturaCollection;
+  private Collection<Prenda> prendaCollection;
 
   public Servicio() {
   }
@@ -159,6 +161,14 @@ public class Servicio implements Serializable {
     this.updatedAt = updatedAt;
   }
 
+  public Collection<DetalleComprobante> getDetalleComprobanteCollection() {
+    return detalleComprobanteCollection;
+  }
+
+  public void setDetalleComprobanteCollection(Collection<DetalleComprobante> detalleComprobanteCollection) {
+    this.detalleComprobanteCollection = detalleComprobanteCollection;
+  }
+
   public Categoria getCategoriaId() {
     return categoriaId;
   }
@@ -167,12 +177,12 @@ public class Servicio implements Serializable {
     this.categoriaId = categoriaId;
   }
 
-  public Collection<DetalleFactura> getDetalleFacturaCollection() {
-    return detalleFacturaCollection;
+  public Collection<Prenda> getPrendaCollection() {
+    return prendaCollection;
   }
 
-  public void setDetalleFacturaCollection(Collection<DetalleFactura> detalleFacturaCollection) {
-    this.detalleFacturaCollection = detalleFacturaCollection;
+  public void setPrendaCollection(Collection<Prenda> prendaCollection) {
+    this.prendaCollection = prendaCollection;
   }
 
   @Override

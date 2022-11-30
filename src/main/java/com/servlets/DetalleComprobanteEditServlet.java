@@ -4,14 +4,14 @@
  */
 package com.servlets;
 
-import com.dao.DetalleFacturaJpaController;
-import com.dao.FacturaJpaController;
+import com.dao.DetalleComprobanteJpaController;
+import com.dao.ComprobanteJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.PrendaJpaController;
 import com.dao.ServicioJpaController;
 import com.dao.TipoDePrendaJpaController;
-import com.dto.DetalleFactura;
-import com.dto.Factura;
+import com.dto.DetalleComprobante;
+import com.dto.Comprobante;
 import com.dto.Persona;
 import com.dto.Prenda;
 import com.dto.Servicio;
@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "DetalleFacturaEditServlet", urlPatterns = {"/DetalleFacturaEditServlet"})
-public class DetalleFacturaEditServlet extends HttpServlet {
+@WebServlet(name = "DetalleComprobanteEditServlet", urlPatterns = {"/DetalleComprobanteEditServlet"})
+public class DetalleComprobanteEditServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,28 +47,28 @@ public class DetalleFacturaEditServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
 
-    System.out.println("Entrando a Servicio Edit Servlet");
+    System.out.println("Entrando a Detalle Comprobante Edit Servlet");
     System.out.println(request.getParameter("editId"));
     System.out.println(request.getParameter("editCantidad"));
     System.out.println(request.getParameter("editPrecio"));
     System.out.println(request.getParameter("editSubtotal"));
     System.out.println(request.getParameter("editIgv"));
     System.out.println(request.getParameter("editTotal"));
-    System.out.println(request.getParameter("editFacturaId"));
+    System.out.println(request.getParameter("editComprobanteId"));
     System.out.println(request.getParameter("editServicioId"));
-    System.out.println(request.getParameter("editPrendaId"));
+//    System.out.println(request.getParameter("editPrendaId"));
     System.out.println(request.getParameter("editEstado"));
     try {
 //      Inicialización de objetos
-      DetalleFacturaJpaController jpac_obj_detF = new DetalleFacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      FacturaJpaController jpac_obj_factura = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DetalleComprobanteJpaController jpac_obj_detC = new DetalleComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ComprobanteJpaController jpac_obj_comprobante = new ComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
       ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+//      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
 
-      DetalleFactura oldObject_detF;
-      Factura mi_obj_factura;
+      DetalleComprobante oldObject_detC;
+      Comprobante mi_obj_comprobante;
       Servicio mi_obj_servicio;
-      Prenda mi_obj_prenda;
+//      Prenda mi_obj_prenda;
 
 //      Lo relacionado a la fecha
       Date dt = new Date();
@@ -80,57 +80,57 @@ public class DetalleFacturaEditServlet extends HttpServlet {
 //      List<Direccion> mi_lista_de_Direcciones = new ArrayList<>();
 //      mi_lista_de_Direcciones = jpac_xa_lista_de_Direcciones.findDireccionEntities();
 //      Obteniendo el objeto con foreign key en base al Id que nos da la vista
-      mi_obj_factura = jpac_obj_factura.findFactura(Long.valueOf(request.getParameter("editFacturaId")));
+      mi_obj_comprobante = jpac_obj_comprobante.findComprobante(Long.valueOf(request.getParameter("editComprobanteId")));
       mi_obj_servicio = jpac_obj_servicio.findServicio(Long.valueOf(request.getParameter("editServicioId")));
-      mi_obj_prenda = jpac_obj_prenda.findPrenda(Long.valueOf(request.getParameter("editPrendaId")));
+//      mi_obj_prenda = jpac_obj_prenda.findPrenda(Long.valueOf(request.getParameter("editPrendaId")));
 
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      oldObject_detF = jpac_obj_detF.findDetalleFactura(Long.valueOf(request.getParameter("editId")));
-      System.out.println("El Detalle de Factura obtenido es: " + oldObject_detF);
+      oldObject_detC = jpac_obj_detC.findDetalleComprobante(Long.valueOf(request.getParameter("editId")));
+      System.out.println("El Detalle de Comprobante obtenido es: " + oldObject_detC);
 
 //      Comparando y asignando nuevos valores al objeto
-      if(oldObject_detF.getCantidad() == null || !oldObject_detF.getCantidad().equals(Integer.valueOf(request.getParameter("editCantidad")))){
-        oldObject_detF.setCantidad(Integer.valueOf(request.getParameter("editCantidad")));
+      if(oldObject_detC.getCantidad() == null || !oldObject_detC.getCantidad().equals(Integer.valueOf(request.getParameter("editCantidad")))){
+        oldObject_detC.setCantidad(Integer.valueOf(request.getParameter("editCantidad")));
       }
-      if (oldObject_detF.getPrecio() == null || oldObject_detF.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio"))) != 0) {
-        oldObject_detF.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
-      }
-
-      if (oldObject_detF.getSubtotal()== null || oldObject_detF.getSubtotal().compareTo(Double.valueOf(request.getParameter("editSubtotal"))) != 0) {
-        oldObject_detF.setSubtotal(Double.valueOf(request.getParameter("editSubtotal")));
-      }
-      if (oldObject_detF.getIgv()== null || oldObject_detF.getIgv().compareTo(Double.valueOf(request.getParameter("editIgv"))) != 0) {
-        oldObject_detF.setIgv(Double.valueOf(request.getParameter("editIgv")));
+      if (oldObject_detC.getPrecio() == null || oldObject_detC.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio"))) != 0) {
+        oldObject_detC.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
       }
 
-      if (oldObject_detF.getTotal()== null || oldObject_detF.getTotal().compareTo(Double.valueOf(request.getParameter("editTotal"))) != 0) {
-        oldObject_detF.setTotal(Double.valueOf(request.getParameter("editTotal")));
+      if (oldObject_detC.getSubtotal()== null || oldObject_detC.getSubtotal().compareTo(Double.valueOf(request.getParameter("editSubtotal"))) != 0) {
+        oldObject_detC.setSubtotal(Double.valueOf(request.getParameter("editSubtotal")));
+      }
+      if (oldObject_detC.getIgv()== null || oldObject_detC.getIgv().compareTo(Double.valueOf(request.getParameter("editIgv"))) != 0) {
+        oldObject_detC.setIgv(Double.valueOf(request.getParameter("editIgv")));
       }
 
-      if (!oldObject_detF.getEstado().equals(request.getParameter("editEstado"))) {
-        oldObject_detF.setEstado(request.getParameter("editEstado"));
+      if (oldObject_detC.getTotal()== null || oldObject_detC.getTotal().compareTo(Double.valueOf(request.getParameter("editTotal"))) != 0) {
+        oldObject_detC.setTotal(Double.valueOf(request.getParameter("editTotal")));
       }
 
-      if (!oldObject_detF.getFacturaId().equals(mi_obj_factura)) {
-        oldObject_detF.setFacturaId(mi_obj_factura);
+      if (!oldObject_detC.getEstado().equals(request.getParameter("editEstado"))) {
+        oldObject_detC.setEstado(request.getParameter("editEstado"));
       }
-      if (!oldObject_detF.getServicioId().equals(mi_obj_servicio)) {
-        oldObject_detF.setServicioId(mi_obj_servicio);
+
+      if (!oldObject_detC.getComprobanteId().equals(mi_obj_comprobante)) {
+        oldObject_detC.setComprobanteId(mi_obj_comprobante);
       }
-      if (!oldObject_detF.getPrendaId().equals(mi_obj_prenda)) {
-        oldObject_detF.setPrendaId(mi_obj_prenda);
+      if (!oldObject_detC.getServicioId().equals(mi_obj_servicio)) {
+        oldObject_detC.setServicioId(mi_obj_servicio);
       }
-      oldObject_detF.setUpdatedAt(ts);
+//      if (!oldObject_detF.getPrendaId().equals(mi_obj_prenda)) {
+//        oldObject_detF.setPrendaId(mi_obj_prenda);
+//      }
+      oldObject_detC.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);
 
-      System.out.println("El Detalle de Factura actualizado es: "
-          + oldObject_detF.getId() + " - " + oldObject_detF.getCantidad()+ " - " + oldObject_detF.getTotal()+ " - "
-          + oldObject_detF.getEstado() + " - " + oldObject_detF.getServicioId().getDescripcion() + " - "
-          + oldObject_detF.getCreatedAt() + " - " + oldObject_detF.getUpdatedAt());
+      System.out.println("El Detalle de Comprobante actualizado es: "
+          + oldObject_detC.getId() + " - " + oldObject_detC.getCantidad()+ " - " + oldObject_detC.getTotal()+ " - "
+          + oldObject_detC.getEstado() + " - " + oldObject_detC.getServicioId().getDescripcion() + " - "
+          + oldObject_detC.getCreatedAt() + " - " + oldObject_detC.getUpdatedAt());
 
-      jpac_obj_detF.edit(oldObject_detF);
+      jpac_obj_detC.edit(oldObject_detC);
 
-      DetalleFacturaListServlet call = new DetalleFacturaListServlet();
+      DetalleComprobanteListServlet call = new DetalleComprobanteListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {

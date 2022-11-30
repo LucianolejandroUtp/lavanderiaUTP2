@@ -11,10 +11,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.dto.Categoria;
-import com.dto.DetalleFactura;
-import com.dto.Servicio;
+import com.dto.DetalleComprobante;
 import java.util.ArrayList;
 import java.util.Collection;
+import com.dto.Prenda;
+import com.dto.Servicio;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,8 +36,11 @@ public class ServicioJpaController implements Serializable {
   }
 
   public void create(Servicio servicio) {
-    if (servicio.getDetalleFacturaCollection() == null) {
-      servicio.setDetalleFacturaCollection(new ArrayList<DetalleFactura>());
+    if (servicio.getDetalleComprobanteCollection() == null) {
+      servicio.setDetalleComprobanteCollection(new ArrayList<DetalleComprobante>());
+    }
+    if (servicio.getPrendaCollection() == null) {
+      servicio.setPrendaCollection(new ArrayList<Prenda>());
     }
     EntityManager em = null;
     try {
@@ -47,24 +51,39 @@ public class ServicioJpaController implements Serializable {
         categoriaId = em.getReference(categoriaId.getClass(), categoriaId.getId());
         servicio.setCategoriaId(categoriaId);
       }
-      Collection<DetalleFactura> attachedDetalleFacturaCollection = new ArrayList<DetalleFactura>();
-      for (DetalleFactura detalleFacturaCollectionDetalleFacturaToAttach : servicio.getDetalleFacturaCollection()) {
-        detalleFacturaCollectionDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionDetalleFacturaToAttach.getClass(), detalleFacturaCollectionDetalleFacturaToAttach.getId());
-        attachedDetalleFacturaCollection.add(detalleFacturaCollectionDetalleFacturaToAttach);
+      Collection<DetalleComprobante> attachedDetalleComprobanteCollection = new ArrayList<DetalleComprobante>();
+      for (DetalleComprobante detalleComprobanteCollectionDetalleComprobanteToAttach : servicio.getDetalleComprobanteCollection()) {
+        detalleComprobanteCollectionDetalleComprobanteToAttach = em.getReference(detalleComprobanteCollectionDetalleComprobanteToAttach.getClass(), detalleComprobanteCollectionDetalleComprobanteToAttach.getId());
+        attachedDetalleComprobanteCollection.add(detalleComprobanteCollectionDetalleComprobanteToAttach);
       }
-      servicio.setDetalleFacturaCollection(attachedDetalleFacturaCollection);
+      servicio.setDetalleComprobanteCollection(attachedDetalleComprobanteCollection);
+      Collection<Prenda> attachedPrendaCollection = new ArrayList<Prenda>();
+      for (Prenda prendaCollectionPrendaToAttach : servicio.getPrendaCollection()) {
+        prendaCollectionPrendaToAttach = em.getReference(prendaCollectionPrendaToAttach.getClass(), prendaCollectionPrendaToAttach.getId());
+        attachedPrendaCollection.add(prendaCollectionPrendaToAttach);
+      }
+      servicio.setPrendaCollection(attachedPrendaCollection);
       em.persist(servicio);
       if (categoriaId != null) {
         categoriaId.getServicioCollection().add(servicio);
         categoriaId = em.merge(categoriaId);
       }
-      for (DetalleFactura detalleFacturaCollectionDetalleFactura : servicio.getDetalleFacturaCollection()) {
-        Servicio oldServicioIdOfDetalleFacturaCollectionDetalleFactura = detalleFacturaCollectionDetalleFactura.getServicioId();
-        detalleFacturaCollectionDetalleFactura.setServicioId(servicio);
-        detalleFacturaCollectionDetalleFactura = em.merge(detalleFacturaCollectionDetalleFactura);
-        if (oldServicioIdOfDetalleFacturaCollectionDetalleFactura != null) {
-          oldServicioIdOfDetalleFacturaCollectionDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionDetalleFactura);
-          oldServicioIdOfDetalleFacturaCollectionDetalleFactura = em.merge(oldServicioIdOfDetalleFacturaCollectionDetalleFactura);
+      for (DetalleComprobante detalleComprobanteCollectionDetalleComprobante : servicio.getDetalleComprobanteCollection()) {
+        Servicio oldServicioIdOfDetalleComprobanteCollectionDetalleComprobante = detalleComprobanteCollectionDetalleComprobante.getServicioId();
+        detalleComprobanteCollectionDetalleComprobante.setServicioId(servicio);
+        detalleComprobanteCollectionDetalleComprobante = em.merge(detalleComprobanteCollectionDetalleComprobante);
+        if (oldServicioIdOfDetalleComprobanteCollectionDetalleComprobante != null) {
+          oldServicioIdOfDetalleComprobanteCollectionDetalleComprobante.getDetalleComprobanteCollection().remove(detalleComprobanteCollectionDetalleComprobante);
+          oldServicioIdOfDetalleComprobanteCollectionDetalleComprobante = em.merge(oldServicioIdOfDetalleComprobanteCollectionDetalleComprobante);
+        }
+      }
+      for (Prenda prendaCollectionPrenda : servicio.getPrendaCollection()) {
+        Servicio oldServicioIdOfPrendaCollectionPrenda = prendaCollectionPrenda.getServicioId();
+        prendaCollectionPrenda.setServicioId(servicio);
+        prendaCollectionPrenda = em.merge(prendaCollectionPrenda);
+        if (oldServicioIdOfPrendaCollectionPrenda != null) {
+          oldServicioIdOfPrendaCollectionPrenda.getPrendaCollection().remove(prendaCollectionPrenda);
+          oldServicioIdOfPrendaCollectionPrenda = em.merge(oldServicioIdOfPrendaCollectionPrenda);
         }
       }
       em.getTransaction().commit();
@@ -83,19 +102,28 @@ public class ServicioJpaController implements Serializable {
       Servicio persistentServicio = em.find(Servicio.class, servicio.getId());
       Categoria categoriaIdOld = persistentServicio.getCategoriaId();
       Categoria categoriaIdNew = servicio.getCategoriaId();
-      Collection<DetalleFactura> detalleFacturaCollectionOld = persistentServicio.getDetalleFacturaCollection();
-      Collection<DetalleFactura> detalleFacturaCollectionNew = servicio.getDetalleFacturaCollection();
+      Collection<DetalleComprobante> detalleComprobanteCollectionOld = persistentServicio.getDetalleComprobanteCollection();
+      Collection<DetalleComprobante> detalleComprobanteCollectionNew = servicio.getDetalleComprobanteCollection();
+      Collection<Prenda> prendaCollectionOld = persistentServicio.getPrendaCollection();
+      Collection<Prenda> prendaCollectionNew = servicio.getPrendaCollection();
       if (categoriaIdNew != null) {
         categoriaIdNew = em.getReference(categoriaIdNew.getClass(), categoriaIdNew.getId());
         servicio.setCategoriaId(categoriaIdNew);
       }
-      Collection<DetalleFactura> attachedDetalleFacturaCollectionNew = new ArrayList<DetalleFactura>();
-      for (DetalleFactura detalleFacturaCollectionNewDetalleFacturaToAttach : detalleFacturaCollectionNew) {
-        detalleFacturaCollectionNewDetalleFacturaToAttach = em.getReference(detalleFacturaCollectionNewDetalleFacturaToAttach.getClass(), detalleFacturaCollectionNewDetalleFacturaToAttach.getId());
-        attachedDetalleFacturaCollectionNew.add(detalleFacturaCollectionNewDetalleFacturaToAttach);
+      Collection<DetalleComprobante> attachedDetalleComprobanteCollectionNew = new ArrayList<DetalleComprobante>();
+      for (DetalleComprobante detalleComprobanteCollectionNewDetalleComprobanteToAttach : detalleComprobanteCollectionNew) {
+        detalleComprobanteCollectionNewDetalleComprobanteToAttach = em.getReference(detalleComprobanteCollectionNewDetalleComprobanteToAttach.getClass(), detalleComprobanteCollectionNewDetalleComprobanteToAttach.getId());
+        attachedDetalleComprobanteCollectionNew.add(detalleComprobanteCollectionNewDetalleComprobanteToAttach);
       }
-      detalleFacturaCollectionNew = attachedDetalleFacturaCollectionNew;
-      servicio.setDetalleFacturaCollection(detalleFacturaCollectionNew);
+      detalleComprobanteCollectionNew = attachedDetalleComprobanteCollectionNew;
+      servicio.setDetalleComprobanteCollection(detalleComprobanteCollectionNew);
+      Collection<Prenda> attachedPrendaCollectionNew = new ArrayList<Prenda>();
+      for (Prenda prendaCollectionNewPrendaToAttach : prendaCollectionNew) {
+        prendaCollectionNewPrendaToAttach = em.getReference(prendaCollectionNewPrendaToAttach.getClass(), prendaCollectionNewPrendaToAttach.getId());
+        attachedPrendaCollectionNew.add(prendaCollectionNewPrendaToAttach);
+      }
+      prendaCollectionNew = attachedPrendaCollectionNew;
+      servicio.setPrendaCollection(prendaCollectionNew);
       servicio = em.merge(servicio);
       if (categoriaIdOld != null && !categoriaIdOld.equals(categoriaIdNew)) {
         categoriaIdOld.getServicioCollection().remove(servicio);
@@ -105,20 +133,37 @@ public class ServicioJpaController implements Serializable {
         categoriaIdNew.getServicioCollection().add(servicio);
         categoriaIdNew = em.merge(categoriaIdNew);
       }
-      for (DetalleFactura detalleFacturaCollectionOldDetalleFactura : detalleFacturaCollectionOld) {
-        if (!detalleFacturaCollectionNew.contains(detalleFacturaCollectionOldDetalleFactura)) {
-          detalleFacturaCollectionOldDetalleFactura.setServicioId(null);
-          detalleFacturaCollectionOldDetalleFactura = em.merge(detalleFacturaCollectionOldDetalleFactura);
+      for (DetalleComprobante detalleComprobanteCollectionOldDetalleComprobante : detalleComprobanteCollectionOld) {
+        if (!detalleComprobanteCollectionNew.contains(detalleComprobanteCollectionOldDetalleComprobante)) {
+          detalleComprobanteCollectionOldDetalleComprobante.setServicioId(null);
+          detalleComprobanteCollectionOldDetalleComprobante = em.merge(detalleComprobanteCollectionOldDetalleComprobante);
         }
       }
-      for (DetalleFactura detalleFacturaCollectionNewDetalleFactura : detalleFacturaCollectionNew) {
-        if (!detalleFacturaCollectionOld.contains(detalleFacturaCollectionNewDetalleFactura)) {
-          Servicio oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura = detalleFacturaCollectionNewDetalleFactura.getServicioId();
-          detalleFacturaCollectionNewDetalleFactura.setServicioId(servicio);
-          detalleFacturaCollectionNewDetalleFactura = em.merge(detalleFacturaCollectionNewDetalleFactura);
-          if (oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura != null && !oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura.equals(servicio)) {
-            oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura.getDetalleFacturaCollection().remove(detalleFacturaCollectionNewDetalleFactura);
-            oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura = em.merge(oldServicioIdOfDetalleFacturaCollectionNewDetalleFactura);
+      for (DetalleComprobante detalleComprobanteCollectionNewDetalleComprobante : detalleComprobanteCollectionNew) {
+        if (!detalleComprobanteCollectionOld.contains(detalleComprobanteCollectionNewDetalleComprobante)) {
+          Servicio oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante = detalleComprobanteCollectionNewDetalleComprobante.getServicioId();
+          detalleComprobanteCollectionNewDetalleComprobante.setServicioId(servicio);
+          detalleComprobanteCollectionNewDetalleComprobante = em.merge(detalleComprobanteCollectionNewDetalleComprobante);
+          if (oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante != null && !oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante.equals(servicio)) {
+            oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante.getDetalleComprobanteCollection().remove(detalleComprobanteCollectionNewDetalleComprobante);
+            oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante = em.merge(oldServicioIdOfDetalleComprobanteCollectionNewDetalleComprobante);
+          }
+        }
+      }
+      for (Prenda prendaCollectionOldPrenda : prendaCollectionOld) {
+        if (!prendaCollectionNew.contains(prendaCollectionOldPrenda)) {
+          prendaCollectionOldPrenda.setServicioId(null);
+          prendaCollectionOldPrenda = em.merge(prendaCollectionOldPrenda);
+        }
+      }
+      for (Prenda prendaCollectionNewPrenda : prendaCollectionNew) {
+        if (!prendaCollectionOld.contains(prendaCollectionNewPrenda)) {
+          Servicio oldServicioIdOfPrendaCollectionNewPrenda = prendaCollectionNewPrenda.getServicioId();
+          prendaCollectionNewPrenda.setServicioId(servicio);
+          prendaCollectionNewPrenda = em.merge(prendaCollectionNewPrenda);
+          if (oldServicioIdOfPrendaCollectionNewPrenda != null && !oldServicioIdOfPrendaCollectionNewPrenda.equals(servicio)) {
+            oldServicioIdOfPrendaCollectionNewPrenda.getPrendaCollection().remove(prendaCollectionNewPrenda);
+            oldServicioIdOfPrendaCollectionNewPrenda = em.merge(oldServicioIdOfPrendaCollectionNewPrenda);
           }
         }
       }
@@ -156,10 +201,15 @@ public class ServicioJpaController implements Serializable {
         categoriaId.getServicioCollection().remove(servicio);
         categoriaId = em.merge(categoriaId);
       }
-      Collection<DetalleFactura> detalleFacturaCollection = servicio.getDetalleFacturaCollection();
-      for (DetalleFactura detalleFacturaCollectionDetalleFactura : detalleFacturaCollection) {
-        detalleFacturaCollectionDetalleFactura.setServicioId(null);
-        detalleFacturaCollectionDetalleFactura = em.merge(detalleFacturaCollectionDetalleFactura);
+      Collection<DetalleComprobante> detalleComprobanteCollection = servicio.getDetalleComprobanteCollection();
+      for (DetalleComprobante detalleComprobanteCollectionDetalleComprobante : detalleComprobanteCollection) {
+        detalleComprobanteCollectionDetalleComprobante.setServicioId(null);
+        detalleComprobanteCollectionDetalleComprobante = em.merge(detalleComprobanteCollectionDetalleComprobante);
+      }
+      Collection<Prenda> prendaCollection = servicio.getPrendaCollection();
+      for (Prenda prendaCollectionPrenda : prendaCollection) {
+        prendaCollectionPrenda.setServicioId(null);
+        prendaCollectionPrenda = em.merge(prendaCollectionPrenda);
       }
       em.remove(servicio);
       em.getTransaction().commit();

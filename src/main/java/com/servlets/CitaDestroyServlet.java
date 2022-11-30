@@ -4,8 +4,10 @@
  */
 package com.servlets;
 
-import com.dao.PersonaJpaController;
-import com.dto.Persona;
+import com.dao.CitaJpaController;
+import com.dao.PrendaJpaController;
+import com.dto.Cita;
+import com.dto.Prenda;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.Persistence;
@@ -19,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "PersonaDestroyServlet", urlPatterns = {"/PersonaDestroyServlet"})
-public class PersonaDestroyServlet extends HttpServlet {
+@WebServlet(name = "CitaDestroyServlet", urlPatterns = {"/CitaDestroyServlet"})
+public class CitaDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +37,18 @@ public class PersonaDestroyServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     
-    System.out.println("Entrando a Persona Destroy Servlet");
+    System.out.println("Entrando a Cita Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      PersonaJpaController jpac_object = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Persona objeto_archivado;
+      CitaJpaController jpac_object = new CitaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      Cita objeto_archivado;
 
-      objeto_archivado = jpac_object.findPersona(Long.valueOf(request.getParameter("destroyId")));
+      objeto_archivado = jpac_object.findCita(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
       jpac_object.edit(objeto_archivado);
 
-      PersonaListServlet call = new PersonaListServlet();
+      CitaListServlet call = new CitaListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {

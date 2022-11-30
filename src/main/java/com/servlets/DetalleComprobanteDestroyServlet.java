@@ -4,10 +4,8 @@
  */
 package com.servlets;
 
-import com.dao.FacturaJpaController;
-import com.dao.ServicioJpaController;
-import com.dto.Factura;
-import com.dto.Servicio;
+import com.dao.DetalleComprobanteJpaController;
+import com.dto.DetalleComprobante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.Persistence;
@@ -21,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "FacturaDestroyServlet", urlPatterns = {"/FacturaDestroyServlet"})
-public class FacturaDestroyServlet extends HttpServlet {
+@WebServlet(name = "DetalleComprobanteDestroyServlet", urlPatterns = {"/DetalleComprobanteDestroyServlet"})
+public class DetalleComprobanteDestroyServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,20 +34,18 @@ public class FacturaDestroyServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
-    
-    System.out.println("Entrando a Factura Destroy Servlet");
+    System.out.println("Entrando a Detalle de Comprobante Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      FacturaJpaController jpac_object = new FacturaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Factura objeto_archivado;
+      DetalleComprobanteJpaController jpac_object = new DetalleComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DetalleComprobante objeto_archivado;
 
-      objeto_archivado = jpac_object.findFactura(Long.valueOf(request.getParameter("destroyId")));
+      objeto_archivado = jpac_object.findDetalleComprobante(Long.valueOf(request.getParameter("destroyId")));
 
       objeto_archivado.setEstado("eliminado");
       jpac_object.edit(objeto_archivado);
 
-      FacturaListServlet call = new FacturaListServlet();
+      DetalleComprobanteListServlet call = new DetalleComprobanteListServlet();
       call.processRequest(request, response);
 
     } catch (Exception theException) {

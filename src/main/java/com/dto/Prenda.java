@@ -5,7 +5,6 @@
 package com.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,7 +17,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -87,11 +85,12 @@ public class Prenda implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "prendaId")
-  private Collection<DetalleFactura> detalleFacturaCollection;
   @JoinColumn(name = "persona_id", referencedColumnName = "id")
   @ManyToOne
   private Persona personaId;
+  @JoinColumn(name = "servicio_id", referencedColumnName = "id")
+  @ManyToOne
+  private Servicio servicioId;
   @JoinColumn(name = "tipo_de_prenda_id", referencedColumnName = "id")
   @ManyToOne
   private TipoDePrenda tipoDePrendaId;
@@ -197,20 +196,20 @@ public class Prenda implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Collection<DetalleFactura> getDetalleFacturaCollection() {
-    return detalleFacturaCollection;
-  }
-
-  public void setDetalleFacturaCollection(Collection<DetalleFactura> detalleFacturaCollection) {
-    this.detalleFacturaCollection = detalleFacturaCollection;
-  }
-
   public Persona getPersonaId() {
     return personaId;
   }
 
   public void setPersonaId(Persona personaId) {
     this.personaId = personaId;
+  }
+
+  public Servicio getServicioId() {
+    return servicioId;
+  }
+
+  public void setServicioId(Servicio servicioId) {
+    this.servicioId = servicioId;
   }
 
   public TipoDePrenda getTipoDePrendaId() {
