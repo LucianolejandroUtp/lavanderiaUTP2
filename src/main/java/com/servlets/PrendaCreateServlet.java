@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,14 +47,16 @@ public class PrendaCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
 
     System.out.println("Bandera servlet create Prenda");
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
     try {
-      PrendaJpaController jpac_object_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoDePrendaJpaController jpac_object_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_object_Persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Prenda mi_objeto_prenda = new Prenda();
-      TipoDePrenda mi_objeto_TdPrenda = new TipoDePrenda();
-      Persona mi_objeto_Persona = new Persona();
+      PrendaJpaController jpac_prenda = new PrendaJpaController(emf);
+      TipoDePrendaJpaController jpac_TdPrenda = new TipoDePrendaJpaController(emf);
+      PersonaJpaController jpac_Persona = new PersonaJpaController(emf);
+      ServicioJpaController jpac_servicio = new ServicioJpaController(emf);
+      Prenda miPrenda = new Prenda();
+      TipoDePrenda miTipoDePrenda = new TipoDePrenda();
+      Persona miPersonaCliente = new Persona();
+      Persona miPersonaEmpleado = new Persona();
       Servicio mi_obj_servicio = new Servicio();
 
       Date dt = new Date();
@@ -61,31 +64,34 @@ public class PrendaCreateServlet extends HttpServlet {
       System.out.println(ts);
 
 //      Obteniendo el objeto en base al Id obtenido de la vista
-      mi_objeto_TdPrenda = jpac_object_TdPrenda.findTipoDePrenda(Long.valueOf(request.getParameter("addTdPrendaId")));
-      mi_objeto_Persona = jpac_object_Persona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
-      mi_obj_servicio = jpac_obj_servicio.findServicio(Long.valueOf(request.getParameter("addServicioId")));
-      System.out.println("El tipo de prenda obtenido fue: " + mi_objeto_TdPrenda.getDescripcion() + " - " + mi_objeto_TdPrenda.getId());
-      System.out.println("La Persona obtenida fue: " + mi_objeto_Persona.getNombres() + " - " + mi_objeto_Persona.getId());
+      miTipoDePrenda = jpac_TdPrenda.findTipoDePrenda(Long.valueOf(request.getParameter("addTdPrendaId")));
+      miPersonaCliente = jpac_Persona.findPersona(Long.valueOf(request.getParameter("addPersonaIdCliente")));
+      miPersonaEmpleado = jpac_Persona.findPersona(Long.valueOf(request.getParameter("addPersonaIdEmpleado")));
+      mi_obj_servicio = jpac_servicio.findServicio(Long.valueOf(request.getParameter("addServicioId")));
+      System.out.println("El tipo de prenda obtenido fue: " + miTipoDePrenda.getDescripcion() + " - " + miTipoDePrenda.getId());
+      System.out.println("La Persona Cliente obtenida fue: " + miPersonaCliente.getNombres() + " - " + miPersonaCliente.getId());
+      System.out.println("La Persona Empleado obtenida fue: " + miPersonaEmpleado.getNombres() + " - " + miPersonaEmpleado.getId());
       System.out.println("El Servicio obtenido fue: " + mi_obj_servicio.getDescripcion() + " - " + mi_obj_servicio.getId());
 
 //      Llenando los parámetros del distrito obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto_prenda.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      mi_objeto_prenda.setCantidad(Double.valueOf(request.getParameter("addCantidad")));
-      mi_objeto_prenda.setColor(request.getParameter("addColor"));
-      mi_objeto_prenda.setMarca(request.getParameter("addMarca"));
-      mi_objeto_prenda.setEstadoDePrenda(request.getParameter("addEstadoDePrenda"));
-      mi_objeto_prenda.setPeso(Double.valueOf(request.getParameter("addPeso")));
-      mi_objeto_prenda.setObservacion(request.getParameter("addObservacion"));
-      mi_objeto_prenda.setEstado("activo");
-      mi_objeto_prenda.setCreatedAt(ts);
-      mi_objeto_prenda.setUpdatedAt(ts);
-      mi_objeto_prenda.setTipoDePrendaId(mi_objeto_TdPrenda);
-      mi_objeto_prenda.setPersonaId(mi_objeto_Persona);
-      mi_objeto_prenda.setServicioId(mi_obj_servicio);
+      miPrenda.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+      miPrenda.setCantidad(Double.valueOf(request.getParameter("addCantidad")));
+      miPrenda.setColor(request.getParameter("addColor"));
+      miPrenda.setMarca(request.getParameter("addMarca"));
+      miPrenda.setEstadoDePrenda(request.getParameter("addEstadoDePrenda"));
+//      miPrenda.setPeso(Double.valueOf(request.getParameter("addPeso")));
+      miPrenda.setObservacion(request.getParameter("addObservacion"));
+      miPrenda.setEstado("activo");
+      miPrenda.setCreatedAt(ts);
+      miPrenda.setUpdatedAt(ts);
+      miPrenda.setTipoDePrendaId(miTipoDePrenda);
+      miPrenda.setPersonaIdCliente(miPersonaCliente);
+      miPrenda.setPersonaIdEmpleado(miPersonaEmpleado);
+      miPrenda.setServicioId(mi_obj_servicio);
 
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpac_object_prenda.create(mi_objeto_prenda);
+      jpac_prenda.create(miPrenda);
 
 //      Llamando al listALGO.jsp
       PrendaListServlet call = new PrendaListServlet();

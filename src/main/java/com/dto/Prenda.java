@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,14 +23,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
-@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "prenda")
 @NamedQueries({
   @NamedQuery(name = "Prenda.findAll", query = "SELECT p FROM Prenda p"),
@@ -39,7 +38,6 @@ import org.eclipse.persistence.annotations.AdditionalCriteria;
   @NamedQuery(name = "Prenda.findByColor", query = "SELECT p FROM Prenda p WHERE p.color = :color"),
   @NamedQuery(name = "Prenda.findByMarca", query = "SELECT p FROM Prenda p WHERE p.marca = :marca"),
   @NamedQuery(name = "Prenda.findByEstadoDePrenda", query = "SELECT p FROM Prenda p WHERE p.estadoDePrenda = :estadoDePrenda"),
-  @NamedQuery(name = "Prenda.findByPeso", query = "SELECT p FROM Prenda p WHERE p.peso = :peso"),
   @NamedQuery(name = "Prenda.findByEstado", query = "SELECT p FROM Prenda p WHERE p.estado = :estado"),
   @NamedQuery(name = "Prenda.findByCreatedAt", query = "SELECT p FROM Prenda p WHERE p.createdAt = :createdAt"),
   @NamedQuery(name = "Prenda.findByUpdatedAt", query = "SELECT p FROM Prenda p WHERE p.updatedAt = :updatedAt")})
@@ -68,8 +66,6 @@ public class Prenda implements Serializable {
   @Size(max = 255)
   @Column(name = "estado_de_prenda")
   private String estadoDePrenda;
-  @Column(name = "peso")
-  private Double peso;
   @Lob
   @Size(max = 65535)
   @Column(name = "observacion")
@@ -85,14 +81,17 @@ public class Prenda implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @JoinColumn(name = "persona_id", referencedColumnName = "id")
-  @ManyToOne
-  private Persona personaId;
+  @JoinColumn(name = "persona_id_cliente", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.EAGER)
+  private Persona personaIdCliente;
+  @JoinColumn(name = "persona_id_empleado", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.EAGER)
+  private Persona personaIdEmpleado;
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private Servicio servicioId;
   @JoinColumn(name = "tipo_de_prenda_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private TipoDePrenda tipoDePrendaId;
 
   public Prenda() {
@@ -156,14 +155,6 @@ public class Prenda implements Serializable {
     this.estadoDePrenda = estadoDePrenda;
   }
 
-  public Double getPeso() {
-    return peso;
-  }
-
-  public void setPeso(Double peso) {
-    this.peso = peso;
-  }
-
   public String getObservacion() {
     return observacion;
   }
@@ -196,12 +187,20 @@ public class Prenda implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Persona getPersonaId() {
-    return personaId;
+  public Persona getPersonaIdCliente() {
+    return personaIdCliente;
   }
 
-  public void setPersonaId(Persona personaId) {
-    this.personaId = personaId;
+  public void setPersonaIdCliente(Persona personaIdCliente) {
+    this.personaIdCliente = personaIdCliente;
+  }
+
+  public Persona getPersonaIdEmpleado() {
+    return personaIdEmpleado;
+  }
+
+  public void setPersonaIdEmpleado(Persona personaIdEmpleado) {
+    this.personaIdEmpleado = personaIdEmpleado;
   }
 
   public Servicio getServicioId() {

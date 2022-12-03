@@ -4,19 +4,16 @@
  */
 package com.servlets;
 
-import com.dao.CategoriaJpaController;
 import com.dao.ComprobanteJpaController;
 import com.dao.PersonaJpaController;
-import com.dao.ServicioJpaController;
-import com.dto.Categoria;
 import com.dto.Comprobante;
 import com.dto.Persona;
-import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,10 +51,12 @@ public class ComprobanteEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editHora"));
     System.out.println(request.getParameter("editPersonaId"));
     System.out.println(request.getParameter("editEstado"));
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
     try {
 //      Inicialización de objetos
-      ComprobanteJpaController jpac_obj_comprobante = new ComprobanteJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      ComprobanteJpaController jpac_obj_comprobante = new ComprobanteJpaController(emf);
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
       Comprobante oldObject_comprobante;
       Persona mi_persona;
 

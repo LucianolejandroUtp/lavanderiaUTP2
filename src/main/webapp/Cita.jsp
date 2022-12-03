@@ -50,14 +50,13 @@
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
-                          <label>Fecha Cita  AA-MM-DD </label>
+                          <label>Fecha Cita</label>
                           <input required name="addFecha" type="date" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
-                          <label>Hora Cita HH:MM:ss</label>
+                          <label>Hora Cita</label>
                           <input required name="addHora" type="time" class="form-control">
                         </div>
-
                         <div class="form-group form-group-default">
                           <label>Placa Vehiculos</label>
                           <select class="form-control" name="addPlacaId">
@@ -93,10 +92,10 @@
                 <tr>
                   <th>Fecha Cita</th>
                   <th>Hora Programada</th>
-                  <th>Estado</th>
                   <th>Nombres</th>
                   <th>Apellidos</th>
                   <th>Placa</th>
+                  <th>Estado</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
@@ -107,10 +106,10 @@
                   <tr>
                     <td>${tempObjeto.fecha }</td>
                     <td>${tempObjeto.hora}</td>
-                    <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.personaId.nombres}</td>
                     <td>${tempObjeto.personaId.apellidos}</td>
                     <td>${tempObjeto.vehiculoId.placa}</td>
+                    <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
@@ -193,21 +192,34 @@
                                 <input name="editId" id="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Nombre</label>
-                                <!-- value="tempObjeto.estado" determina si lista todo o solo el primero, y permitira abrir el modal +AñadirALGO -->
-                                <input required name="editDescripcion" id="editDescripcion" type="text" class="form-control" value="${tempObjeto.estado }">
+                                <label>Fecha Cita</label>
+                                <input required name="editFecha" type="date" class="form-control" value="${tempObjeto.fecha }">
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Departamento</label>
-                                <select class="form-control" name="editDepaId" id="editDepaId">
-                                  <c:forEach var="tempObjetoDepa" items="${mi_lista_de_personas }">
-                                    <option value="${tempObjetoDepa.id }">${tempObjetoDepa.nombres }</option>
+                                <label>Hora Cita</label>
+                                <input required name="editHora" type="time" class="form-control" value="${tempObjeto.hora }">
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Placa Vehiculos</label>
+                                <select class="form-control" name="editPlacaId">
+                                  <c:forEach var="tempEdit" items="${mi_lista_de_vehiculos }">
+                                    <option value="${tempEdit.id}">${tempEdit.placa }</option>
+                                  </c:forEach>
+                                </select>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Cliente</label>
+                                <select class="form-control" name="editNombreId">
+                                  <c:forEach var="tempEdit2" items="${mi_lista_de_personas}">
+                                    <c:if test="${tempEdit2.tipoPersonaId.descripcion.equalsIgnoreCase('Cliente')}">  
+                                      <option value="${tempEdit2.id}">${tempEdit2.nombres} - ${tempEdit2.apellidos}</option>
+                                    </c:if>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
-                                <select class="form-control" name="editEstado" id="editEstado">
+                                <select class="form-control" name="editEstado">
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->
@@ -220,7 +232,6 @@
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>

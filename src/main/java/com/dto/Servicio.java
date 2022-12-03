@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,14 +25,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
-@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "servicio")
 @NamedQueries({
   @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s"),
@@ -76,12 +75,12 @@ public class Servicio implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "servicioId")
+  @OneToMany(mappedBy = "servicioId", fetch = FetchType.EAGER)
   private Collection<DetalleComprobante> detalleComprobanteCollection;
   @JoinColumn(name = "categoria_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private Categoria categoriaId;
-  @OneToMany(mappedBy = "servicioId")
+  @OneToMany(mappedBy = "servicioId", fetch = FetchType.EAGER)
   private Collection<Prenda> prendaCollection;
 
   public Servicio() {

@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,14 +22,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
-@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "cita")
 @NamedQueries({
   @NamedQuery(name = "Cita.findAll", query = "SELECT c FROM Cita c"),
@@ -70,10 +69,10 @@ public class Cita implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "persona_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private Persona personaId;
   @JoinColumn(name = "vehiculo_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private Vehiculo vehiculoId;
 
   public Cita() {

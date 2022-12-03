@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +24,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
-@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "persona")
 @NamedQueries({
   @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
@@ -85,19 +84,21 @@ public class Persona implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "tipo_persona_id", referencedColumnName = "id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private TipoPersona tipoPersonaId;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
   private Collection<Comprobante> comprobanteCollection;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
   private Collection<Vehiculo> vehiculoCollection;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
   private Collection<DireccionPersona> direccionPersonaCollection;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaIdCliente", fetch = FetchType.EAGER)
   private Collection<Prenda> prendaCollection;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaIdEmpleado", fetch = FetchType.EAGER)
+  private Collection<Prenda> prendaCollection1;
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
   private Collection<Telefono> telefonoCollection;
-  @OneToMany(mappedBy = "personaId")
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
   private Collection<Cita> citaCollection;
 
   public Persona() {
@@ -231,6 +232,14 @@ public class Persona implements Serializable {
 
   public void setPrendaCollection(Collection<Prenda> prendaCollection) {
     this.prendaCollection = prendaCollection;
+  }
+
+  public Collection<Prenda> getPrendaCollection1() {
+    return prendaCollection1;
+  }
+
+  public void setPrendaCollection1(Collection<Prenda> prendaCollection1) {
+    this.prendaCollection1 = prendaCollection1;
   }
 
   public Collection<Telefono> getTelefonoCollection() {

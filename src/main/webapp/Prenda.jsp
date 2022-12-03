@@ -65,10 +65,10 @@
                           <label>Estado de prenda</label>
                           <input required name="addEstadoDePrenda" type="text" class="form-control" placeholder="Llene el estado de la prenda">
                         </div>
-                        <div class="form-group form-group-default">
-                          <label>Peso</label>
-                          <input required name="addPeso" type="number" class="form-control" placeholder="Llene el peso">
-                        </div>
+                        <!--                        <div class="form-group form-group-default">
+                                                  <label>Peso</label>
+                                                  <input required name="addPeso" type="number" class="form-control" placeholder="Llene el peso">
+                                                </div>-->
                         <div class="form-group form-group-default">
                           <label>Observación</label>
                           <input required name="addObservacion" type="text" class="form-control" placeholder="Llene la observación">
@@ -77,24 +77,36 @@
                         <div class="form-group form-group-default">
                           <label>Tipo de Prenda</label>
                           <select class="form-control" name="addTdPrendaId">
-                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_TdPrendas }">
-                              <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
+                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_TdPrendas}">
+                              <option value="${tempObjetoCreate.id}">${tempObjetoCreate.descripcion}</option>
                             </c:forEach>
                           </select>
                         </div>
                         <div class="form-group form-group-default">
-                          <label>Persona</label>
-                          <select class="form-control" name="addPersonaId">
+                          <label>Cliente</label>
+                          <select class="form-control" name="addPersonaIdCliente">
                             <c:forEach var="tempObjetoCreate2" items="${mi_lista_de_personas }">
-                              <option value="${tempObjetoCreate2.id }">${tempObjetoCreate2.nombres }</option>
+                              <c:if test="${tempObjetoCreate2.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
+                                <option value="${tempObjetoCreate2.id }">${tempObjetoCreate2.nombres }</option>
+                              </c:if>
                             </c:forEach>
                           </select>
                         </div>
                         <div class="form-group form-group-default">
-                          <label>Servicio</label>
+                          <label>Empleado</label>
+                          <select class="form-control" name="addPersonaIdEmpleado">
+                            <c:forEach var="tempObjetoCreate4" items="${mi_lista_de_personas}">
+                              <c:if test="${tempObjetoCreate4.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                                <option value="${tempObjetoCreate4.id }">${tempObjetoCreate4.nombres}</option>
+                              </c:if>
+                            </c:forEach>
+                          </select>
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Categoría-Servicio</label>
                           <select class="form-control" name="addServicioId">
-                            <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_servicios }">
-                              <option value="${tempObjetoCreate3.id }">${tempObjetoCreate3.descripcion }</option>
+                            <c:forEach var="tempObjetoCreate3" items="${mi_lista_de_servicios}">
+                              <option value="${tempObjetoCreate3.id }">${tempObjetoCreate3.categoriaId.descripcion} - ${tempObjetoCreate3.descripcion}</option>
                             </c:forEach>
                           </select>
                         </div>
@@ -118,11 +130,11 @@
                   <th>Color</th>
                   <th>Marca</th>
                   <th>Estado de Prenda</th>
-                  <th>Peso</th>
                   <th>Observación</th>
                   <th>Estado</th>
                   <th>Tipo</th>
-                  <th>Persona</th>
+                  <th>Cliente</th>
+                  <th>Empleado</th>
                   <th>Servicio</th>
                   <th>Creado</th>
                   <th>Modificado</th>
@@ -136,11 +148,11 @@
                     <td>${tempObjeto.color}</td>
                     <td>${tempObjeto.marca}</td>
                     <td>${tempObjeto.estadoDePrenda}</td>
-                    <td>${tempObjeto.peso}</td>
                     <td>${tempObjeto.observacion}</td>
                     <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
-                    <td>${tempObjeto.personaId.nombres}</td>
+                    <td>${tempObjeto.personaIdCliente.nombres}</td>
+                    <td>${tempObjeto.personaIdEmpleado.nombres}</td>
                     <td>${tempObjeto.servicioId.descripcion}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
@@ -242,10 +254,11 @@
                                 <label>Estado Prenda</label>
                                 <input required name="editEstadoDePrenda" type="text" class="form-control" value="${tempObjeto.estadoDePrenda }">
                               </div>
-                              <div class="form-group form-group-default">
-                                <label>Peso</label>
-                                <input required name="editPeso" type="number" class="form-control" value="${tempObjeto.peso }">
-                              </div>
+                              <%--                              <div class="form-group form-group-default">
+                                                              <label>Peso</label>
+                                                              <input required name="editPeso" type="number" class="form-control" value="${tempObjeto.peso }">
+                                                            </div>
+                              --%>
                               <div class="form-group form-group-default">
                                 <label>Observación</label>
                                 <input required name="editObservacion" type="text" class="form-control" value="${tempObjeto.observacion }">
@@ -254,15 +267,30 @@
                                 <label>Tipo de Prenda</label>
                                 <select class="form-control" name="editTdPrendaId">
                                   <c:forEach var="tempObjetoEdit" items="${mi_lista_de_TdPrendas }">
+                                    <option value="${tempObjeto.tipoDePrendaId.id}" selected hidden>${tempObjeto.tipoDePrendaId.descripcion}</option>
                                     <option value="${tempObjetoEdit.id }">${tempObjetoEdit.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
-                                <label>Persona</label>
-                                <select class="form-control" name="editPersonaId">
+                                <label>Cliente</label>
+                                <select class="form-control" name="editPersonaIdCliente">
                                   <c:forEach var="tempObjetoEdit2" items="${mi_lista_de_personas }">
-                                    <option value="${tempObjetoEdit2.id }">${tempObjetoEdit2.nombres }</option>
+                                    <option value="${tempObjeto.personaIdCliente.id}" selected hidden>${tempObjeto.personaIdCliente.nombres}</option>
+                                    <c:if test="${tempObjetoEdit2.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
+                                      <option value="${tempObjetoEdit2.id }">${tempObjetoEdit2.nombres }</option>
+                                    </c:if>
+                                  </c:forEach>
+                                </select>
+                              </div>
+                              <div class="form-group form-group-default">
+                                <label>Empleado</label>
+                                <select class="form-control" name="editPersonaIdEmpleado">
+                                  <c:forEach var="tempObjetoEdit4" items="${mi_lista_de_personas }">
+                                    <option value="${tempObjeto.personaIdEmpleado.id}" selected hidden>${tempObjeto.personaIdEmpleado.nombres}</option>
+                                    <c:if test="${tempObjetoEdit4.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                                      <option value="${tempObjetoEdit4.id }">${tempObjetoEdit4.nombres }</option>
+                                    </c:if>
                                   </c:forEach>
                                 </select>
                               </div>
@@ -270,14 +298,15 @@
                                 <label>Servicio</label>
                                 <select class="form-control" name="editServicioId">
                                   <c:forEach var="tempObjetoEdit3" items="${mi_lista_de_servicios }">
+                                    <option value="${tempObjeto.servicioId.id}" selected hidden>${tempObjeto.servicioId.descripcion}</option>
                                     <option value="${tempObjetoEdit3.id }">${tempObjetoEdit3.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
-
                                 <select class="form-control" name="editEstado"">
+                                  <option value="${tempObjeto.estado}" selected hidden>${tempObjeto.estado}</option>
                                   <option value="activo">Activo</option>
                                   <option value="inactivo">Inactivo</option>
                                   <!--<option value="eliminado">Eliminado</option>-->
@@ -290,13 +319,10 @@
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
             </table>
           </div>

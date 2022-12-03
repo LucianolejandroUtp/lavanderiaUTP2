@@ -4,16 +4,22 @@
  */
 package com.servlets;
 
+import com.dao.CitaJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.PrendaJpaController;
 import com.dao.TipoDePrendaJpaController;
+import com.dao.VehiculoJpaController;
+import com.dto.Cita;
 import com.dto.Persona;
 import com.dto.Prenda;
 import com.dto.TipoDePrenda;
+import com.dto.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,27 +47,31 @@ public class CitaEditServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
 
-    System.out.println("Entrando a Servicio Edit Servlet");
+    System.out.println("Entrando a Cita Edit Servlet");
     System.out.println(request.getParameter("editId"));
-    System.out.println(request.getParameter("editCantidad"));
-    System.out.println(request.getParameter("editColor"));
-    System.out.println(request.getParameter("editMarca"));
-    System.out.println(request.getParameter("editEstadoDePrenda"));
-    System.out.println(request.getParameter("editPeso"));
-    System.out.println(request.getParameter("editObservacion"));
+    System.out.println(request.getParameter("editFecha"));
+    System.out.println(request.getParameter("editHora"));
+    System.out.println(request.getParameter("editPlacaId"));
+    System.out.println(request.getParameter("editNombreId"));
     System.out.println(request.getParameter("editEstado"));
-    System.out.println(request.getParameter("editTdPrendaId"));
-    System.out.println(request.getParameter("editPersonaId"));
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
     try {
 //      Inicialización de objetos
-      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoDePrendaJpaController jpac_obj_tipo_prenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Prenda oldObject_prenda;
-      TipoDePrenda tipo_prenda;
-      Persona persona;
+      CitaJpaController jpac_obj_cita = new CitaJpaController(emf);
+      VehiculoJpaController jpac_obj_vehiculo = new VehiculoJpaController(emf);
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
+      Cita oldObject_cita;
+      Vehiculo mi_vehiculo;
+      Persona mi_persona;
 
 //      Lo relacionado a la fecha
+      SimpleDateFormat sdf_fecha = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat sdf_hora = new SimpleDateFormat("HH:mm");
+      
+      Date fecha = sdf_fecha.parse(String.valueOf(request.getParameter("editFecha")));
+      Date hora = sdf_hora.parse(String.valueOf(request.getParameter("editHora")));
+      
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
@@ -71,62 +81,39 @@ public class CitaEditServlet extends HttpServlet {
 //      List<Direccion> mi_lista_de_Direcciones = new ArrayList<>();
 //      mi_lista_de_Direcciones = jpac_xa_lista_de_Direcciones.findDireccionEntities();
 //      Obteniendo el objeto con foreign key en base al Id que nos da la vista
-      tipo_prenda = jpac_obj_tipo_prenda.findTipoDePrenda(Long.valueOf(request.getParameter("editTdPrendaId")));
-      persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("editPersonaId")));
+      mi_vehiculo = jpac_obj_vehiculo.findVehiculo(Long.valueOf(request.getParameter("editPlacaId")));
+      mi_persona = jpac_obj_persona.findPersona(Long.valueOf(request.getParameter("editNombreId")));
 
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      oldObject_prenda = jpac_obj_prenda.findPrenda(Long.valueOf(request.getParameter("editId")));
-      System.out.println("La prenda obtenida es: " + oldObject_prenda);
+      oldObject_cita = jpac_obj_cita.findCita(Long.valueOf(request.getParameter("editId")));
+      System.out.println("La Cita obtenida es: " + oldObject_cita);
 
 //      Comparando y asignando nuevos valores al objeto
-      if (!oldObject_prenda.getColor().equals(request.getParameter("editColor"))) {
-        oldObject_prenda.setColor(request.getParameter("editColor"));
+      if (oldObject_cita.getFecha() == null || oldObject_cita.getFecha().compareTo(fecha) != 0) {
+        oldObject_cita.setFecha(fecha);
       }
-      if (!oldObject_prenda.getMarca().equals(request.getParameter("editMarca"))) {
-        oldObject_prenda.setMarca(request.getParameter("editMarca"));
+      if (oldObject_cita.getHora() == null || oldObject_cita.getHora().compareTo(hora) != 0) {
+        oldObject_cita.setHora(hora);
       }
-      if (!oldObject_prenda.getEstadoDePrenda().equals(request.getParameter("editEstadoDePrenda"))) {
-        oldObject_prenda.setEstadoDePrenda(request.getParameter("editEstadoDePrenda"));
-      }
-      if (!oldObject_prenda.getObservacion().equals(request.getParameter("editObservacion"))) {
-        oldObject_prenda.setObservacion(request.getParameter("editObservacion"));
-      }
-      if (!oldObject_prenda.getEstado().equals(request.getParameter("editEstado"))) {
-        oldObject_prenda.setEstado(request.getParameter("editEstado"));
+      if (!oldObject_cita.getEstado().equals(request.getParameter("editEstado"))) {
+        oldObject_cita.setEstado(request.getParameter("editEstado"));
       }
 
-//      BigDecimal old = new BigDecimal(oldObject_prenda.getCantidad());
-//      BigDecimal nuevo = new BigDecimal(request.getParameter("editCantidad"));
-
-      if(oldObject_prenda.getPeso().compareTo(Double.valueOf(request.getParameter("editPeso"))) != 0){
-        oldObject_prenda.setPeso(Double.valueOf(request.getParameter("editPeso")));
+      if (!oldObject_cita.getVehiculoId().equals(mi_vehiculo)) {
+        oldObject_cita.setVehiculoId(mi_vehiculo);
       }
-      
-      if(oldObject_prenda.getCantidad().compareTo(Double.valueOf(request.getParameter("editCantidad"))) !=0){
-        oldObject_prenda.setCantidad(Double.valueOf(request.getParameter("editCantidad")));
+      if (!oldObject_cita.getPersonaId().equals(mi_persona)) {
+        oldObject_cita.setPersonaId(mi_persona);
       }
-      
-//      if (old.compareTo(nuevo) != 0) {
-//        oldObject_prenda.setCantidad(Double.valueOf(request.getParameter("editCantidad")));
-//      }
-//      if (oldObject_servicio.getPrecio().compareTo(Double.valueOf(request.getParameter("editPrecio")))!=0) {
-//        oldObject_servicio.setPrecio(Double.valueOf(request.getParameter("editPrecio")));
-//      }
-      if (!oldObject_prenda.getTipoDePrendaId().equals(tipo_prenda)) {
-        oldObject_prenda.setTipoDePrendaId(tipo_prenda);
-      }
-      if (!oldObject_prenda.getPersonaId().equals(persona)) {
-        oldObject_prenda.setPersonaId(persona);
-      }
-      oldObject_prenda.setUpdatedAt(ts);
+      oldObject_cita.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);
 
-      System.out.println("La prenda actualizada es: "
-          + oldObject_prenda.getId() + " - " + oldObject_prenda.getMarca()+ " - "
-          + oldObject_prenda.getEstado() + " - " + oldObject_prenda.getTipoDePrendaId().getDescripcion() + " - "
-          + oldObject_prenda.getCreatedAt() + " - " + oldObject_prenda.getUpdatedAt());
+      System.out.println("La Cita actualizada es: "
+          + oldObject_cita.getId() + " - " + oldObject_cita.getFecha()+ " - "
+          + oldObject_cita.getEstado() + " - " + oldObject_cita.getPersonaId().getNombres()+ " - "
+          + oldObject_cita.getCreatedAt() + " - " + oldObject_cita.getUpdatedAt());
 
-      jpac_obj_prenda.edit(oldObject_prenda);
+      jpac_obj_cita.edit(oldObject_cita);
 
       PrendaListServlet call = new PrendaListServlet();
       call.processRequest(request, response);

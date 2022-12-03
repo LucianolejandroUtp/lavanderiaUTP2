@@ -4,12 +4,10 @@
  */
 package com.servlets;
 
-import com.dao.CategoriaJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.PrendaJpaController;
 import com.dao.ServicioJpaController;
 import com.dao.TipoDePrendaJpaController;
-import com.dto.Categoria;
 import com.dto.Persona;
 import com.dto.Prenda;
 import com.dto.Servicio;
@@ -18,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,11 +45,13 @@ public class PrendaListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     
     System.out.println("Entrando a Prenda List Servlet");
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+    
     try {
-      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoDePrendaJpaController jpac_obj_TdPrenda = new TipoDePrendaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PrendaJpaController jpac_obj_prenda = new PrendaJpaController(emf);
+      TipoDePrendaJpaController jpac_obj_TdPrenda = new TipoDePrendaJpaController(emf);
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
+      ServicioJpaController jpac_obj_servicio = new ServicioJpaController(emf);
       List<Prenda> mi_lista_de_prendas = new ArrayList<>();
       List<TipoDePrenda> mi_lista_de_TdPrendas = new ArrayList<>();
       List<Persona> mi_lista_de_personas = new ArrayList<>();
@@ -63,7 +64,8 @@ public class PrendaListServlet extends HttpServlet {
       mi_lista_de_servicios =jpac_obj_servicio.findServicioEntities();
 
       for (Prenda temp1 : mi_lista_de_prendas) {
-        System.out.println(temp1.getId() +" - "+ temp1.getColor()+" - "+ temp1.getTipoDePrendaId().getDescripcion()+" - "+temp1.getPersonaId().getDni());
+        System.out.println(temp1.getId() +" - "+ temp1.getColor()+" - "+ temp1.getTipoDePrendaId().getDescripcion()
+            +" - "+temp1.getPersonaIdCliente().getDni()+" - "+temp1.getPersonaIdEmpleado().getDni());
       }
       for (TipoDePrenda temp2 : mi_lista_de_TdPrendas) {
         System.out.println(temp2.getId() + " - " + temp2.getDescripcion());

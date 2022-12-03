@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,10 +51,12 @@ public class PersonaEditServlet extends HttpServlet {
     System.out.println(request.getParameter("editPassword"));
     System.out.println(request.getParameter("editTdPersonaId"));
     System.out.println(request.getParameter("editEstado"));
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
     try {
 //      Inicialización de objetos
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoPersonaJpaController jpac_obj_TdPersona = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
+      TipoPersonaJpaController jpac_obj_TdPersona = new TipoPersonaJpaController(emf);
       Persona oldObject_persona;
       TipoPersona mi_TdPersona;
       BasicPasswordEncryptor passEnc = new BasicPasswordEncryptor();

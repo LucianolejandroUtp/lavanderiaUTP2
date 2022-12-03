@@ -38,10 +38,15 @@ public class PrendaJpaController implements Serializable {
     try {
       em = getEntityManager();
       em.getTransaction().begin();
-      Persona personaId = prenda.getPersonaId();
-      if (personaId != null) {
-        personaId = em.getReference(personaId.getClass(), personaId.getId());
-        prenda.setPersonaId(personaId);
+      Persona personaIdCliente = prenda.getPersonaIdCliente();
+      if (personaIdCliente != null) {
+        personaIdCliente = em.getReference(personaIdCliente.getClass(), personaIdCliente.getId());
+        prenda.setPersonaIdCliente(personaIdCliente);
+      }
+      Persona personaIdEmpleado = prenda.getPersonaIdEmpleado();
+      if (personaIdEmpleado != null) {
+        personaIdEmpleado = em.getReference(personaIdEmpleado.getClass(), personaIdEmpleado.getId());
+        prenda.setPersonaIdEmpleado(personaIdEmpleado);
       }
       Servicio servicioId = prenda.getServicioId();
       if (servicioId != null) {
@@ -54,9 +59,13 @@ public class PrendaJpaController implements Serializable {
         prenda.setTipoDePrendaId(tipoDePrendaId);
       }
       em.persist(prenda);
-      if (personaId != null) {
-        personaId.getPrendaCollection().add(prenda);
-        personaId = em.merge(personaId);
+      if (personaIdCliente != null) {
+        personaIdCliente.getPrendaCollection().add(prenda);
+        personaIdCliente = em.merge(personaIdCliente);
+      }
+      if (personaIdEmpleado != null) {
+        personaIdEmpleado.getPrendaCollection().add(prenda);
+        personaIdEmpleado = em.merge(personaIdEmpleado);
       }
       if (servicioId != null) {
         servicioId.getPrendaCollection().add(prenda);
@@ -80,15 +89,21 @@ public class PrendaJpaController implements Serializable {
       em = getEntityManager();
       em.getTransaction().begin();
       Prenda persistentPrenda = em.find(Prenda.class, prenda.getId());
-      Persona personaIdOld = persistentPrenda.getPersonaId();
-      Persona personaIdNew = prenda.getPersonaId();
+      Persona personaIdClienteOld = persistentPrenda.getPersonaIdCliente();
+      Persona personaIdClienteNew = prenda.getPersonaIdCliente();
+      Persona personaIdEmpleadoOld = persistentPrenda.getPersonaIdEmpleado();
+      Persona personaIdEmpleadoNew = prenda.getPersonaIdEmpleado();
       Servicio servicioIdOld = persistentPrenda.getServicioId();
       Servicio servicioIdNew = prenda.getServicioId();
       TipoDePrenda tipoDePrendaIdOld = persistentPrenda.getTipoDePrendaId();
       TipoDePrenda tipoDePrendaIdNew = prenda.getTipoDePrendaId();
-      if (personaIdNew != null) {
-        personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-        prenda.setPersonaId(personaIdNew);
+      if (personaIdClienteNew != null) {
+        personaIdClienteNew = em.getReference(personaIdClienteNew.getClass(), personaIdClienteNew.getId());
+        prenda.setPersonaIdCliente(personaIdClienteNew);
+      }
+      if (personaIdEmpleadoNew != null) {
+        personaIdEmpleadoNew = em.getReference(personaIdEmpleadoNew.getClass(), personaIdEmpleadoNew.getId());
+        prenda.setPersonaIdEmpleado(personaIdEmpleadoNew);
       }
       if (servicioIdNew != null) {
         servicioIdNew = em.getReference(servicioIdNew.getClass(), servicioIdNew.getId());
@@ -99,13 +114,21 @@ public class PrendaJpaController implements Serializable {
         prenda.setTipoDePrendaId(tipoDePrendaIdNew);
       }
       prenda = em.merge(prenda);
-      if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-        personaIdOld.getPrendaCollection().remove(prenda);
-        personaIdOld = em.merge(personaIdOld);
+      if (personaIdClienteOld != null && !personaIdClienteOld.equals(personaIdClienteNew)) {
+        personaIdClienteOld.getPrendaCollection().remove(prenda);
+        personaIdClienteOld = em.merge(personaIdClienteOld);
       }
-      if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-        personaIdNew.getPrendaCollection().add(prenda);
-        personaIdNew = em.merge(personaIdNew);
+      if (personaIdClienteNew != null && !personaIdClienteNew.equals(personaIdClienteOld)) {
+        personaIdClienteNew.getPrendaCollection().add(prenda);
+        personaIdClienteNew = em.merge(personaIdClienteNew);
+      }
+      if (personaIdEmpleadoOld != null && !personaIdEmpleadoOld.equals(personaIdEmpleadoNew)) {
+        personaIdEmpleadoOld.getPrendaCollection().remove(prenda);
+        personaIdEmpleadoOld = em.merge(personaIdEmpleadoOld);
+      }
+      if (personaIdEmpleadoNew != null && !personaIdEmpleadoNew.equals(personaIdEmpleadoOld)) {
+        personaIdEmpleadoNew.getPrendaCollection().add(prenda);
+        personaIdEmpleadoNew = em.merge(personaIdEmpleadoNew);
       }
       if (servicioIdOld != null && !servicioIdOld.equals(servicioIdNew)) {
         servicioIdOld.getPrendaCollection().remove(prenda);
@@ -152,10 +175,15 @@ public class PrendaJpaController implements Serializable {
       } catch (EntityNotFoundException enfe) {
         throw new NonexistentEntityException("The prenda with id " + id + " no longer exists.", enfe);
       }
-      Persona personaId = prenda.getPersonaId();
-      if (personaId != null) {
-        personaId.getPrendaCollection().remove(prenda);
-        personaId = em.merge(personaId);
+      Persona personaIdCliente = prenda.getPersonaIdCliente();
+      if (personaIdCliente != null) {
+        personaIdCliente.getPrendaCollection().remove(prenda);
+        personaIdCliente = em.merge(personaIdCliente);
+      }
+      Persona personaIdEmpleado = prenda.getPersonaIdEmpleado();
+      if (personaIdEmpleado != null) {
+        personaIdEmpleado.getPrendaCollection().remove(prenda);
+        personaIdEmpleado = em.merge(personaIdEmpleado);
       }
       Servicio servicioId = prenda.getServicioId();
       if (servicioId != null) {
