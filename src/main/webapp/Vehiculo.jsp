@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="form-group form-group-default">
-                          <label>Nombre Conductor</label>
+                          <label>Nombre - Apellido Conductor</label>
                           <select class="form-control" name="addNombreId">
                             <c:forEach var="tempObjPersona" items="${mi_lista_de_personas }">
                               <c:if test="${tempObjPersona.tipoPersonaId.descripcion.equalsIgnoreCase('chofer')}">  

@@ -61,7 +61,7 @@
                           <label>Placa Vehiculos</label>
                           <select class="form-control" name="addPlacaId">
                             <c:forEach var="tempObjAdd" items="${mi_lista_de_vehiculos }">
-                              <option value="${tempObjAdd.id}">${tempObjAdd.placa }</option>
+                              <option value="${tempObjAdd.id}">${tempObjAdd.placa} - ${tempObjAdd.personaId.nombres}</option>
                             </c:forEach>
                           </select>
                         </div>
