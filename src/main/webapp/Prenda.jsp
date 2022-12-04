@@ -126,16 +126,16 @@
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
                 <tr>
+                  <th>Tipo</th>
                   <th>Cantidad</th>
                   <th>Color</th>
                   <th>Marca</th>
-                  <th>Estado de Prenda</th>
+                  <th>Condición</th>
                   <th>Observación</th>
-                  <th>Estado</th>
-                  <th>Tipo</th>
                   <th>Cliente</th>
                   <th>Empleado</th>
                   <th>Servicio</th>
+                  <th>Estado</th>
                   <th>Creado</th>
                   <th>Modificado</th>
                   <th style="width: 10%">Acciones</th>
@@ -144,16 +144,16 @@
               <tbody>
                 <c:forEach var="tempObjeto" items="${mi_lista_de_prendas }">
                   <tr>
+                    <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
                     <td>${tempObjeto.cantidad }</td>
                     <td>${tempObjeto.color}</td>
                     <td>${tempObjeto.marca}</td>
                     <td>${tempObjeto.estadoDePrenda}</td>
                     <td>${tempObjeto.observacion}</td>
-                    <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
                     <td>${tempObjeto.personaIdCliente.nombres}</td>
                     <td>${tempObjeto.personaIdEmpleado.nombres}</td>
                     <td>${tempObjeto.servicioId.descripcion}</td>
+                    <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
                     <td>
