@@ -6,16 +6,21 @@ package com.servlets;
 
 import com.dao.CategoriaJpaController;
 import com.dao.DireccionJpaController;
+import com.dao.DireccionPersonaJpaController;
 import com.dao.DistritoJpaController;
+import com.dao.PersonaJpaController;
 import com.dao.ServicioJpaController;
 import com.dto.Categoria;
 import com.dto.Direccion;
+import com.dto.DireccionPersona;
 import com.dto.Distrito;
+import com.dto.Persona;
 import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,26 +48,36 @@ public class DireccionListServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+
     System.out.println("Entrando a Dirección List Servlet");
     try {
-      DireccionJpaController jpac_obj_dir = new DireccionJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      DistritoJpaController jpac_obj_dist = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      List<Direccion> mi_lista_de_direcciones = new ArrayList<>();
-      List<Distrito> mi_lista_de_distritos = new ArrayList<>();
+      DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
+      DireccionPersonaJpaController jpacDirPersona = new DireccionPersonaJpaController(emf);
+      DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
+      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
+      List<Direccion> miListaDeDirecciones = new ArrayList<>();
+      List<DireccionPersona> miListaDeDirPersonas = new ArrayList<>();
+      List<Distrito> miListaDeDistritos = new ArrayList<>();
+      List<Persona> miListaDePersonas = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_direcciones = jpac_obj_dir.findDireccionEntities();
-      mi_lista_de_distritos = jpac_obj_dist.findDistritoEntities();
+      miListaDeDirecciones = jpacDireccion.findDireccionEntities();
+      miListaDeDistritos = jpacDistrito.findDistritoEntities();
+      miListaDePersonas = jpacPersona.findPersonaEntities();
 
-      for (Direccion temp1 : mi_lista_de_direcciones) {
-        System.out.println(temp1.getId() + " - " + temp1.getDescripcion()+ " - " + temp1.getDistritoId().getDescripcion());
+      for (Direccion temp1 : miListaDeDirecciones) {
+        System.out.println(temp1.getId() + " - " + temp1.getDescripcion()+ " - " + temp1.getDireccionPersonaCollection());
       }
-      for (Distrito temp2 : mi_lista_de_distritos) {
+      for (Distrito temp2 : miListaDeDistritos) {
         System.out.println(temp2.getId() + " - " + temp2.getDescripcion());
       }
 
-      request.setAttribute("mi_lista_de_direcciones", mi_lista_de_direcciones);
-      request.setAttribute("mi_lista_de_distritos", mi_lista_de_distritos);
+      
+      
+      request.setAttribute("mi_lista_de_direcciones", miListaDeDirecciones);
+      request.setAttribute("mi_lista_de_distritos", miListaDeDistritos);
+      request.setAttribute("miListaDePersonas", miListaDePersonas);
       request.getRequestDispatcher("Direccion.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {

@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,6 +67,12 @@ public class EjemplosServlet extends HttpServlet {
     for (Prenda temp4 : mi_lista_de_prendas) {
       System.out.println(temp4.getId() + " - " + temp4.getServicioId().getCategoriaId().getDescripcion());
     }
+    
+    HttpSession miSesion = request.getSession();
+    
+    System.out.println(request.getSession());
+    
+    
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
