@@ -4,26 +4,24 @@
  */
 package com.servlets;
 
-import com.dao.DepartamentoJpaController;
-import com.dto.Departamento;
+import com.dto.Persona;
+import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 
 /**
  *
  * @author desti
  */
-@WebServlet(name = "DepartamentoListServlet", urlPatterns = {"/DepartamentoListServlet"})
-public class DepartamentoListServlet extends HttpServlet {
+@WebServlet(name = "PersonaLogoutServlet", urlPatterns = {"/PersonaLogoutServlet"})
+public class PersonaLogoutServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +35,27 @@ public class DepartamentoListServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    System.out.println("Entrando a Departamento List Servlet");
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
 
     try {
-      DepartamentoJpaController jpac_object = new DepartamentoJpaController(emf);
-      List<Departamento> mi_lista_de_objetos = new ArrayList<>();
+      HttpSession sesion = request.getSession();
+      Persona miPersona = new Persona();
+      TipoPersona miTdP = new TipoPersona();
+      miTdP.setDescripcion("");
+      
+      miPersona =  (Persona)sesion.getAttribute("miPersonaObtenida");
 
-//      System.out.println(listD.findDistritoEntities());
-      mi_lista_de_objetos = jpac_object.findDepartamentoEntities();
+      
+      miPersona.setTipoPersonaId(miTdP);
+//    sesion.invalidate();
+//      sesion.removeAttribute("miPersonaObtenida");
+//      request.getSession(false).invalidate();
+//    sesion = request.getSession(true);
+      response.sendRedirect("auth/login.jsp");
 
-      for (Departamento elemento : mi_lista_de_objetos) {
-        System.out.println(elemento.getId() + " - " + elemento.getDescripcion() );
-      }
-
-      request.setAttribute("mi_lista_de_objetos", mi_lista_de_objetos);
-      request.getRequestDispatcher("Departamento.jsp").forward(request, response);
-
-    } catch (IOException | ServletException theException) {
+    } catch (IOException theException) {
       System.out.println(theException);
     }
-    
+
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

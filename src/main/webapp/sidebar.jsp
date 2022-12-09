@@ -1,24 +1,15 @@
 <%-- 
-    Document   : template
-    Created on : 12 oct. 2022, 23:36:18
+    Document   : sidebar
+    Created on : 9 dic. 2022, 03:10:13
     Author     : desti
 --%>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<%@tag description="put the tag description here" pageEncoding="UTF-8"%>--%>
-<%--<%@taglib prefix="t" tagdir="/WEB-INF/tags/template.tag"%>--%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%-- The list of normal or fragment attributes can be specified here: --%>
-<%@attribute name="message"%>
-<%@attribute name="title"%>
-<%@attribute name="head_area" fragment="true" %>
-<%@attribute name="body_area" fragment="true" %>
-
-<%-- any content can be specified here e.g.: --%>
 <html>
   <head>
-    <jsp:invoke fragment="head_area"/>
-    <title>${title}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
@@ -42,6 +33,8 @@
 
   </head>
   <body>
+
+
     <div class="wrapper">
       <div class="main-header">
 
@@ -110,13 +103,19 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
 
+
+
+
+
+
+
             <c:choose>
               <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Administrador')}">
                 <ul class="nav nav-primary">
                   <li class="nav-item">
                     <a href="../CategoriaListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Categorías</p>
+                      <p>CategorÃ­as</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -170,7 +169,7 @@
                   <li class="nav-item">
                     <a href="../VehiculoListServlet">
                       <i class="fas fa-car"></i>
-                      <p>Vehículo</p>
+                      <p>VehÃ­culo</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -183,13 +182,13 @@
                     <!--<a href="../Distrito/List.jsp">-->
                     <a href="../DireccionPersonaListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección Persona</p>
+                      <p>DirecciÃ³n Persona</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../DireccionListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección</p>
+                      <p>DirecciÃ³n</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -242,7 +241,7 @@
                   <li class="nav-item">
                     <a href="../DireccionListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección</p>
+                      <p>DirecciÃ³n</p>
                     </a>
                   </li>
                 </ul>
@@ -260,6 +259,10 @@
                 <c:redirect url="../auth/login.jsp"/>
               </c:otherwise>
             </c:choose>
+
+
+
+
 
           </div>
         </div>
@@ -283,7 +286,6 @@
 
 
 
-              <jsp:invoke fragment="body_area"/>
 
 
 
@@ -337,3 +339,5 @@
     <script src="../assets/js/atlantis.min.js"></script>
   </body>
 </html>
+
+

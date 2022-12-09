@@ -4,18 +4,14 @@
  */
 package com.servlets;
 
-import com.dao.CategoriaJpaController;
 import com.dao.DireccionJpaController;
 import com.dao.DireccionPersonaJpaController;
 import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
-import com.dao.ServicioJpaController;
-import com.dto.Categoria;
 import com.dto.Direccion;
 import com.dto.DireccionPersona;
 import com.dto.Distrito;
 import com.dto.Persona;
-import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -27,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
