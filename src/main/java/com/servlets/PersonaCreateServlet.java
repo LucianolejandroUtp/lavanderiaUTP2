@@ -4,14 +4,11 @@
  */
 package com.servlets;
 
-import com.dao.DepartamentoJpaController;
-import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.TipoPersonaJpaController;
-import com.dto.Departamento;
-import com.dto.Distrito;
 import com.dto.Persona;
 import com.dto.TipoPersona;
+import com.email.SendEmailServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -91,12 +88,21 @@ public class PersonaCreateServlet extends HttpServlet {
       jpac_object_persona.create(mi_objeto_persona);
 
       if (request.getParameter("addTdPersonaId") == null) {
-        response.sendRedirect("index.jsp");
+//        SendEmailServlet miEnvio = new SendEmailServlet();
+//        request.setAttribute("usuario", 3);
+//        request.setAttribute("contrasenia", 4);
+  
+        request.getRequestDispatcher("/SendEmailServlet").include(request, response);
+//        request.getRequestDispatcher("/SendEmailServlet").forward(request, response);
+//        miEnvio.service(request, response);
+        response.sendRedirect("auth/login.jsp");
+        
       } else {
 //      Llamando al listALGO.jsp
         PersonaListServlet call = new PersonaListServlet();
         call.processRequest(request, response);
       }
+      
 //      response.sendRedirect("Distrito/List.jsp").forward(request, response);
 
     } catch (IOException | ServletException theException) {
