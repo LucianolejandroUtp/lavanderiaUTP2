@@ -4,9 +4,12 @@
     Author     : desti
 --%>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@tag language="java" pageEncoding="UTF-8"%>
+<%--<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
 <%--<%@tag description="put the tag description here" pageEncoding="UTF-8"%>--%>
 <%--<%@taglib prefix="t" tagdir="/WEB-INF/tags/template.tag"%>--%>
+
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="message"%>
@@ -109,14 +112,25 @@
       <div class="sidebar sidebar-style-2">			
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
-
+            
+            
             <c:choose>
+              <c:when test="${miPersonaObtenida == null}">
+
+                <ul class="nav nav-primary">
+                  <li class="nav-item">
+                    <a href="../auth/login.jsp">
+                      <i class="fas fa-map-marked-alt"></i>
+                      <p>LogIn</p>
+                    </a>
+                  </li>
+              </c:when>
               <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Administrador')}">
                 <ul class="nav nav-primary">
                   <li class="nav-item">
                     <a href="../CategoriaListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Categorías</p>
+                      <p>CategorÃ­as</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -170,7 +184,7 @@
                   <li class="nav-item">
                     <a href="../VehiculoListServlet">
                       <i class="fas fa-car"></i>
-                      <p>Vehículo</p>
+                      <p>Vehï¿½culo</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -183,13 +197,13 @@
                     <!--<a href="../Distrito/List.jsp">-->
                     <a href="../DireccionPersonaListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección Persona</p>
+                      <p>Direcciï¿½n Persona</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../DireccionListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección</p>
+                      <p>Direcciï¿½n</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -232,7 +246,6 @@
                       <p>Telefono</p>
                     </a>
                   </li>
-
                   <li class="nav-item">
                     <a href="../CitaListServlet">
                       <i class="fas fa-handshake"></i>
@@ -242,7 +255,7 @@
                   <li class="nav-item">
                     <a href="../DireccionListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección</p>
+                      <p>Direcciï¿½n</p>
                     </a>
                   </li>
                 </ul>

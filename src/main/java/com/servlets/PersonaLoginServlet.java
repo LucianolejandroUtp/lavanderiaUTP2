@@ -69,8 +69,10 @@ public class PersonaLoginServlet extends HttpServlet {
 
 //        request.setAttribute("miPersonaObtenida", miPersonaObtenida);
         sesion.setAttribute("miPersonaObtenida", miPersonaObtenida);
-//        request.getRequestDispatcher("index.jsp").forward(request, response);
-        response.sendRedirect("index.jsp");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+
+//        request.getRequestDispatcher("/NivelUsuarioServlet").include(request, response);
+
       } else {
         response.sendRedirect("auth/login.jsp");
       }

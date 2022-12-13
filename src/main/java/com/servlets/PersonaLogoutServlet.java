@@ -36,21 +36,22 @@ public class PersonaLogoutServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
 
+    System.out.println("Entrando a PersonaLogoutServlet");
     try {
       HttpSession sesion = request.getSession();
-      Persona miPersona = new Persona();
-      TipoPersona miTdP = new TipoPersona();
-      miTdP.setDescripcion("");
-      
-      miPersona =  (Persona)sesion.getAttribute("miPersonaObtenida");
+//      Persona miPersona = new Persona();
+//      TipoPersona miTdP = new TipoPersona();
+//      miTdP.setDescripcion("");
+//      
+//      miPersona =  (Persona)sesion.getAttribute("miPersonaObtenida");
 
-      
-      miPersona.setTipoPersonaId(miTdP);
-//    sesion.invalidate();
+//      miPersona.setTipoPersonaId(miTdP);
+      sesion.invalidate();
 //      sesion.removeAttribute("miPersonaObtenida");
 //      request.getSession(false).invalidate();
 //    sesion = request.getSession(true);
-      response.sendRedirect("auth/login.jsp");
+//      response.sendRedirect("index.jsp");
+      request.getRequestDispatcher("index.jsp").forward(request, response);
 
     } catch (IOException theException) {
       System.out.println(theException);

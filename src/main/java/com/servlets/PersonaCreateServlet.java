@@ -92,7 +92,7 @@ public class PersonaCreateServlet extends HttpServlet {
 //        request.setAttribute("usuario", 3);
 //        request.setAttribute("contrasenia", 4);
   
-        request.getRequestDispatcher("/SendEmailServlet").include(request, response);
+        request.getRequestDispatcher("/EmailRegistroPersonaServlet").include(request, response);
 //        request.getRequestDispatcher("/SendEmailServlet").forward(request, response);
 //        miEnvio.service(request, response);
         response.sendRedirect("auth/login.jsp");
