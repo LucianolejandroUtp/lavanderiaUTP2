@@ -67,11 +67,13 @@ public class EjemplosServlet extends HttpServlet {
     
     con.getCon();
 
-            File  reporFile = new File ( .getRealPath("report.ReportCitas"));
+            File  reporFile = new File ("src\\main\\java\\com\\report\\ReportCitas.jasper");
+            
             Map<String,Object> parameter = new HashMap<String, Object>();
             String valor = request.getParameter("asd");
             
-            byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter,con);
+            byte[] bytes;
+            bytes = JasperRunManager.runReportToPdf("src\\main\\java\\com\\report\\ReportCitas.jasper",null,con);
            
             
             response.setContentType("application/pdf");

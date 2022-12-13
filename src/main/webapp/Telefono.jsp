@@ -70,10 +70,7 @@
                     </div>
                   </form>
                 </div>
-        <%
-            System.out.println("------------------"+ application.getRealPath("report.ReportCitas"));
-
-        %>
+        
               </div>
             </div>
           </div>
