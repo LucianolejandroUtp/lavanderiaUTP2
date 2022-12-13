@@ -4,14 +4,10 @@
  */
 package com.servlets;
 
-import com.dao.CategoriaJpaController;
 import com.dao.DireccionJpaController;
 import com.dao.DistritoJpaController;
-import com.dao.ServicioJpaController;
-import com.dto.Categoria;
 import com.dto.Direccion;
 import com.dto.Distrito;
-import com.dto.Servicio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;

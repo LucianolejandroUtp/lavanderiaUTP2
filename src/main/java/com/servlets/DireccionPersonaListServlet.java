@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,13 +45,14 @@ public class DireccionPersonaListServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
-    
+        
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+
     System.out.println("Entrando a DireccionPersona List Servlet");
     try {
-      DireccionPersonaJpaController jpac_obj_dirPer = new DireccionPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      DireccionJpaController jpac_obj_direccion = new DireccionJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      DireccionPersonaJpaController jpac_obj_dirPer = new DireccionPersonaJpaController(emf);
+      DireccionJpaController jpac_obj_direccion = new DireccionJpaController(emf);
+      PersonaJpaController jpac_obj_persona = new PersonaJpaController(emf);
       List<DireccionPersona> mi_lista_de_dirPer = new ArrayList<>();
       List<Direccion> mi_lista_de_direcciones = new ArrayList<>();
       List<Persona> mi_lista_de_personas = new ArrayList<>();

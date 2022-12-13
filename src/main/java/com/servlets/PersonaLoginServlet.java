@@ -12,12 +12,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -43,25 +45,31 @@ public class PersonaLoginServlet extends HttpServlet {
 
     System.out.println("Entrando a Persona Login Servlet");
     try {
-      PersonaJpaController jpac_obj_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoPersonaJpaController jpac_obj_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      List<Persona> mi_lista_de_personas = new ArrayList<>();
-      List<TipoPersona> mi_lista_de_TdP = new ArrayList<>();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
+//      TipoPersonaJpaController jpacTdPer = new TipoPersonaJpaController(emf);
+      List<Persona> miListaDePersonas = new ArrayList<>();
+      Persona miPersonaObtenida = new Persona();
+//      List<TipoPersona> miListaDeTdPer = new ArrayList<>();
       int banderaLogin = 0;
       BasicPasswordEncryptor passEnc = new BasicPasswordEncryptor();
-
+      HttpSession sesion = request.getSession();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_personas = jpac_obj_persona.findPersonaEntities();
-      mi_lista_de_TdP = jpac_obj_TdP.findTipoPersonaEntities();
-      for (Persona per : mi_lista_de_personas) {
+      miListaDePersonas = jpacPersona.findPersonaEntities();
+//      miListaDeTdPer = jpacTdPer.findTipoPersonaEntities();
+      for (Persona per : miListaDePersonas) {
         System.out.println(per.getId() + " - " + per.getNombres() + " - " + per.getEmail() + " - " + per.getPassword() + " - " + per.getTipoPersonaId().getDescripcion());
-        
         if (per.getEmail().equals(request.getParameter("loginEmail")) && passEnc.checkPassword(request.getParameter("loginPassword"), per.getPassword())) {
+          miPersonaObtenida = per;
           banderaLogin = 1;
         }
       }
       if (banderaLogin == 1) {
+
+//        request.setAttribute("miPersonaObtenida", miPersonaObtenida);
+        sesion.setAttribute("miPersonaObtenida", miPersonaObtenida);
+//        request.getRequestDispatcher("index.jsp").forward(request, response);
         response.sendRedirect("index.jsp");
       } else {
         response.sendRedirect("auth/login.jsp");
@@ -109,5 +117,5 @@ public class PersonaLoginServlet extends HttpServlet {
   public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
-  
+
 }

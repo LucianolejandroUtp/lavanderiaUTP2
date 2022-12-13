@@ -67,6 +67,14 @@
 
                           </select>
                         </div>
+                        <div class="form-group form-group-default">
+                          <label>Personas</label>
+                          <select class="form-control" name="addPersonaId">
+                            <c:forEach var="tempObjetoCreate2" items="${miListaDePersonas}">
+                              <option value="${tempObjetoCreate2.id}">${tempObjetoCreate2.nombres} - ${tempObjetoCreate2.apellidos}</option>
+                            </c:forEach>
+                          </select>
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -86,6 +94,7 @@
                   <th>Dirección</th>
                   <th>Referencia</th>
                   <th>Distrito</th>
+                  <th>Persona</th>
                   <th>Estado</th>
                   <th>Creado</th>
                   <th>Modificado</th>
