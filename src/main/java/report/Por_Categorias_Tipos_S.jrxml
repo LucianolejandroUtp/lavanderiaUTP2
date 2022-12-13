@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7a837ec-898a-4039-aea7-73ef6ec99d59">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT persona.dni, persona.nombres, persona.apellidos,
+direccion.descripcion AS DIRECCs, 
+distrito.descripcion AS DISTRI,
+departamento.descripcion AS DEPAR,
+comprobante.numero, comprobante.serie,comprobante.fecha,comprobante.tipo,
+detalle_comprobante.cantidad, detalle_comprobante.precio,detalle_comprobante.subtotal, detalle_comprobante.igv, detalle_comprobante.total,
+servicio.descripcion AS SERVIC, servicio.precio AS PRECIOSERVICIO,servicio.created_at AS FECHAINICIAL, 
+categoria.descripcion AS CATEGO,
+
+prenda.cantidad AS CANTprenda, prenda.color , prenda.marca, prenda.observacion AS OBSprenda, prenda.estado_de_prenda,
+tipo_de_prenda.descripcion AS TIPOprenda
+
+
+FROM ((((((((((direccion_persona 
+INNER JOIN persona ON direccion_persona.persona_id= persona.id)
+INNER JOIN direccion ON direccion_persona.direccion_id= direccion.id)
+INNER JOIN distrito ON direccion.distrito_id= distrito.id)
+INNER JOIN departamento ON distrito.departamento_id= departamento.id)
+INNER JOIN comprobante ON persona.id= comprobante.persona_id)
+INNER JOIN detalle_comprobante ON comprobante.id= detalle_comprobante.comprobante_id)
+INNER JOIN servicio ON detalle_comprobante.id= servicio.id)
+INNER JOIN categoria ON servicio.id= categoria.id)
+INNER JOIN prenda ON prenda.persona_id_cliente= persona.id)
+INNER JOIN tipo_de_prenda ON prenda.tipo_de_prenda_id= tipo_de_prenda.id)
+WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripcion = 'Lavandería' OR comprobante.fecha BETWEEN '2022-12-01'AND '2022-12-10';]]>
+	</queryString>
+	<field name="dni" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellidos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIRECCs" class="java.lang.String"/>
+	<field name="DISTRI" class="java.lang.String"/>
+	<field name="DEPAR" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SERVIC" class="java.lang.String"/>
+	<field name="PRECIOSERVICIO" class="java.lang.Double"/>
+	<field name="FECHAINICIAL" class="java.sql.Timestamp"/>
+	<field name="CATEGO" class="java.lang.String"/>
+	<field name="CANTprenda" class="java.lang.Double"/>
+	<field name="color" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OBSprenda" class="java.lang.String"/>
+	<field name="estado_de_prenda" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIPOprenda" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="229" y="31" width="280" height="23" forecolor="#0066CC" uuid="371afb8d-51cd-4973-a0e6-b96c2975dab3"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORIAS Y SERVICIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="0" width="280" height="31" forecolor="#0066CC" uuid="4d6e20bf-8e24-4f05-ba58-b729bc1c722b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="423" y="59" width="132" height="20" uuid="f93dfafc-8e41-42b0-b20f-544842c71dee"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="229" y="59" width="194" height="20" uuid="28631f76-6635-475b-9c75-dba2cf6ef3e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Lista de categorias y servicios]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="78" width="555" height="1" uuid="8b2a062f-f9d2-4d84-ab52-3ff74e1ab6b9"/>
+			</line>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="12" y="6" width="199" height="63" uuid="00513010-32cb-4989-9df1-32ae7842d311"/>
+				<imageExpression><![CDATA["C:\\Users\\Acer\\Desktop\\LOGOLavanderia.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="509" y="6" width="46" height="48" uuid="28557cc7-ea4a-4549-b4ff-15b0d831db19"/>
+				<imageExpression><![CDATA["C:\\Users\\Acer\\Desktop\\LOGOReporte.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="15" width="100" height="20" backcolor="#66CCFF" uuid="1ff5efc6-27ab-4418-8052-187295baf81d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="100" y="15" width="129" height="20" backcolor="#66CCFF" uuid="5e1bf39e-e6de-4e63-bc17-ab7bb6303eb1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="17" width="100" height="18" backcolor="#99CCFF" uuid="a92d0341-b778-43ed-a1a6-beee5bc5efb9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="15" width="129" height="20" uuid="48992c83-ccd0-4981-b198-c8f87f45d5c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPOS DE SERVICIOS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="455" y="15" width="100" height="20" backcolor="#66CCFF" uuid="f739698f-f99b-47ae-821a-5e0de2bb153a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="423" y="15" width="56" height="20" backcolor="#66CCFF" uuid="8284b41f-9db3-425a-8aa0-b7f237680c3e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="271" y="15" width="68" height="20" backcolor="#66CCFF" uuid="dfbf9925-fde2-4514-a3ad-4811cb8b32ce"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="479" y="17" width="76" height="18" backcolor="#99CCFF" uuid="a3912dd7-739d-4eb2-b130-819220ac0ca1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="15" width="55" height="20" backcolor="#99CCFF" uuid="aa831c8f-63d9-41f4-8155-1dc1762a099e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="15" width="68" height="20" backcolor="#99CCFF" uuid="e0771acc-2d4d-401f-9f29-62bcacfd9733"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="229" y="15" width="42" height="20" backcolor="#66CCFF" uuid="91ef6d63-39b6-4001-af96-2e9e591ce124"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="229" y="15" width="42" height="20" backcolor="#99CCFF" uuid="f59c3bd9-137c-4e9c-909b-3fe7501962e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERIE]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="339" y="15" width="84" height="20" backcolor="#66CCFF" uuid="505f8ccc-7583-448d-b3d0-5351969c23e5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="339" y="15" width="84" height="20" backcolor="#99CCFF" uuid="bfacf10f-8109-4536-ac9b-3f1c1dcf83f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="7" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7fd6d947-4742-420d-9be6-001f0221a336"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CATEGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="129" height="20" uuid="62137f41-f35c-4e01-8fbf-2fcfbf5aeda1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SERVIC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="0" width="55" height="20" uuid="326129c3-0e17-47d5-a674-8947e65526b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="0" width="68" height="20" uuid="52e8dcc1-8e95-4f7a-a682-5ca5c3cfc4ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="1" width="42" height="19" uuid="a5fd1e7c-a8af-458f-81d8-2a3cdd7fce89"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{serie}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="229" y="2" width="1" height="18" uuid="eb3892e0-b0f8-442d-af36-d089589b2708"/>
+			</line>
+			<textField>
+				<reportElement x="479" y="0" width="76" height="20" uuid="4e5e73c8-4791-4b1f-ab1b-c04a86ed41cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="339" y="2" width="84" height="18" uuid="21377765-53d9-4833-a7b0-51c3ccb5ec0d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

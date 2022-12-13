@@ -57,17 +57,35 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.25</version>
+    </dependency>
+    <dependency>
+      <groupId>jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jasper</groupId>
+      <artifactId>jasper-jsp</artifactId>
+      <version>10.0.2</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
       <version>7.0</version>
       <scope>provided</scope>
     </dependency>
+    
         
     <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
       <version>8.0.31</version>
+      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -88,6 +106,7 @@
       <version>1.9.3</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
 
   </dependencies>
 

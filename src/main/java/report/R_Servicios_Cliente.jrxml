@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0f7f46c-b397-4b68-bda6-7c25461e0131">
+	<queryString language="SQL">
+		<![CDATA[
+
+SELECT persona.dni, persona.nombres, persona.apellidos, persona.dni,
+direccion.descripcion AS DIRECCs, 
+distrito.descripcion AS DISTRI,
+departamento.descripcion AS DEPAR,
+comprobante.numero, comprobante.serie,comprobante.fecha,
+detalle_comprobante.cantidad, detalle_comprobante.precio, detalle_comprobante.subtotal, detalle_comprobante.igv, detalle_comprobante.total,
+servicio.descripcion AS SERVIC, servicio.precio AS PRECIOSERVICIO, 
+categoria.descripcion
+FROM ((((((((direccion_persona 
+INNER JOIN persona ON direccion_persona.persona_id= persona.id)
+INNER JOIN direccion ON direccion_persona.direccion_id= direccion.id)
+INNER JOIN distrito ON direccion.distrito_id= distrito.id)
+INNER JOIN departamento ON distrito.departamento_id= departamento.id)
+INNER JOIN comprobante ON persona.id= comprobante.persona_id)
+INNER JOIN detalle_comprobante ON comprobante.id= detalle_comprobante.comprobante_id)
+INNER JOIN servicio ON detalle_comprobante.id= servicio.id)
+INNER JOIN categoria ON servicio.id= categoria.id)
+WHERE persona.id=2;]]>
+	</queryString>
+	<field name="dni" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellidos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIRECCs" class="java.lang.String"/>
+	<field name="DISTRI" class="java.lang.String"/>
+	<field name="DEPAR" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SERVIC" class="java.lang.String"/>
+	<field name="PRECIOSERVICIO" class="java.lang.Double"/>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
