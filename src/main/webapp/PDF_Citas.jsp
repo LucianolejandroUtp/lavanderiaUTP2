@@ -4,6 +4,7 @@
     Author     : Acer
 --%>
 
+<%@page import="net.sf.jasperreports.engine.JasperRunManager"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.io.File"%>
 <%@page import="report.Conexion"%>
@@ -20,13 +21,24 @@
     <body>
         <%
             Connection con = null;
-            try{
-            Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/lavanderiautpmigrations","root","");
-            out.print("Conexion en Linea");
-            }catch(Exception ex){
-            out.print("Error:  !!!!!!!!!!!!!!  "+ex.getMessage());
-            }
+            
+            File  reporFile = new File (application  getRealPath("report.ReportCitas"));
+            Map<String,Object> parameter = new HashMap<String, Object>();
+            String valor = request.getParameter("asd");
+            
+            byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter,con);
+           
+            
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes,0,bytes.length);
+            
+            outputStream.flush();
+            outputStream.close();
+            
+            
+            
          
         %>
     </body>
