@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7a837ec-898a-4039-aea7-73ef6ec99d59">
-	<property name="ireport.zoom" value="1.6105100000000032"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.138428376721009"/>
+	<property name="ireport.x" value="379"/>
+	<property name="ireport.y" value="207"/>
 	<queryString>
 		<![CDATA[SELECT persona.dni, persona.nombres, persona.apellidos,
 direccion.descripcion AS DIRECCs, 
@@ -28,7 +28,8 @@ INNER JOIN servicio ON detalle_comprobante.id= servicio.id)
 INNER JOIN categoria ON servicio.id= categoria.id)
 INNER JOIN prenda ON prenda.persona_id_cliente= persona.id)
 INNER JOIN tipo_de_prenda ON prenda.tipo_de_prenda_id= tipo_de_prenda.id)
-WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripcion = 'Lavandería' OR comprobante.fecha BETWEEN '2022-12-01'AND '2022-12-10';]]>
+WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripcion = 'Lavandería' OR comprobante.fecha BETWEEN '2022-12-01'AND '2022-12-10'
+GROUP BY (comprobante.numero)]]>
 	</queryString>
 	<field name="dni" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -128,7 +129,7 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 		</band>
 	</title>
 	<pageHeader>
-		<band height="37" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="15" width="100" height="20" backcolor="#66CCFF" uuid="1ff5efc6-27ab-4418-8052-187295baf81d"/>
 			</rectangle>
@@ -153,10 +154,10 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 				<reportElement x="455" y="15" width="100" height="20" backcolor="#66CCFF" uuid="f739698f-f99b-47ae-821a-5e0de2bb153a"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="423" y="15" width="56" height="20" backcolor="#66CCFF" uuid="8284b41f-9db3-425a-8aa0-b7f237680c3e"/>
+				<reportElement x="382" y="15" width="97" height="20" backcolor="#66CCFF" uuid="8284b41f-9db3-425a-8aa0-b7f237680c3e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="271" y="15" width="68" height="20" backcolor="#66CCFF" uuid="dfbf9925-fde2-4514-a3ad-4811cb8b32ce"/>
+				<reportElement x="229" y="15" width="68" height="20" backcolor="#66CCFF" uuid="dfbf9925-fde2-4514-a3ad-4811cb8b32ce"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="479" y="17" width="76" height="18" backcolor="#99CCFF" uuid="a3912dd7-739d-4eb2-b130-819220ac0ca1"/>
@@ -166,34 +167,24 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="15" width="55" height="20" backcolor="#99CCFF" uuid="aa831c8f-63d9-41f4-8155-1dc1762a099e"/>
+				<reportElement x="382" y="15" width="96" height="20" backcolor="#99CCFF" uuid="aa831c8f-63d9-41f4-8155-1dc1762a099e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[PRECIO]]></text>
+				<text><![CDATA[PRECIO + IGV]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="271" y="15" width="68" height="20" backcolor="#99CCFF" uuid="e0771acc-2d4d-401f-9f29-62bcacfd9733"/>
+				<reportElement x="230" y="15" width="68" height="20" backcolor="#99CCFF" uuid="e0771acc-2d4d-401f-9f29-62bcacfd9733"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[NUMERO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="229" y="15" width="42" height="20" backcolor="#66CCFF" uuid="91ef6d63-39b6-4001-af96-2e9e591ce124"/>
+				<reportElement x="296" y="15" width="86" height="20" backcolor="#66CCFF" uuid="505f8ccc-7583-448d-b3d0-5351969c23e5"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="229" y="15" width="42" height="20" backcolor="#99CCFF" uuid="f59c3bd9-137c-4e9c-909b-3fe7501962e0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[SERIE]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="339" y="15" width="84" height="20" backcolor="#66CCFF" uuid="505f8ccc-7583-448d-b3d0-5351969c23e5"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="339" y="15" width="84" height="20" backcolor="#99CCFF" uuid="bfacf10f-8109-4536-ac9b-3f1c1dcf83f9"/>
+				<reportElement x="296" y="15" width="86" height="20" backcolor="#99CCFF" uuid="bfacf10f-8109-4536-ac9b-3f1c1dcf83f9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -202,7 +193,7 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="7" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="28" splitType="Stretch">
@@ -217,19 +208,9 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 				<textFieldExpression><![CDATA[$F{SERVIC}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="423" y="0" width="55" height="20" uuid="326129c3-0e17-47d5-a674-8947e65526b5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="271" y="0" width="68" height="20" uuid="52e8dcc1-8e95-4f7a-a682-5ca5c3cfc4ce"/>
+				<reportElement x="230" y="0" width="68" height="20" uuid="52e8dcc1-8e95-4f7a-a682-5ca5c3cfc4ce"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="229" y="1" width="42" height="19" uuid="a5fd1e7c-a8af-458f-81d8-2a3cdd7fce89"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{serie}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="229" y="2" width="1" height="18" uuid="eb3892e0-b0f8-442d-af36-d089589b2708"/>
@@ -240,9 +221,14 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="339" y="2" width="84" height="18" uuid="21377765-53d9-4833-a7b0-51c3ccb5ec0d"/>
+				<reportElement x="297" y="0" width="84" height="20" uuid="21377765-53d9-4833-a7b0-51c3ccb5ec0d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="0" width="97" height="20" uuid="b6a1ed05-8208-4dee-9901-26ecfb122154"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRECIOSERVICIO}+$F{igv}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -250,9 +236,30 @@ WHERE  servicio.descripcion = 'Prenda lavada y planchada' OR categoria.descripci
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="14" width="310" height="20" uuid="38b2ee69-f0cb-4c39-a629-10920d657849"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAVANDERÍA UTP]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="14" width="80" height="20" uuid="917e6458-ea93-47f7-80d6-bd9ea29afd1f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="14" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="4516dfb7-fc1e-412b-9eed-c468d015b8a9"/>
+			</rectangle>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="14" width="40" height="20" uuid="d2f60285-f338-44bd-b968-da2b58ba3560"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="22" splitType="Stretch"/>
 	</summary>
 </jasperReport>
