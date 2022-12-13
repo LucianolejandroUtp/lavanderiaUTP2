@@ -4,18 +4,8 @@
  */
 package com.servlets;
 
-import com.dao.CategoriaJpaController;
-import com.dao.DepartamentoJpaController;
-import com.dao.PrendaJpaController;
-import com.dto.Categoria;
-import com.dto.Departamento;
-import com.dto.Prenda;
-import com.dto.TipoDePrenda;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -23,19 +13,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import report.Conexion;
 
-
-import net.sf.jasperreports.engine.JasperRunManager;
-import java.sql.DriverManager;
-import java.io.File;
-import report.Conexion;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.sql.Connection;
-import javax.faces.application.Application;
-import javax.servlet.ServletContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -55,32 +51,46 @@ public class EjemplosServlet extends HttpServlet {
    */
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    //    try {
     response.setContentType("text/html;charset=UTF-8");
-
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-
     Conexion con = new Conexion();
-    
-    
-    
-    
-    
-    con.getCon();
+    Connection conn = con.getCon();
 
-            File  reporFile = new File ( .getRealPath("report.ReportCitas"));
-            Map<String,Object> parameter = new HashMap<String, Object>();
-            String valor = request.getParameter("asd");
-            
-            byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter,con);
-           
-            
-            response.setContentType("application/pdf");
-            response.setContentLength(bytes.length);
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.write(bytes,0,bytes.length);
-            
-            outputStream.flush();
-            outputStream.close();
+    try {
+      Map parameters = new HashMap();
+      parameters.put("TITULO", "PAISES");
+      parameters.put("FECHA", new java.util.Date());
+      JasperReport report = JasperCompileManager.compileReport("D:\\ReportCitas.jrxml");
+      JasperPrint print = JasperFillManager.fillReport(report, parameters, conn);
+      // Exporta el informe a PDF
+      JasperExportManager.exportReportToPdfFile(print,"D:\\ReportCitas.pdf");
+      //Para visualizar el pdf directamente desde java
+      JasperViewer.viewReport(print, false);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+//
+//      File reporFile = new File("src/main/java/report/ReportCitas.jasper");
+//
+////    File reporFile = new File( .getRealPath("report.ReportCitas"));
+//      Map<String, Object> parameter = new HashMap<String, Object>();
+//      String valor = request.getParameter("asd");
+//
+////    byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter, con);
+//      byte[] bytes = JasperRunManager.runReportToPdf("src\\main\\java\\report\\ReportCitas.jasper", null, conn);
+//
+//      response.setContentType("application/pdf");
+//      response.setContentLength(bytes.length);
+//      ServletOutputStream outputStream = response.getOutputStream();
+//      outputStream.write(bytes, 0, bytes.length);
+//
+//      outputStream.flush();
+//      outputStream.close();
+//    } catch (JRException ex) {
+//      Logger.getLogger(EjemplosServlet.class.getName()).log(Level.SEVERE, null, ex);
+//    }
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
