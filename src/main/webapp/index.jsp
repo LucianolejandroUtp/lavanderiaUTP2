@@ -3,6 +3,9 @@
     Created on : 15 oct. 2022, 00:16:22
     Author     : desti
 --%>
+
+<%--<%@page language="java"%>--%>
+<%--<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>

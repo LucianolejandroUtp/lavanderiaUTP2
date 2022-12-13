@@ -12,6 +12,7 @@
 <t:template title="Listar Categoría">
   <jsp:attribute name="head_area">
   </jsp:attribute>
+  
   <jsp:attribute name="body_area">
 
     <div class="col-md-12">

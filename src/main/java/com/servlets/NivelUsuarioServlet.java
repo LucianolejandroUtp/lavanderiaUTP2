@@ -4,31 +4,22 @@
  */
 package com.servlets;
 
-import com.dao.PersonaJpaController;
-import com.dao.TipoPersonaJpaController;
 import com.dto.Persona;
-import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  *
  * @author desti
  */
-@WebServlet(name = "PersonaLoginServlet", urlPatterns = {"/PersonaLoginServlet"})
-public class PersonaLoginServlet extends HttpServlet {
+@WebServlet(name = "NivelUsuarioServlet", urlPatterns = {"/NivelUsuarioServlet"})
+public class NivelUsuarioServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,42 +34,36 @@ public class PersonaLoginServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
 
-    System.out.println("Entrando a Persona Login Servlet");
-    try {
-      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
-//      TipoPersonaJpaController jpacTdPer = new TipoPersonaJpaController(emf);
-      List<Persona> miListaDePersonas = new ArrayList<>();
-      Persona miPersonaObtenida = new Persona();
-//      List<TipoPersona> miListaDeTdPer = new ArrayList<>();
-      int banderaLogin = 0;
-      BasicPasswordEncryptor passEnc = new BasicPasswordEncryptor();
-      HttpSession sesion = request.getSession();
+    System.out.println("Entrando a NivelUsuarioServlet");
 
-//      System.out.println(jpacontroller_object.findDistritoEntities());
-      miListaDePersonas = jpacPersona.findPersonaEntities();
-//      miListaDeTdPer = jpacTdPer.findTipoPersonaEntities();
-      for (Persona per : miListaDePersonas) {
-        System.out.println(per.getId() + " - " + per.getNombres() + " - " + per.getEmail() + " - " + per.getPassword() + " - " + per.getTipoPersonaId().getDescripcion());
-        if (per.getEmail().equals(request.getParameter("loginEmail")) && passEnc.checkPassword(request.getParameter("loginPassword"), per.getPassword())) {
-          miPersonaObtenida = per;
-          banderaLogin = 1;
-        }
-      }
-      if (banderaLogin == 1) {
+    Persona miPersonaObtenida = new Persona();
+    HttpSession sesion = request.getSession();
 
-//        request.setAttribute("miPersonaObtenida", miPersonaObtenida);
-        sesion.setAttribute("miPersonaObtenida", miPersonaObtenida);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-
-//        request.getRequestDispatcher("/NivelUsuarioServlet").include(request, response);
-
-      } else {
-        response.sendRedirect("auth/login.jsp");
-      }
-    } catch (IOException theException) {
-      System.out.println(theException);
+    miPersonaObtenida = (Persona)sesion.getAttribute("miPersonaObtenida");
+    System.out.println("Persona: "+miPersonaObtenida.getNombres()+miPersonaObtenida.getTipoPersonaId().getDescripcion());
+    
+//    if(miPersonaObtenida.getTipoPersonaId().getId() == 1){
+//      
+//        System.out.println("La persona obtenida es un Admin");
+//        request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+////        response.sendRedirect("auth/login.jsp");
+//    }
+//    
+    switch (miPersonaObtenida.getTipoPersonaId().getDescripcion()) {
+      case "Administrador":
+        System.out.println("La persona obtenida es un Admin");
+        request.getRequestDispatcher("userLevel/sidebarAdmin.jsp").forward(request, response);
+        break;
+      case "Cliente":
+        System.out.println("La persona obtenida es un Cliente");
+        request.getRequestDispatcher("userLevel/sidebarCliente.jsp").forward(request, response);
+        break;
+      default:
+        System.out.println("Algo salió mal...");
+        request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+        throw new AssertionError();
     }
+
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
