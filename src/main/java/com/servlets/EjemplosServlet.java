@@ -11,6 +11,7 @@ import com.dto.Categoria;
 import com.dto.Departamento;
 import com.dto.Prenda;
 import com.dto.TipoDePrenda;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,6 +24,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import report.Conexion;
+
+
+import net.sf.jasperreports.engine.JasperRunManager;
+import java.sql.DriverManager;
+import java.io.File;
+import report.Conexion;
+import java.util.HashMap;
+import java.util.Map;
+import java.sql.Connection;
+import javax.faces.application.Application;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -46,33 +59,28 @@ public class EjemplosServlet extends HttpServlet {
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
 
-    DepartamentoJpaController jpaDepa = new DepartamentoJpaController(emf);
-    CategoriaJpaController nn = new CategoriaJpaController(emf);
-    PrendaJpaController prendajpaC = new PrendaJpaController(emf);
+    Conexion con = new Conexion();
     
-    List<Departamento> mi_lista_de_depas = new ArrayList<>();
-    List<Categoria> mi_lista_de_categorias = new ArrayList<>();
-    List<Prenda> mi_lista_de_prendas = new ArrayList<>();
+    
+    
+    
+    
+    con.getCon();
 
-    mi_lista_de_depas = jpaDepa.findDepartamentoEntities();
-    mi_lista_de_categorias = nn.findCategoriaEntities();
-    mi_lista_de_prendas = prendajpaC.findPrendaEntities();
-
-    for (Departamento temp2 : mi_lista_de_depas) {
-      System.out.println(temp2.getId() + " - " + temp2.getDescripcion());
-    }
-    for (Categoria temp3 : mi_lista_de_categorias) {
-      System.out.println(temp3.getId() + " - " + temp3.getDescripcion());
-    }
-    for (Prenda temp4 : mi_lista_de_prendas) {
-      System.out.println(temp4.getId() + " - " + temp4.getServicioId().getCategoriaId().getDescripcion());
-    }
-    
-    HttpSession miSesion = request.getSession();
-    
-    System.out.println(request.getSession());
-    
-    
+            File  reporFile = new File ( .getRealPath("report.ReportCitas"));
+            Map<String,Object> parameter = new HashMap<String, Object>();
+            String valor = request.getParameter("asd");
+            
+            byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter,con);
+           
+            
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes,0,bytes.length);
+            
+            outputStream.flush();
+            outputStream.close();
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
