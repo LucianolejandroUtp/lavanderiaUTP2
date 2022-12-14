@@ -64,7 +64,7 @@ public class TipoPersona implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "tipoPersonaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "tipoPersonaId", fetch = FetchType.LAZY)
   private Collection<Persona> personaCollection;
 
   public TipoPersona() {

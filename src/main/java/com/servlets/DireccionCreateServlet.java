@@ -5,11 +5,9 @@
 package com.servlets;
 
 import com.dao.DireccionJpaController;
-import com.dao.DireccionPersonaJpaController;
 import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
 import com.dto.Direccion;
-import com.dto.DireccionPersona;
 import com.dto.Distrito;
 import com.dto.Persona;
 import java.io.IOException;
@@ -49,17 +47,21 @@ public class DireccionCreateServlet extends HttpServlet {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
 
     System.out.println("Bandera servlet create Dirección");
+    System.out.println(request.getParameter("addDireccion"));
+    System.out.println(request.getParameter("addReferencia"));
+    System.out.println(request.getParameter("addDistritoId"));
+    System.out.println(request.getParameter("addPersonaId"));
     try {
       DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
-      DireccionPersonaJpaController jpacDirPersona = new DireccionPersonaJpaController(emf);
+//      DireccionPersonaJpaController jpacDirPersona = new DireccionPersonaJpaController(emf);
       DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
       PersonaJpaController jpacPersona = new PersonaJpaController(emf);
       Direccion miDireccion = new Direccion();
-      DireccionPersona miDirPersona = new DireccionPersona();
+//      DireccionPersona miDirPersona = new DireccionPersona();
       Distrito miDistrito = new Distrito();
       Persona miPersona = new Persona();
-      List<Persona> miListaDePersonas = new ArrayList<>();
-      List<Direccion> miListaDeDirecciones = new ArrayList<>();
+//      List<Persona> miListaDePersonas = new ArrayList<>();
+//      List<Direccion> miListaDeDirecciones = new ArrayList<>();
 
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
@@ -77,6 +79,7 @@ public class DireccionCreateServlet extends HttpServlet {
       miDireccion.setReferencia(request.getParameter("addReferencia"));
       miDireccion.setEstado("activo");
       miDireccion.setDistritoId(miDistrito);
+      miDireccion.setPersonaId(miPersona);
       miDireccion.setCreatedAt(ts);
       miDireccion.setUpdatedAt(ts);
 
@@ -85,28 +88,28 @@ public class DireccionCreateServlet extends HttpServlet {
       
       
       
-      miPersona = jpacPersona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
+//      miPersona = jpacPersona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
+//      
+//      miListaDeDirecciones = jpacDireccion.findDireccionEntities();
+//      
+//      for (Direccion temp: miListaDeDirecciones){
+//        if(temp.getDescripcion().equalsIgnoreCase(request.getParameter("addDireccion"))){
+////          System.out.println("Dirección encontrada: "+temp.getDescripcion()+" - "+temp.getId());
+//          miDireccion = temp;
+//        }
+//      }
+//      
+//      System.out.println("La persona es: "+ miPersona.getNombres() + " - "+ miPersona.getId());
+//      System.out.println("La dirección es: "+ miDireccion.getDescripcion()+" - "+miDireccion.getId());
       
-      miListaDeDirecciones = jpacDireccion.findDireccionEntities();
-      
-      for (Direccion temp: miListaDeDirecciones){
-        if(temp.getDescripcion().equalsIgnoreCase(request.getParameter("addDireccion"))){
-//          System.out.println("Dirección encontrada: "+temp.getDescripcion()+" - "+temp.getId());
-          miDireccion = temp;
-        }
-      }
-      
-      System.out.println("La persona es: "+ miPersona.getNombres() + " - "+ miPersona.getId());
-      System.out.println("La dirección es: "+ miDireccion.getDescripcion()+" - "+miDireccion.getId());
-      
-      miDirPersona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      miDirPersona.setEstado("activo");
-      miDirPersona.setCreatedAt(ts);
-      miDirPersona.setUpdatedAt(ts);
-      miDirPersona.setPersonaId(miPersona);
-      miDirPersona.setDireccionId(miDireccion);
-      
-      jpacDirPersona.create(miDirPersona);
+//      miDirPersona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+//      miDirPersona.setEstado("activo");
+//      miDirPersona.setCreatedAt(ts);
+//      miDirPersona.setUpdatedAt(ts);
+//      miDirPersona.setPersonaId(miPersona);
+//      miDirPersona.setDireccionId(miDireccion);
+//      
+//      jpacDirPersona.create(miDirPersona);
       
 //      Llamando al listALGO.jsp
       DireccionListServlet call = new DireccionListServlet();

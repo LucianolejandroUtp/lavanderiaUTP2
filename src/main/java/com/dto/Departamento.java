@@ -64,7 +64,7 @@ public class Departamento implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "departamentoId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "departamentoId", fetch = FetchType.LAZY)
   private Collection<Distrito> distritoCollection;
 
   public Departamento() {

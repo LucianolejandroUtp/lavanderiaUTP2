@@ -82,16 +82,16 @@ public class Prenda implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "persona_id_cliente", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Persona personaIdCliente;
   @JoinColumn(name = "persona_id_empleado", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Persona personaIdEmpleado;
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Servicio servicioId;
   @JoinColumn(name = "tipo_de_prenda_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private TipoDePrenda tipoDePrendaId;
 
   public Prenda() {

@@ -67,9 +67,9 @@ public class Distrito implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "departamento_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Departamento departamentoId;
-  @OneToMany(mappedBy = "distritoId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "distritoId", fetch = FetchType.LAZY)
   private Collection<Direccion> direccionCollection;
 
   public Distrito() {

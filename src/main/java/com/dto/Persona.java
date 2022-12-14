@@ -84,21 +84,21 @@ public class Persona implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "tipo_persona_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private TipoPersona tipoPersonaId;
-  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.LAZY)
   private Collection<Comprobante> comprobanteCollection;
-  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.LAZY)
+  private Collection<Direccion> direccionCollection;
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.LAZY)
   private Collection<Vehiculo> vehiculoCollection;
-  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
-  private Collection<DireccionPersona> direccionPersonaCollection;
-  @OneToMany(mappedBy = "personaIdCliente", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaIdCliente", fetch = FetchType.LAZY)
   private Collection<Prenda> prendaCollection;
-  @OneToMany(mappedBy = "personaIdEmpleado", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaIdEmpleado", fetch = FetchType.LAZY)
   private Collection<Prenda> prendaCollection1;
-  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.LAZY)
   private Collection<Telefono> telefonoCollection;
-  @OneToMany(mappedBy = "personaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "personaId", fetch = FetchType.LAZY)
   private Collection<Cita> citaCollection;
 
   public Persona() {
@@ -210,20 +210,20 @@ public class Persona implements Serializable {
     this.comprobanteCollection = comprobanteCollection;
   }
 
+  public Collection<Direccion> getDireccionCollection() {
+    return direccionCollection;
+  }
+
+  public void setDireccionCollection(Collection<Direccion> direccionCollection) {
+    this.direccionCollection = direccionCollection;
+  }
+
   public Collection<Vehiculo> getVehiculoCollection() {
     return vehiculoCollection;
   }
 
   public void setVehiculoCollection(Collection<Vehiculo> vehiculoCollection) {
     this.vehiculoCollection = vehiculoCollection;
-  }
-
-  public Collection<DireccionPersona> getDireccionPersonaCollection() {
-    return direccionPersonaCollection;
-  }
-
-  public void setDireccionPersonaCollection(Collection<DireccionPersona> direccionPersonaCollection) {
-    this.direccionPersonaCollection = direccionPersonaCollection;
   }
 
   public Collection<Prenda> getPrendaCollection() {

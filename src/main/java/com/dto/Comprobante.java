@@ -84,10 +84,10 @@ public class Comprobante implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "comprobanteId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "comprobanteId", fetch = FetchType.LAZY)
   private Collection<DetalleComprobante> detalleComprobanteCollection;
   @JoinColumn(name = "persona_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Persona personaId;
 
   public Comprobante() {

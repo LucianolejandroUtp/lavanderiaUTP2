@@ -79,9 +79,9 @@ public class Vehiculo implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "persona_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Persona personaId;
-  @OneToMany(mappedBy = "vehiculoId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "vehiculoId", fetch = FetchType.LAZY)
   private Collection<Cita> citaCollection;
 
   public Vehiculo() {

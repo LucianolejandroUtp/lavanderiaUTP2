@@ -75,12 +75,12 @@ public class Servicio implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "servicioId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "servicioId", fetch = FetchType.LAZY)
   private Collection<DetalleComprobante> detalleComprobanteCollection;
   @JoinColumn(name = "categoria_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Categoria categoriaId;
-  @OneToMany(mappedBy = "servicioId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "servicioId", fetch = FetchType.LAZY)
   private Collection<Prenda> prendaCollection;
 
   public Servicio() {

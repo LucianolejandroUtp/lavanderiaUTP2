@@ -77,10 +77,10 @@ public class DetalleComprobante implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "comprobante_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Comprobante comprobanteId;
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Servicio servicioId;
 
   public DetalleComprobante() {

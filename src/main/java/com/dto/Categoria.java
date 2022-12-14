@@ -64,7 +64,7 @@ public class Categoria implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "categoriaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "categoriaId", fetch = FetchType.LAZY)
   private Collection<Servicio> servicioCollection;
 
   public Categoria() {

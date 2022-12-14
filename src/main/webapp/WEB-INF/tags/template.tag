@@ -193,17 +193,17 @@
                       <p>Cita Programada</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <!--<a href="../Distrito/List.jsp">-->
+<!--                  <li class="nav-item">
+                    <a href="../Distrito/List.jsp">
                     <a href="../DireccionPersonaListServlet">
                       <i class="fas fa-map-marked-alt"></i>
                       <p>Direcci�n Persona</p>
                     </a>
-                  </li>
+                  </li>-->
                   <li class="nav-item">
                     <a href="../DireccionListServlet">
                       <i class="fas fa-map-marked-alt"></i>
-                      <p>Direcci�n</p>
+                      <p>Dirección</p>
                     </a>
                   </li>
                   <li class="nav-item">
