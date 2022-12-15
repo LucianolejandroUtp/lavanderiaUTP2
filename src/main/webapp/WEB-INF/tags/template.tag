@@ -91,7 +91,7 @@
                           <p class="text-muted">
                             ${miPersonaObtenida.email}
                           </p>
-                          <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                          <!--<a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>-->
                         </div>
                       </div>
                     </li>
@@ -112,8 +112,8 @@
       <div class="sidebar sidebar-style-2">			
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
-            
-            
+
+
             <c:choose>
               <c:when test="${miPersonaObtenida == null}">
 
@@ -124,155 +124,175 @@
                       <p>LogIn</p>
                     </a>
                   </li>
-              </c:when>
-              <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Administrador')}">
-                <ul class="nav nav-primary">
-                  <li class="nav-item">
-                    <a href="../CategoriaListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Categorías</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../ServicioListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Servicios</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../DetalleComprobanteListServlet">
-                      <i class="fas fa-car"></i>
-                      <p>Detalle Comprobante</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../TdPrendaListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Tipo de Prenda</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../PrendaListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Prenda</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../ComprobanteListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Comprobante</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../TdPListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Tipo de Persona</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../TelefonoListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Telefono</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../PersonaListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Persona</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../VehiculoListServlet">
-                      <i class="fas fa-car"></i>
-                      <p>Veh�culo</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../CitaListServlet">
-                      <i class="fas fa-handshake"></i>
-                      <p>Cita Programada</p>
-                    </a>
-                  </li>
-<!--                  <li class="nav-item">
-                    <a href="../Distrito/List.jsp">
-                    <a href="../DireccionPersonaListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Direcci�n Persona</p>
-                    </a>
-                  </li>-->
-                  <li class="nav-item">
-                    <a href="../DireccionListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Dirección</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../DistritoListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Distritos</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../DepartamentoListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Departamentos</p>
-                    </a>
-                  </li>
-                </ul>
-              </c:when>
-              <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Cliente')}">
-                <ul class="nav nav-primary">
-                  <li class="nav-item">
-                    <a href="../DetalleComprobanteListServlet">
-                      <i class="fas fa-car"></i>
-                      <p>Detalle Comprobante</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../PrendaListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Prenda</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../ComprobanteListServlet">
-                      <i class="fas fa-user"></i>
-                      <p>Comprobante</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../TelefonoListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Telefono</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../CitaListServlet">
-                      <i class="fas fa-handshake"></i>
-                      <p>Cita Programada</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../DireccionListServlet">
-                      <i class="fas fa-map-marked-alt"></i>
-                      <p>Direcci�n</p>
-                    </a>
-                  </li>
-                </ul>
-              </c:when>
-              <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Empleado')}">
+                </c:when>
+                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Administrador')}">
+                  <ul class="nav nav-primary">
+                    <li class="nav-item">
+                      <a href="../CategoriaListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Categorías</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../ServicioListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Servicios</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../DetalleComprobanteListServlet">
+                        <i class="fas fa-car"></i>
+                        <p>Detalle Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TdPrendaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Tipo de Prenda</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../PrendaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Prenda</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../ComprobanteListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TdPListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Tipo de Persona</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TelefonoListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Teléfono</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../PersonaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Persona</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../VehiculoListServlet">
+                        <i class="fas fa-car"></i>
+                        <p>Vehículo</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../CitaListServlet">
+                        <i class="fas fa-handshake"></i>
+                        <p>Cita Programada</p>
+                      </a>
+                    </li>
+                    <!--                  <li class="nav-item">
+                                        <a href="../Distrito/List.jsp">
+                                        <a href="../DireccionPersonaListServlet">
+                                          <i class="fas fa-map-marked-alt"></i>
+                                          <p>Direcci�n Persona</p>
+                                        </a>
+                                      </li>-->
+                    <li class="nav-item">
+                      <a href="../DireccionListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Dirección</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../DistritoListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Distritos</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../DepartamentoListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Departamentos</p>
+                      </a>
+                    </li>
+                  </ul>
+                </c:when>
+                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Cliente')}">
+                  <ul class="nav nav-primary">
+                    <li class="nav-item">
+                      <a href="../DetalleComprobanteListServlet">
+                        <i class="fas fa-car"></i>
+                        <p>Detalle Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../PrendaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Prenda</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../ComprobanteListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TelefonoListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Teléfono</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../CitaListServlet">
+                        <i class="fas fa-handshake"></i>
+                        <p>Cita Programada</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../DireccionListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Dirección</p>
+                      </a>
+                    </li>
+                  </ul>
+                </c:when>
+                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Empleado')}">
+                  <ul class="nav nav-primary">
+                    <li class="nav-item">
+                      <a href="../PersonaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Persona</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../DireccionListServlet">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Dirección</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../PrendaListServlet">
+                        <i class="fas fa-user"></i>
+                        <p>Prenda</p>
+                      </a>
+                    </li>
 
-              </c:when>
-              <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Proveedor')}">
+                  </ul>
+                </c:when>
+                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Proveedor')}">
 
-              </c:when>
-              <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Chofer')}">
+                </c:when>
+                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Chofer')}">
 
-              </c:when>
-              <c:otherwise>
-                <c:redirect url="../auth/login.jsp"/>
-              </c:otherwise>
-            </c:choose>
+                </c:when>
+                <c:otherwise>
+                  <c:redirect url="../auth/login.jsp"/>
+                </c:otherwise>
+              </c:choose>
 
           </div>
         </div>

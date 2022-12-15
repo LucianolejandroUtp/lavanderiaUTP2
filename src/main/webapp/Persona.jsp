@@ -52,32 +52,40 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombres</label>
-                          <input required name="addNombres" id="addNombres" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addNombres" id="addNombres" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Apellidos</label>
-                          <input required name="addApellidos" id="addApellidos" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addApellidos" id="addApellidos" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>DNI</label>
-                          <input required name="addDni" id="addDni" type="text" class="form-control" placeholder="Llene">
+                          <input required name="addDni" id="addDni" type="text" class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-default">
                           <label>Email</label>
-                          <input required name="addEmail" id="addEmail" type="email" class="form-control" placeholder="Llene">
+                          <input required name="addEmail" id="addEmail" type="email" class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-default">
                           <label>Password</label>
-                          <input required name="addPassword" id="addPassword" type="password" class="form-control" placeholder="Llene">
+                          <input required name="addPassword" id="addPassword" type="password" class="form-control">
                         </div>
 
                         <div class="form-group form-group-default">
                           <label>Tipo de Persona</label>
                           <select class="form-control" name="addTdPersonaId">
-                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_TdP }">
-                              <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
+                            <c:forEach var="temp" items="${mi_lista_de_TdP }">
+                              <c:choose>
+                                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                                  <option value="${temp.id }">${temp.descripcion }</option>
+                                </c:when>
+                                <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                                  <c:if test="${temp.descripcion.equalsIgnoreCase('cliente')}">
+                                    <option value="${temp.id }">${temp.descripcion }</option>
+                                  </c:if>
+                                </c:when>
+                              </c:choose>
                             </c:forEach>
-
                           </select>
                         </div>
                       </div>
@@ -109,35 +117,67 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_personas }">
-                  <tr>
-                    <td>${tempObjeto.nombres }</td>
-                    <td>${tempObjeto.apellidos}</td>
-                    <td>${tempObjeto.dni}</td>
-                    <td>${tempObjeto.email}</td>
-                    <td>******</td>
-                    <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.tipoPersonaId.descripcion}</td>
-                    <td>${tempObjeto.createdAt }</td>
-                    <td>${tempObjeto.updatedAt }</td>
-                    <td>
-                      <div class="form-button-action">
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
-                                data-target="#${tempObjeto.uniqueId}">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
-                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
-                          <i class="fa fa-times"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                <c:forEach var="temp" items="${mi_lista_de_personas }">
+                  <c:choose>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                      <tr>
+                        <td>${temp.nombres }</td>
+                        <td>${temp.apellidos}</td>
+                        <td>${temp.dni}</td>
+                        <td>${temp.email}</td>
+                        <td>******</td>
+                        <td>${temp.estado}</td>
+                        <td>${temp.tipoPersonaId.descripcion}</td>
+                        <td>${temp.createdAt }</td>
+                        <td>${temp.updatedAt }</td>
+                        <td>
+                          <div class="form-button-action">
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                    data-target="#${temp.uniqueId}">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                    data-target="#${temp.id}${temp.uniqueId}">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:when>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                      <c:if test="${temp.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
+
+                        <tr>
+                          <td>${temp.nombres }</td>
+                          <td>${temp.apellidos}</td>
+                          <td>${temp.dni}</td>
+                          <td>${temp.email}</td>
+                          <td>******</td>
+                          <td>${temp.estado}</td>
+                          <td>${temp.tipoPersonaId.descripcion}</td>
+                          <td>${temp.createdAt }</td>
+                          <td>${temp.updatedAt }</td>
+                          <td>
+                            <div class="form-button-action">
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                      data-target="#${temp.uniqueId}">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                      data-target="#${temp.id}${temp.uniqueId}">
+                                <i class="fa fa-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:if>
+                    </c:when>
+                  </c:choose>
 
 
 
                   <!-- Modal Eliminar -->
-                <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${temp.id}${temp.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -156,15 +196,15 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${temp.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombres</label>
-                                <input type="text" class="form-control" value="${tempObjeto.nombres }" readonly>
+                                <input type="text" class="form-control" value="${temp.nombres }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Apellidos</label>
-                                <input type="text" class="form-control" value="${tempObjeto.apellidos }" readonly>
+                                <input type="text" class="form-control" value="${temp.apellidos }" readonly>
                               </div>
 
                             </div>
@@ -179,7 +219,7 @@
                 </div>
 
                 <!-- Modal Editar -->
-                <div class="modal fade" id="${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${temp.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -200,23 +240,23 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="editId" type="text" class="form-control" value="${temp.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Nombres</label>
-                                <input required name="editNombres" type="text" class="form-control" value="${tempObjeto.nombres }">
+                                <input required name="editNombres" type="text" class="form-control" value="${temp.nombres }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Apellidos</label>
-                                <input required name="editApellidos" type="text" class="form-control" value="${tempObjeto.apellidos }">
+                                <input required name="editApellidos" type="text" class="form-control" value="${temp.apellidos }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>DNI</label>
-                                <input required name="editDni" type="text" class="form-control" value="${tempObjeto.dni }">
+                                <input required name="editDni" type="text" class="form-control" value="${temp.dni }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Email</label>
-                                <input required name="editEmail" type="text" class="form-control" value="${tempObjeto.email }">
+                                <input required name="editEmail" type="text" class="form-control" value="${temp.email }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Password</label>
@@ -224,11 +264,24 @@
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Tipo de Persona</label>
-                                <select class="form-control" name="editTdPersonaId">
-                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_TdP }">
-                                    <option value="${tempObjetoEdit.id }">${tempObjetoEdit.descripcion }</option>
-                                  </c:forEach>
-                                </select>
+                                <c:choose>
+                                  <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                                    <select class="form-control" name="editTdPersonaId">
+                                      <c:forEach var="tempEdit" items="${mi_lista_de_TdP }">
+                                        <option value="${tempEdit.id }">${tempEdit.descripcion }</option>
+                                      </c:forEach>
+                                    </select>
+                                  </c:when>
+                                  <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                                    <select class="form-control" name="editTdPersonaId">
+                                      <c:forEach var="tempEdit" items="${mi_lista_de_TdP }">
+                                        <c:if test="${tempEdit.descripcion.equalsIgnoreCase('cliente')}">
+                                          <option value="${tempEdit.id }">${tempEdit.descripcion }</option>
+                                        </c:if>
+                                      </c:forEach>
+                                    </select>
+                                  </c:when>
+                                </c:choose>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
