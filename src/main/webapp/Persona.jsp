@@ -15,8 +15,6 @@
   </jsp:attribute>
   <jsp:attribute name="body_area">
 
-
-
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -52,25 +50,44 @@
                       <div class="col-sm-12">
                         <div class="form-group form-group-default">
                           <label>Nombres</label>
-                          <input required name="addNombres" id="addNombres" type="text" class="form-control">
+                          <input required name="addNombres" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Apellidos</label>
-                          <input required name="addApellidos" id="addApellidos" type="text" class="form-control">
+                          <input required name="addApellidos" type="text" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>DNI</label>
-                          <input required name="addDni" id="addDni" type="text" class="form-control">
+                          <input required name="addDni" type="text" class="form-control">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Teléfono</label>
+                          <input required name="addTelefono" type="text" class="form-control">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Dirección</label>
+                          <input required name="addDireccion" type="text" class="form-control">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Referencia</label>
+                          <input name="addReferencia" type="text" class="form-control">
+                        </div>
+                        <div class="form-group form-group-default">
+                          <label>Distrito</label>
+                          <select class="form-control" name="addDistritoId">
+                            <c:forEach var="tempD" items="${miListaDeDistritos }">
+                              <option value="${tempD.id }">${tempD.descripcion }</option>
+                            </c:forEach>
+                          </select>
                         </div>
                         <div class="form-group form-group-default">
                           <label>Email</label>
-                          <input required name="addEmail" id="addEmail" type="email" class="form-control">
+                          <input required name="addEmail" type="email" class="form-control">
                         </div>
                         <div class="form-group form-group-default">
                           <label>Password</label>
-                          <input required name="addPassword" id="addPassword" type="password" class="form-control">
+                          <input required name="addPassword" type="password" class="form-control">
                         </div>
-
                         <div class="form-group form-group-default">
                           <label>Tipo de Persona</label>
                           <select class="form-control" name="addTdPersonaId">
@@ -95,7 +112,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -107,8 +123,10 @@
                   <th>Nombres</th>
                   <th>Apellidos</th>
                   <th>DNI</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
                   <th>Email</th>
-                  <th>Password</th>
+                  <!--<th>Password</th>-->
                   <th>Estado</th>
                   <th>Tipo de Persona</th>
                   <th>Creado</th>
@@ -121,11 +139,21 @@
                   <c:choose>
                     <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
                       <tr>
-                        <td>${temp.nombres }</td>
+                        <td>${temp.nombres}</td>
                         <td>${temp.apellidos}</td>
                         <td>${temp.dni}</td>
+                        <td>
+                          <c:forEach var="tempC" items="${temp.telefonoCollection}">
+                            ${tempC.descripcion}
+                          </c:forEach>
+                        </td>
+                        <td>
+                          <c:forEach var="tempC" items="${temp.direccionCollection}">
+                            ${tempC.descripcion}
+                          </c:forEach>
+                        </td>
                         <td>${temp.email}</td>
-                        <td>******</td>
+                        <!--<td>******</td>-->
                         <td>${temp.estado}</td>
                         <td>${temp.tipoPersonaId.descripcion}</td>
                         <td>${temp.createdAt }</td>
@@ -146,13 +174,22 @@
                     </c:when>
                     <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
                       <c:if test="${temp.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
-
                         <tr>
                           <td>${temp.nombres }</td>
                           <td>${temp.apellidos}</td>
                           <td>${temp.dni}</td>
+                          <td>
+                            <c:forEach var="tempC" items="${temp.telefonoCollection}">
+                              ${tempC.descripcion}
+                            </c:forEach>
+                          </td>
+                          <td>
+                            <c:forEach var="tempC" items="${temp.direccionCollection}">
+                              ${tempC.descripcion}
+                            </c:forEach>
+                          </td>
                           <td>${temp.email}</td>
-                          <td>******</td>
+                          <!--<td>******</td>-->
                           <td>${temp.estado}</td>
                           <td>${temp.tipoPersonaId.descripcion}</td>
                           <td>${temp.createdAt }</td>
@@ -206,7 +243,6 @@
                                 <label>Apellidos</label>
                                 <input type="text" class="form-control" value="${temp.apellidos }" readonly>
                               </div>
-
                             </div>
                             <div class="col-md-6">
                               <button type="submit" class="btn btn-danger">Borrar</button>
@@ -298,15 +334,11 @@
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
-
             </table>
           </div>
         </div>

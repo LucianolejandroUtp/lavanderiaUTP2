@@ -4,14 +4,12 @@
  */
 package com.servlets;
 
-import com.dao.PersonaJpaController;
-import com.dao.TelefonoJpaController;
-import com.dto.Persona;
-import com.dto.Telefono;
+import com.dao.DistritoJpaController;
+import com.dto.Distrito;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -24,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author desti
  */
-@WebServlet(name = "TelefonoCreateServlet", urlPatterns = {"/TelefonoCreateServlet"})
-public class TelefonoCreateServlet extends HttpServlet {
+@WebServlet(name = "indexServlet", urlPatterns = {"/indexServlet"})
+public class indexServlet extends HttpServlet {
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,42 +38,6 @@ public class TelefonoCreateServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
 
-    System.out.println("Bandera servlet create Teléfono");
-    try {
-      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
-      TelefonoJpaController jpacTelefono = new TelefonoJpaController(emf);
-      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
-      Telefono miTelefono = new Telefono();
-      Persona miPersona = new Persona();
-
-      Date dt = new Date();
-      Timestamp ts = new Timestamp(dt.getTime());
-      System.out.println(ts);
-
-//      Obteniendo el departamento en base al Id obtenido de la vista
-      miPersona = jpacPersona.findPersona(Long.valueOf(request.getParameter("addPersonaId")));
-      System.out.println("La Persona obtenida fue: " + miPersona.getId() + " - " + miPersona.getNombres());
-
-//      Llenando los parámetros del distrito obtenidos de la vista
-//            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      miTelefono.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      miTelefono.setDescripcion(request.getParameter("addDescripcion"));
-      miTelefono.setEstado("activo");
-      miTelefono.setPersonaId(miPersona);
-      miTelefono.setCreatedAt(ts);
-      miTelefono.setUpdatedAt(ts);
-
-//      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpacTelefono.create(miTelefono);
-
-//      Llamando al listALGO.jsp
-      TelefonoListServlet call = new TelefonoListServlet();
-      call.processRequest(request, response);
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
-
-    } catch (IOException | ServletException theException) {
-      System.out.println(theException);
-    }
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

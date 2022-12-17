@@ -27,6 +27,8 @@ import javax.validation.constraints.Size;
  *
  * @author desti
  */
+import org.eclipse.persistence.annotations.AdditionalCriteria;
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Entity
 @Table(name = "telefono")
 @NamedQueries({

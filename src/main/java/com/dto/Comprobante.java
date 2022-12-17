@@ -24,12 +24,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "comprobante")
 @NamedQueries({
   @NamedQuery(name = "Comprobante.findAll", query = "SELECT c FROM Comprobante c"),

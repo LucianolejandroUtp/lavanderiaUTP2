@@ -120,7 +120,7 @@
                 <ul class="nav nav-primary">
                   <li class="nav-item">
                     <a href="../auth/login.jsp">
-                      <i class="fas fa-map-marked-alt"></i>
+                      <i class="fas fa-user"></i>
                       <p>LogIn</p>
                     </a>
                   </li>
@@ -129,49 +129,43 @@
                   <ul class="nav nav-primary">
                     <li class="nav-item">
                       <a href="../CategoriaListServlet">
-                        <i class="fas fa-map-marked-alt"></i>
+                        <i class="fas fa-list"></i>
                         <p>Categorías</p>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="../ServicioListServlet">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-list"></i>
                         <p>Servicios</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="../DetalleComprobanteListServlet">
-                        <i class="fas fa-car"></i>
-                        <p>Detalle Comprobante</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="../TdPrendaListServlet">
-                        <i class="fas fa-user"></i>
-                        <p>Tipo de Prenda</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="../PrendaListServlet">
-                        <i class="fas fa-user"></i>
-                        <p>Prenda</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
                       <a href="../ComprobanteListServlet">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-receipt"></i>
                         <p>Comprobante</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="../TdPListServlet">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <p>Tipo de Persona</p>
+                      <a href="../DetalleComprobanteListServlet">
+                        <i class="fas fa-receipt"></i>
+                        <p>Detalle Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../PrendaListServlet">
+                        <i class="fas fa-tshirt"></i>
+                        <p>Prenda</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TdPrendaListServlet">
+                        <i class="fas fa-tshirt"></i>
+                        <p>Tipo de Prenda</p>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="../TelefonoListServlet">
-                        <i class="fas fa-map-marked-alt"></i>
+                        <i class="fas fa-phone"></i>
                         <p>Teléfono</p>
                       </a>
                     </li>
@@ -179,6 +173,12 @@
                       <a href="../PersonaListServlet">
                         <i class="fas fa-user"></i>
                         <p>Persona</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="../TdPListServlet">
+                        <i class="fas fa-users-cog"></i>
+                        <p>Tipo de Persona</p>
                       </a>
                     </li>
                     <li class="nav-item">
@@ -223,26 +223,26 @@
                 <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('Cliente')}">
                   <ul class="nav nav-primary">
                     <li class="nav-item">
-                      <a href="../DetalleComprobanteListServlet">
-                        <i class="fas fa-car"></i>
-                        <p>Detalle Comprobante</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
                       <a href="../PrendaListServlet">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-tshirt"></i>
                         <p>Prenda</p>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="../ComprobanteListServlet">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-receipt"></i>
                         <p>Comprobante</p>
                       </a>
                     </li>
                     <li class="nav-item">
+                      <a href="../DetalleComprobanteListServlet">
+                        <i class="fas fa-receipt"></i>
+                        <p>Detalle Comprobante</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
                       <a href="../TelefonoListServlet">
-                        <i class="fas fa-map-marked-alt"></i>
+                        <i class="fas fa-phone"></i>
                         <p>Teléfono</p>
                       </a>
                     </li>
@@ -275,8 +275,14 @@
                       </a>
                     </li>
                     <li class="nav-item">
+                      <a href="../TelefonoListServlet">
+                        <i class="fas fa-phone"></i>
+                        <p>Teléfono</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
                       <a href="../PrendaListServlet">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-tshirt"></i>
                         <p>Prenda</p>
                       </a>
                     </li>

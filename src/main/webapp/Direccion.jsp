@@ -74,6 +74,13 @@
                                 </c:forEach>
                               </select>
                             </c:when>
+                            <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                              <select class="form-control" name="addPersonaId">
+                                <c:forEach var="temp" items="${miListaDePersonas}">
+                                  <option value="${temp.id}">${temp.nombres} - ${temp.apellidos}</option>
+                                </c:forEach>
+                              </select>
+                            </c:when>
                             <c:otherwise>
                               <input readonly name="addPersonaId" type="text" class="form-control" value="${miPersonaObtenida.id}">
                             </c:otherwise>
@@ -126,6 +133,29 @@
                           </div>
                         </td>
                       </tr>
+                    </c:when>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                      <c:if test="${temp.personaId.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
+                        <tr>
+                          <td>${temp.descripcion }</td>
+                          <td>${temp.referencia}</td>
+                          <td>${temp.distritoId.descripcion}</td>
+                          <td>${temp.personaId.nombres}</td>
+                          <td>${temp.estado}</td>
+                          <td>${temp.createdAt }</td>
+                          <td>${temp.updatedAt }</td>
+                          <td>
+                            <div class="form-button-action">
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                      data-target="#${temp.uniqueId}"><i class="fa fa-edit"></i>
+                              </button>
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                      data-target="#${temp.id}${temp.uniqueId}"><i class="fa fa-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:if>
                     </c:when>
                     <c:otherwise>
                       <c:if test="${temp.personaId.nombres.equalsIgnoreCase(miPersonaObtenida.nombres)}">
@@ -242,7 +272,7 @@
                                     </select>
                                   </c:when>
                                   <c:otherwise>
-                                    <input readonly name="editPersonaId" type="text" class="form-control" value="${miPersonaObtenida.id}">
+                                    <input readonly name="editPersonaId" type="text" class="form-control" value="${temp.personaId.id}">
                                   </c:otherwise>
                                 </c:choose>
                               </div>

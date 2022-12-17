@@ -74,7 +74,8 @@
           </form>
 
           <p class="mb-0">
-            <a href="register.jsp" class="text-center">Registrarse</a>
+            <a href="../AuthRegisterServlet" class="text-center">Registrarse</a>
+            <!--<a href="register.jsp" class="text-center">Registrarse</a>-->
           </p>
           <p class="mb-1">
             <a href="forgot-password.jsp">Olvidé mi contraseña</a>

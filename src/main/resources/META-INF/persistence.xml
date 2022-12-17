@@ -4,16 +4,15 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.dto.Vehiculo</class>
     <class>com.dto.TipoPersona</class>
-    <class>com.dto.DireccionPersona</class>
     <class>com.dto.Direccion</class>
     <class>com.dto.Categoria</class>
     <class>com.dto.Distrito</class>
-    <class>com.dto.Factura</class>
+    <!--<class>com.dto.Factura</class>-->
     <class>com.dto.Cita</class>
     <class>com.dto.Persona</class>
     <class>com.dto.Departamento</class>
     <class>com.dto.Servicio</class>
-    <class>com.dto.DetalleFactura</class>
+    <!--<class>com.dto.DetalleFactura</class>-->
     <class>com.dto.Telefono</class>
     <class>com.dto.TipoDePrenda</class>
     <class>com.dto.Prenda</class>

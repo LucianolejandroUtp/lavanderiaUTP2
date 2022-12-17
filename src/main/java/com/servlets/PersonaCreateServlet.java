@@ -4,15 +4,24 @@
  */
 package com.servlets;
 
+import com.dao.DireccionJpaController;
+import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
+import com.dao.TelefonoJpaController;
 import com.dao.TipoPersonaJpaController;
+import com.dto.Direccion;
+import com.dto.Distrito;
 import com.dto.Persona;
+import com.dto.Telefono;
 import com.dto.TipoPersona;
 import com.email.SendEmailServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,14 +51,33 @@ public class PersonaCreateServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
 
     System.out.println("Bandera servlet create Persona");
+    System.out.println(request.getParameter("addNombres"));
+    System.out.println(request.getParameter("addApellidos"));
+    System.out.println(request.getParameter("addDni"));
+    System.out.println(request.getParameter("addTelefono"));
+    System.out.println(request.getParameter("addDireccion"));
+    System.out.println(request.getParameter("addReferencia"));
+    System.out.println(request.getParameter("addDistritoId"));
+    System.out.println(request.getParameter("addEmail"));
+    System.out.println(request.getParameter("addPassword"));
+    System.out.println(request.getParameter("addTdPersonaId"));
     try {
-      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Persona mi_objeto_persona = new Persona();
-      TipoPersona mi_objeto_TdP = new TipoPersona();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
+      TipoPersonaJpaController jpacTdP = new TipoPersonaJpaController(emf);
+      TelefonoJpaController jpacTelefono = new TelefonoJpaController(emf);
+      DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
+      DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
+      Persona miPersona = new Persona();
+      TipoPersona miTdP = new TipoPersona();
+      Telefono miTelefono = new Telefono();
+      Direccion miDireccion = new Direccion();
+      Distrito miDistrito = new Distrito();
+      List<Persona> miListaDePersonas = new ArrayList<>();
+      List<Distrito> miListaDeDistritos = new ArrayList<>();
       String contrasenia = null;
       BasicPasswordEncryptor bpe = new BasicPasswordEncryptor();
-      
+
       Date dt = new Date();
       Timestamp ts = new Timestamp(dt.getTime());
       System.out.println(ts);
@@ -57,54 +85,72 @@ public class PersonaCreateServlet extends HttpServlet {
 //      System.out.println("Tipo de persona: "+request.getParameter("addTdPersonaId"));
       if (request.getParameter("addTdPersonaId") == null) {
         System.out.println("Tipo de persona vacío, viene del register");
-        mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(2));
-        System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() + " - " + mi_objeto_TdP.getId());
+        miTdP = jpacTdP.findTipoPersona(Long.valueOf(2));
+        System.out.println("El Tipo de Persona obtenido fue: " + miTdP.getDescripcion() + " - " + miTdP.getId());
 
-      } else {
-//        Llenando datos  que únicamente se reciben desde Persona.jsp
+      } else {//Llenando datos  que únicamente se reciben desde Persona.jsp
 //      Obteniendo el Tipo dePpersona en base al Id obtenido de la vista
-        mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(request.getParameter("addTdPersonaId")));
-        System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() + " - " + mi_objeto_TdP.getId());
-
-        mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
-        mi_objeto_persona.setDni(request.getParameter("addDni"));
+        miTdP = jpacTdP.findTipoPersona(Long.valueOf(request.getParameter("addTdPersonaId")));
+        System.out.println("El Tipo de Persona obtenido fue: " + miTdP.getDescripcion() + " - " + miTdP.getId());
       }
 
 //      Llenando los parámetros independientes del tipo de persona obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
-      mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
-      mi_objeto_persona.setNombres(request.getParameter("addNombres"));
-      mi_objeto_persona.setEmail(request.getParameter("addEmail"));
+      miPersona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+      miPersona.setNombres(request.getParameter("addNombres"));
+      miPersona.setApellidos(request.getParameter("addApellidos"));
+      miPersona.setDni(request.getParameter("addDni"));
+      miPersona.setEmail(request.getParameter("addEmail"));
 
       contrasenia = bpe.encryptPassword(String.valueOf(request.getParameter("addPassword")));
-      mi_objeto_persona.setPassword(contrasenia);
+      miPersona.setPassword(contrasenia);
 
-      mi_objeto_persona.setEstado("activo");
-      mi_objeto_persona.setTipoPersonaId(mi_objeto_TdP);
-      mi_objeto_persona.setCreatedAt(ts);
-      mi_objeto_persona.setUpdatedAt(ts);
+      miPersona.setEstado("activo");
+      miPersona.setTipoPersonaId(miTdP);
+      miPersona.setCreatedAt(ts);
+      miPersona.setUpdatedAt(ts);
 
 //      Llamando al método crear del controlador y pasándole el objeto Distrito
-      jpac_object_persona.create(mi_objeto_persona);
+      jpacPersona.create(miPersona);
+
+      miListaDePersonas = jpacPersona.findPersonaEntities();
+      miDistrito = jpacDistrito.findDistrito(Long.valueOf(request.getParameter("addDistritoId")));
+      
+      for (Persona per : miListaDePersonas) {
+        System.out.println("Persona:" + per);
+        if (per.getUniqueId().equals(miPersona.getUniqueId())) {
+          System.out.println("Persona encontrada!");
+
+          miTelefono.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+          miTelefono.setDescripcion(request.getParameter("addTelefono"));
+          miTelefono.setPersonaId(per);
+          miTelefono.setEstado("activo");
+          miTelefono.setCreatedAt(ts);
+          miTelefono.setUpdatedAt(ts);
+
+          jpacTelefono.create(miTelefono);
+          
+          miDireccion.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
+          miDireccion.setDescripcion(request.getParameter("addDireccion"));
+          miDireccion.setReferencia(request.getParameter("addReferencia"));
+          miDireccion.setDistritoId(miDistrito);
+          miDireccion.setPersonaId(per);
+          miDireccion.setEstado("activo");
+          miDireccion.setCreatedAt(ts);
+          miDireccion.setUpdatedAt(ts);
+          
+          jpacDireccion.create(miDireccion);
+        }
+      }
 
       if (request.getParameter("addTdPersonaId") == null) {
-//        SendEmailServlet miEnvio = new SendEmailServlet();
-//        request.setAttribute("usuario", 3);
-//        request.setAttribute("contrasenia", 4);
-  
         request.getRequestDispatcher("/EmailRegistroPersonaServlet").include(request, response);
-//        request.getRequestDispatcher("/SendEmailServlet").forward(request, response);
-//        miEnvio.service(request, response);
         response.sendRedirect("auth/login.jsp");
-        
       } else {
 //      Llamando al listALGO.jsp
         PersonaListServlet call = new PersonaListServlet();
         call.processRequest(request, response);
       }
-      
-//      response.sendRedirect("Distrito/List.jsp").forward(request, response);
-
     } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
