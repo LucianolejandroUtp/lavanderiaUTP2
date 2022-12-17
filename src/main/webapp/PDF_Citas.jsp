@@ -4,6 +4,10 @@
     Author     : Acer
 --%>
 
+<%@page import="com.servlets.ReporteCitas"%>
+<%@page import="java.util.logging.Level"%>
+<%@page import="java.util.logging.Logger"%>
+<%@page import="net.sf.jasperreports.engine.JRException"%>
 <%@page import="net.sf.jasperreports.engine.JasperRunManager"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.io.File"%>
@@ -20,23 +24,28 @@
     </head>
     <body>
         <%
-            Connection con = null;
             
-            File  reporFile = new File (application  getRealPath("report.ReportCitas"));
-            Map<String,Object> parameter = new HashMap<String, Object>();
-            String valor = request.getParameter("asd");
-            
-            byte[] bytes = JasperRunManager.runReportToPdf(reporFile.getPath(), parameter,con);
-           
-            
+        try {
+            Conexion con = new Conexion();
+            con.getCon();
+            File reportFile =new File(request.getServletContext().getRealPath("ReportCitas.jasper"));
+
+            Map parameters = new HashMap();
+            parameters.put("nombre del parametro", "valor del parametro");
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), null, con.getCon());
             response.setContentType("application/pdf");
             response.setContentLength(bytes.length);
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.write(bytes,0,bytes.length);
             
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes, 0 , bytes.length);
             outputStream.flush();
             outputStream.close();
             
+            
+        } catch (JRException ex) {
+            Logger.getLogger(ReporteCitas.class.getName()).log(Level.SEVERE, null,ex);
+            
+        }
             
             
          
