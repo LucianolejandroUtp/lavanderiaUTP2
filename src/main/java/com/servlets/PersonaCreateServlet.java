@@ -59,7 +59,6 @@ public class PersonaCreateServlet extends HttpServlet {
         System.out.println("Tipo de persona vacío, viene del register");
         mi_objeto_TdP = jpac_object_TdP.findTipoPersona(Long.valueOf(2));
         System.out.println("El Tipo de Persona obtenido fue: " + mi_objeto_TdP.getDescripcion() + " - " + mi_objeto_TdP.getId());
-
       } else {
 //        Llenando datos  que únicamente se reciben desde Persona.jsp
 //      Obteniendo el Tipo dePpersona en base al Id obtenido de la vista
@@ -69,7 +68,6 @@ public class PersonaCreateServlet extends HttpServlet {
         mi_objeto_persona.setApellidos(request.getParameter("addApellidos"));
         mi_objeto_persona.setDni(request.getParameter("addDni"));
       }
-
 //      Llenando los parámetros independientes del tipo de persona obtenidos de la vista
 //            mi_distrito.setIdTelefono(566);                        //No necesario, tiene auto_increment
       mi_objeto_persona.setUniqueId(String.valueOf(java.util.UUID.randomUUID()));
@@ -84,7 +82,7 @@ public class PersonaCreateServlet extends HttpServlet {
       mi_objeto_persona.setCreatedAt(ts);
       mi_objeto_persona.setUpdatedAt(ts);
 
-//      Llamando al método crear del controlador y pasándole el objeto Distrito
+//      Llamando al método crear del controlador y pasándole el objeto Persona
       jpac_object_persona.create(mi_objeto_persona);
 
       if (request.getParameter("addTdPersonaId") == null) {

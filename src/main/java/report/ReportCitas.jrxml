@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23de2156-141b-41a1-a46e-3dbba0b42dbd">
-	<property name="ireport.zoom" value="2.143588810000009"/>
-	<property name="ireport.x" value="92"/>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23de2156-141b-41a1-a46e-3dbba0b42dbd">
+	<property name="ireport.zoom" value="1.6105100000000068"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="7f2f0f49-dde3-40e9-8b93-d3d516baeed4"/>
 	<queryString>
@@ -65,7 +66,7 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 	<columnHeader>
 		<band height="24" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="555" height="20" uuid="4da55d22-9231-4aed-ac07-9329d4b9ca4f"/>
+				<reportElement x="0" y="0" width="555" height="20" uuid="4da55d22-9231-4aed-ac07-9329d4b9ca4f"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="251" y="0" width="214" height="20" uuid="c1828f94-00f5-4472-8b54-2a605e106c2a"/>
@@ -92,18 +93,18 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 				<text><![CDATA[Nombre y Apellidos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="467" y="10" width="46" height="10" uuid="335fb6f2-2af5-4653-bdee-c5c4c3ef4f2a"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6" isBold="true" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[solicitud]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="467" y="0" width="46" height="10" uuid="8ae0daac-b78c-4325-8f48-5906eebf7c09"/>
+				<reportElement x="465" y="0" width="46" height="10" uuid="8947d626-8a85-40cc-98d1-88214eea624e"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6" isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="10" width="46" height="10" uuid="74756c58-2ec2-465e-a5c0-3cd3df36cc49"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Solicitud]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -126,7 +127,7 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 				<text><![CDATA[Referencia:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="1" y="0" width="118" height="20" uuid="2944d644-bcd1-4dd4-acee-7d9a82986253"/>
+				<reportElement x="4" y="0" width="115" height="20" uuid="2944d644-bcd1-4dd4-acee-7d9a82986253"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
@@ -159,7 +160,7 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 				<textFieldExpression><![CDATA[$F{distritoDescripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="23" y="20" width="96" height="18" uuid="4ed25953-099e-40cd-8d8b-178361dc5f33"/>
+				<reportElement x="27" y="20" width="90" height="18" uuid="4ed25953-099e-40cd-8d8b-178361dc5f33"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
@@ -173,7 +174,7 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 				<textFieldExpression><![CDATA[$F{citaHora}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="20" width="24" height="18" uuid="a2cce665-74a8-40c7-aa62-3b641eec1979"/>
+				<reportElement x="4" y="20" width="23" height="18" uuid="a2cce665-74a8-40c7-aa62-3b641eec1979"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -187,7 +188,7 @@ INNER JOIN telefono ON persona.id= telefono.persona_id)]]>
 				<text><![CDATA[TELF:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="146" y="20" width="105" height="18" uuid="48c2995b-caed-40ac-a590-f524fd18ed25"/>
+				<reportElement x="159" y="20" width="92" height="18" uuid="48c2995b-caed-40ac-a590-f524fd18ed25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TELEFON}]]></textFieldExpression>
 			</textField>
