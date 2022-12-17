@@ -120,7 +120,7 @@
                   <th>Total</th>
                   <th>Factura</th>
                   <th>Servicio</th>
-                  <th>Prenda</th>
+                  <!--<th>Prenda</th>-->
                   <th>Estado</th>
                   <th>Creado</th>
                   <th>Modificado</th>
@@ -135,9 +135,9 @@
                     <td>${tempObjeto.subtotal}</td>
                     <td>${tempObjeto.igv}</td>
                     <td>${tempObjeto.total}</td>
-                    <td>${tempObjeto.facturaId.numero}</td>
+                    <td>${tempObjeto.comprobanteId.numero}</td>
                     <td>${tempObjeto.servicioId.descripcion}</td>
-                    <td>${tempObjeto.prendaId.marca}</td>
+                    <%--<td>${tempObjeto.prendaId.marca}</td>--%>
                     <td>${tempObjeto.estado}</td>
                     <td>${tempObjeto.createdAt }</td>
                     <td>${tempObjeto.updatedAt }</td>
