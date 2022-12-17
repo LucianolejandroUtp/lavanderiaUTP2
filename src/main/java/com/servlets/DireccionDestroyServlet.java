@@ -8,6 +8,7 @@ import com.dao.DireccionJpaController;
 import com.dto.Direccion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +39,9 @@ public class DireccionDestroyServlet extends HttpServlet {
     System.out.println("Entrando a Dirección Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      DireccionJpaController jpac_object = new DireccionJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+      
+      DireccionJpaController jpac_object = new DireccionJpaController(emf);
       Direccion objeto_archivado;
 
       objeto_archivado = jpac_object.findDireccion(Long.valueOf(request.getParameter("destroyId")));

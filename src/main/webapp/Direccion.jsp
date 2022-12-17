@@ -3,7 +3,6 @@
     Created on : 20 nov. 2022, 11:27:18
     Author     : desti
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
@@ -57,23 +56,35 @@
                           <label>Referencia</label>
                           <input required name="addReferencia" type="text" class="form-control">
                         </div>
-                        
                         <div class="form-group form-group-default">
                           <label>Distritos</label>
                           <select class="form-control" name="addDistritoId">
-                            <c:forEach var="tempObjetoCreate" items="${mi_lista_de_distritos }">
-                              <option value="${tempObjetoCreate.id }">${tempObjetoCreate.descripcion }</option>
+                            <c:forEach var="temp" items="${mi_lista_de_distritos }">
+                              <option value="${temp.id }">${temp.descripcion }</option>
                             </c:forEach>
-
                           </select>
                         </div>
                         <div class="form-group form-group-default">
-                          <label>Personas</label>
-                          <select class="form-control" name="addPersonaId">
-                            <c:forEach var="tempObjetoCreate2" items="${miListaDePersonas}">
-                              <option value="${tempObjetoCreate2.id}">${tempObjetoCreate2.nombres} - ${tempObjetoCreate2.apellidos}</option>
-                            </c:forEach>
-                          </select>
+                          <label>Persona</label>
+                          <c:choose>
+                            <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                              <select class="form-control" name="addPersonaId">
+                                <c:forEach var="temp" items="${miListaDePersonas}">
+                                  <option value="${temp.id}">${temp.nombres} - ${temp.apellidos}</option>
+                                </c:forEach>
+                              </select>
+                            </c:when>
+                            <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                              <select class="form-control" name="addPersonaId">
+                                <c:forEach var="temp" items="${miListaDePersonas}">
+                                  <option value="${temp.id}">${temp.nombres} - ${temp.apellidos}</option>
+                                </c:forEach>
+                              </select>
+                            </c:when>
+                            <c:otherwise>
+                              <input readonly name="addPersonaId" type="text" class="form-control" value="${miPersonaObtenida.id}">
+                            </c:otherwise>
+                          </c:choose>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -82,11 +93,9 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
-
           <div class="table-responsive">
             <table id="add-row" class="display table table-striped table-hover" >
               <thead>
@@ -102,32 +111,80 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="tempObjeto" items="${mi_lista_de_direcciones }">
-                  <tr>
-                    <td>${tempObjeto.descripcion }</td>
-                    <td>${tempObjeto.referencia}</td>
-                    <td>${tempObjeto.distritoId.descripcion}</td>
-                    <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.createdAt }</td>
-                    <td>${tempObjeto.updatedAt }</td>
-                    <td>
-                      <div class="form-button-action">
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
-                                data-target="#${tempObjeto.uniqueId}">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
-                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
-                          <i class="fa fa-times"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-
+                <c:forEach var="temp" items="${mi_lista_de_direcciones }">
+                  <c:choose>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                      <tr>
+                        <td>${temp.descripcion }</td>
+                        <td>${temp.referencia}</td>
+                        <td>${temp.distritoId.descripcion}</td>
+                        <td>${temp.personaId.nombres}</td>
+                        <td>${temp.estado}</td>
+                        <td>${temp.createdAt }</td>
+                        <td>${temp.updatedAt }</td>
+                        <td>
+                          <div class="form-button-action">
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                    data-target="#${temp.uniqueId}"><i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                    data-target="#${temp.id}${temp.uniqueId}"><i class="fa fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:when>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('empleado')}">
+                      <c:if test="${temp.personaId.tipoPersonaId.descripcion.equalsIgnoreCase('cliente')}">
+                        <tr>
+                          <td>${temp.descripcion }</td>
+                          <td>${temp.referencia}</td>
+                          <td>${temp.distritoId.descripcion}</td>
+                          <td>${temp.personaId.nombres}</td>
+                          <td>${temp.estado}</td>
+                          <td>${temp.createdAt }</td>
+                          <td>${temp.updatedAt }</td>
+                          <td>
+                            <div class="form-button-action">
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                      data-target="#${temp.uniqueId}"><i class="fa fa-edit"></i>
+                              </button>
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                      data-target="#${temp.id}${temp.uniqueId}"><i class="fa fa-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:if>
+                    </c:when>
+                    <c:otherwise>
+                      <c:if test="${temp.personaId.nombres.equalsIgnoreCase(miPersonaObtenida.nombres)}">
+                        <tr>
+                          <td>${temp.descripcion }</td>
+                          <td>${temp.referencia}</td>
+                          <td>${temp.distritoId.descripcion}</td>
+                          <td>${temp.personaId.nombres}</td>
+                          <td>${temp.estado}</td>
+                          <td>${temp.createdAt }</td>
+                          <td>${temp.updatedAt }</td>
+                          <td>
+                            <div class="form-button-action">
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                      data-target="#${temp.uniqueId}"><i class="fa fa-edit"></i>
+                              </button>
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                      data-target="#${temp.id}${temp.uniqueId}"><i class="fa fa-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:if>
+                    </c:otherwise>
+                  </c:choose>
 
 
                   <!-- Modal Eliminar -->
-                <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${temp.id}${temp.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -146,11 +203,11 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="destroyId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="destroyId" type="text" class="form-control" value="${temp.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control" value="${tempObjeto.descripcion }" readonly>
+                                <input type="text" class="form-control" value="${temp.descripcion }" readonly>
                               </div>
 
                             </div>
@@ -165,7 +222,7 @@
                 </div>
 
                 <!-- Modal Editar -->
-                <div class="modal fade" id="${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="${temp.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header no-bd">
@@ -186,24 +243,40 @@
                             <div class="col-sm-12">
                               <div class="form-group form-group-default">
                                 <label>Id</label>
-                                <input name="editId" type="text" class="form-control" value="${tempObjeto.id }" readonly>
+                                <input name="editId" type="text" class="form-control" value="${temp.id }" readonly>
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Dirección</label>
-                                <input required name="editDescripcion" type="text" class="form-control" value="${tempObjeto.descripcion }">
+                                <input required name="editDescripcion" type="text" class="form-control" value="${temp.descripcion }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Referencia</label>
-                                <input required name="editReferencia" type="text" class="form-control" value="${tempObjeto.referencia }">
+                                <input required name="editReferencia" type="text" class="form-control" value="${temp.referencia }">
                               </div>
                               <div class="form-group form-group-default">
                                 <label>Distrito</label>
                                 <select class="form-control" name="editDistritoId">
-                                  <c:forEach var="tempObjetoEdit" items="${mi_lista_de_distritos }">
-                                    <option value="${tempObjetoEdit.id }">${tempObjetoEdit.descripcion }</option>
+                                  <c:forEach var="tempEdit" items="${mi_lista_de_distritos }">
+                                    <option value="${tempEdit.id }">${tempEdit.descripcion }</option>
                                   </c:forEach>
                                 </select>
                               </div>
+                              <div class="form-group form-group-default">
+                                <label>Persona</label>
+                                <c:choose>
+                                  <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                                    <select class="form-control" name="editPersonaId">
+                                      <c:forEach var="tempEdit" items="${miListaDePersonas}">
+                                        <option value="${tempEdit.id}">${tempEdit.nombres} - ${tempEdit.apellidos}</option>
+                                      </c:forEach>
+                                    </select>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <input readonly name="editPersonaId" type="text" class="form-control" value="${temp.personaId.id}">
+                                  </c:otherwise>
+                                </c:choose>
+                              </div>
+                              <!--</div>-->
                               <div class="form-group form-group-default">
                                 <label>Estado</label>
                                 <select class="form-control" name="editEstado" id="editEstado">
@@ -219,20 +292,16 @@
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>
-
               </c:forEach>
-
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
     <!-- Datatables -->
@@ -243,6 +312,5 @@
         "pageLength": 5,
       });
     </script>
-
   </jsp:attribute>
 </t:template>

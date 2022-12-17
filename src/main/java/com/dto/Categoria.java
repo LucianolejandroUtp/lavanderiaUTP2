@@ -22,12 +22,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  *
  * @author desti
  */
 @Entity
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Table(name = "categoria")
 @NamedQueries({
   @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
@@ -64,7 +66,7 @@ public class Categoria implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "categoriaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "categoriaId", fetch = FetchType.LAZY)
   private Collection<Servicio> servicioCollection;
 
   public Categoria() {

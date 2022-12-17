@@ -5,11 +5,9 @@
 package com.servlets;
 
 import com.dao.DireccionJpaController;
-import com.dao.DireccionPersonaJpaController;
 import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
 import com.dto.Direccion;
-import com.dto.DireccionPersona;
 import com.dto.Distrito;
 import com.dto.Persona;
 import java.io.IOException;
@@ -50,11 +48,11 @@ public class DireccionListServlet extends HttpServlet {
     System.out.println("Entrando a Dirección List Servlet");
     try {
       DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
-      DireccionPersonaJpaController jpacDirPersona = new DireccionPersonaJpaController(emf);
+//      DireccionPersonaJpaController jpacDirPersona = new DireccionPersonaJpaController(emf);
       DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
       PersonaJpaController jpacPersona = new PersonaJpaController(emf);
       List<Direccion> miListaDeDirecciones = new ArrayList<>();
-      List<DireccionPersona> miListaDeDirPersonas = new ArrayList<>();
+//      List<DireccionPersona> miListaDeDirPersonas = new ArrayList<>();
       List<Distrito> miListaDeDistritos = new ArrayList<>();
       List<Persona> miListaDePersonas = new ArrayList<>();
 
@@ -64,7 +62,7 @@ public class DireccionListServlet extends HttpServlet {
       miListaDePersonas = jpacPersona.findPersonaEntities();
 
       for (Direccion temp1 : miListaDeDirecciones) {
-        System.out.println(temp1.getId() + " - " + temp1.getDescripcion()+ " - " + temp1.getDireccionPersonaCollection());
+        System.out.println(temp1.getId() + " - " + temp1.getDescripcion());
       }
       for (Distrito temp2 : miListaDeDistritos) {
         System.out.println(temp2.getId() + " - " + temp2.getDescripcion());

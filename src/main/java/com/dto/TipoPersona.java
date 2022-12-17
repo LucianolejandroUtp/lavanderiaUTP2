@@ -27,6 +27,8 @@ import javax.validation.constraints.Size;
  *
  * @author desti
  */
+import org.eclipse.persistence.annotations.AdditionalCriteria;
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Entity
 @Table(name = "tipo_persona")
 @NamedQueries({
@@ -64,7 +66,7 @@ public class TipoPersona implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(mappedBy = "tipoPersonaId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "tipoPersonaId", fetch = FetchType.LAZY)
   private Collection<Persona> personaCollection;
 
   public TipoPersona() {

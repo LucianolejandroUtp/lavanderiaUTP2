@@ -142,34 +142,66 @@
               </thead>
               <tbody>
                 <c:forEach var="tempObjeto" items="${mi_lista_de_prendas }">
-                  <tr>
-                    <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
-                    <td>${tempObjeto.cantidad }</td>
-                    <td>${tempObjeto.color}</td>
-                    <td>${tempObjeto.marca}</td>
-                    <td>${tempObjeto.estadoDePrenda}</td>
-                    <td>${tempObjeto.observacion}</td>
-                    <td>${tempObjeto.personaIdCliente.nombres}</td>
-                    <td>${tempObjeto.personaIdEmpleado.nombres}</td>
-                    <td>${tempObjeto.servicioId.descripcion}</td>
-                    <td>${tempObjeto.estado}</td>
-                    <td>${tempObjeto.createdAt }</td>
-                    <td>${tempObjeto.updatedAt }</td>
-                    <td>
-                      <div class="form-button-action">
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
-                                data-target="#${tempObjeto.uniqueId}">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
-                                data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
-                          <i class="fa fa-times"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-
-
+                  <c:choose>
+                    <c:when test="${miPersonaObtenida.tipoPersonaId.descripcion.equalsIgnoreCase('administrador')}">
+                      <tr>
+                        <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
+                        <td>${tempObjeto.cantidad}</td>
+                        <td>${tempObjeto.color}</td>
+                        <td>${tempObjeto.marca}</td>
+                        <td>${tempObjeto.estadoDePrenda}</td>
+                        <td>${tempObjeto.observacion}</td>
+                        <td>${tempObjeto.personaIdCliente.nombres}</td>
+                        <td>${tempObjeto.personaIdEmpleado.nombres}</td>
+                        <td>${tempObjeto.servicioId.descripcion}</td>
+                        <td>${tempObjeto.estado}</td>
+                        <td>${tempObjeto.createdAt }</td>
+                        <td>${tempObjeto.updatedAt }</td>
+                        <td>
+                          <div class="form-button-action">
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                    data-target="#${tempObjeto.uniqueId}">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                    data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:when>
+                    <c:otherwise>
+                      <c:if test="${tempObjeto.personaIdCliente.nombres.equalsIgnoreCase(miPersonaObtenida.nombres)}">
+                        <tr>
+                          <td>${tempObjeto.tipoDePrendaId.descripcion}</td>
+                          <td>${tempObjeto.cantidad }</td>
+                          <td>${tempObjeto.color}</td>
+                          <td>${tempObjeto.marca}</td>
+                          <td>${tempObjeto.estadoDePrenda}</td>
+                          <td>${tempObjeto.observacion}</td>
+                          <td>${tempObjeto.personaIdCliente.nombres}</td>
+                          <td>${tempObjeto.personaIdEmpleado.nombres}</td>
+                          <td>${tempObjeto.servicioId.descripcion}</td>
+                          <td>${tempObjeto.estado}</td>
+                          <td>${tempObjeto.createdAt }</td>
+                          <td>${tempObjeto.updatedAt }</td>
+                          <td>
+                            <div class="form-button-action">
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-primary btn-lg"
+                                      data-target="#${tempObjeto.uniqueId}">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                              <button type="button" data-toggle="modal" class="btn btn-link btn-danger"
+                                      data-target="#${tempObjeto.id}${tempObjeto.uniqueId}">
+                                <i class="fa fa-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:if>
+                    </c:otherwise>
+                  </c:choose>
 
                   <!-- Modal Eliminar -->
                 <div class="modal fade" id="${tempObjeto.id}${tempObjeto.uniqueId}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -328,7 +360,6 @@
         </div>
       </div>
     </div>
-
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
     <!-- Datatables -->
@@ -339,6 +370,5 @@
         "pageLength": 5,
       });
     </script>
-
   </jsp:attribute>
 </t:template>

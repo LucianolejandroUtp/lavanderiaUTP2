@@ -6,12 +6,15 @@ package com.servlets;
 
 import com.dao.DireccionJpaController;
 import com.dao.DistritoJpaController;
+import com.dao.PersonaJpaController;
 import com.dto.Direccion;
 import com.dto.Distrito;
+import com.dto.Persona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,19 +41,24 @@ public class DireccionEditServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
+
     System.out.println("Entrando a Direccion Edit Servlet");
     System.out.println(request.getParameter("editId"));
     System.out.println(request.getParameter("editDescripcion"));
     System.out.println(request.getParameter("editReferencia"));
     System.out.println(request.getParameter("editEstado"));
     System.out.println(request.getParameter("editDistritoId"));
+    System.out.println(request.getParameter("editPersonaId"));
     try {
 //      Inicialización de objetos
-      DireccionJpaController jpac_obj_dir = new DireccionJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      DistritoJpaController jpac_obj_distrito = new DistritoJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Direccion oldObject_direccion;
-      Distrito mi_distrito;
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+
+      DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
+      DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
+      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
+      Direccion oldObjDireccion;
+      Distrito miDistrito;
+      Persona miPersona;
 
 //      Lo relacionado a la fecha
       Date dt = new Date();
@@ -61,38 +69,40 @@ public class DireccionEditServlet extends HttpServlet {
 //      DireccionJpaController jpac_xa_lista_de_Direcciones = new DireccionJpaController();
 //      List<Direccion> mi_lista_de_Direcciones = new ArrayList<>();
 //      mi_lista_de_Direcciones = jpac_xa_lista_de_Direcciones.findDireccionEntities();
-
 //      Obteniendo el objeto con foreign key en base al Id que nos da la vista
-      mi_distrito = jpac_obj_distrito.findDistrito(Long.valueOf(request.getParameter("editDistritoId")));
+      miDistrito = jpacDistrito.findDistrito(Long.valueOf(request.getParameter("editDistritoId")));
+      miPersona = jpacPersona.findPersona(Long.valueOf(request.getParameter("editPersonaId")));
 
       //  Ahora necesitamos obtener el objeto a editar para chancar los nuevos valores encima
-      oldObject_direccion = jpac_obj_dir.findDireccion(Long.valueOf(request.getParameter("editId")));
-      System.out.println("La Dirección obtenida es: " + oldObject_direccion);
+      oldObjDireccion = jpacDireccion.findDireccion(Long.valueOf(request.getParameter("editId")));
+      System.out.println("La Dirección obtenida es: " + oldObjDireccion);
 
 //      Comparando y asignando nuevos valores al objeto
-      if (oldObject_direccion.getDescripcion() == null || !oldObject_direccion.getDescripcion().equals(request.getParameter("editDescripcion"))) {
-        oldObject_direccion.setDescripcion(request.getParameter("editDescripcion"));
+      if (oldObjDireccion.getDescripcion() == null || !oldObjDireccion.getDescripcion().equals(request.getParameter("editDescripcion"))) {
+        oldObjDireccion.setDescripcion(request.getParameter("editDescripcion"));
       }
-      if (oldObject_direccion.getReferencia()== null || !oldObject_direccion.getReferencia().equals(request.getParameter("editReferencia"))) {
-        oldObject_direccion.setReferencia(request.getParameter("editReferencia"));
+      if (oldObjDireccion.getReferencia() == null || !oldObjDireccion.getReferencia().equals(request.getParameter("editReferencia"))) {
+        oldObjDireccion.setReferencia(request.getParameter("editReferencia"));
       }
-      
-      if (oldObject_direccion.getEstado() == null || !oldObject_direccion.getEstado().equals(request.getParameter("editEstado"))) {
-        oldObject_direccion.setEstado(request.getParameter("editEstado"));
+
+      if (oldObjDireccion.getEstado() == null || !oldObjDireccion.getEstado().equals(request.getParameter("editEstado"))) {
+        oldObjDireccion.setEstado(request.getParameter("editEstado"));
       }
-      if (!oldObject_direccion.getDistritoId().equals(mi_distrito)) {
-        oldObject_direccion.setDistritoId(mi_distrito);
+      if (!oldObjDireccion.getDistritoId().equals(miDistrito)) {
+        oldObjDireccion.setDistritoId(miDistrito);
       }
-      oldObject_direccion.setUpdatedAt(ts);
+      if (!oldObjDireccion.getPersonaId().equals(miPersona)) {
+        oldObjDireccion.setPersonaId(miPersona);
+      }
+      oldObjDireccion.setUpdatedAt(ts);
 //      oldObject_distrito.setDireccionCollection(mi_lista_de_Direcciones);
 
       System.out.println("El Servicio actualizado es: "
-          + oldObject_direccion.getId() + " - " + oldObject_direccion.getDescripcion() + " - "
-          + oldObject_direccion.getEstado() + " - " + oldObject_direccion.getDistritoId().getDescripcion() + " - "
-          + oldObject_direccion.getCreatedAt() + " - " + oldObject_direccion.getUpdatedAt() + " - "
-          + oldObject_direccion.getDireccionPersonaCollection());
+          + oldObjDireccion.getId() + " - " + oldObjDireccion.getDescripcion() + " - "
+          + oldObjDireccion.getEstado() + " - " + oldObjDireccion.getDistritoId().getDescripcion() + " - "
+          + oldObjDireccion.getCreatedAt() + " - " + oldObjDireccion.getUpdatedAt());
 
-      jpac_obj_dir.edit(oldObject_direccion);
+      jpacDireccion.edit(oldObjDireccion);
 
       DireccionListServlet call = new DireccionListServlet();
       call.processRequest(request, response);

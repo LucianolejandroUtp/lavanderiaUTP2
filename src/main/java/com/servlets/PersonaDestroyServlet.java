@@ -4,10 +4,17 @@
  */
 package com.servlets;
 
+import com.dao.DireccionJpaController;
 import com.dao.PersonaJpaController;
+import com.dao.TelefonoJpaController;
+import com.dto.Direccion;
 import com.dto.Persona;
+import com.dto.Telefono;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,17 +41,38 @@ public class PersonaDestroyServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
+
     System.out.println("Entrando a Persona Destroy Servlet");
     System.out.println(request.getParameter("destroyId"));
     try {
-      PersonaJpaController jpac_object = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      Persona objeto_archivado;
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+      PersonaJpaController jpacObjeto = new PersonaJpaController(emf);
+      TelefonoJpaController jpacTelefono = new TelefonoJpaController(emf);
+      DireccionJpaController jpacDireccion = new DireccionJpaController(emf);
+      Persona objetoArchivado;
+      List<Telefono> miTelefono = new ArrayList<>();
+      List<Direccion> miDireccion = new ArrayList<>();
+      
 
-      objeto_archivado = jpac_object.findPersona(Long.valueOf(request.getParameter("destroyId")));
+      objetoArchivado = jpacObjeto.findPersona(Long.valueOf(request.getParameter("destroyId")));
+      System.out.println(objetoArchivado.getDireccionCollection());
 
-      objeto_archivado.setEstado("eliminado");
-      jpac_object.edit(objeto_archivado);
+//      miTelefono = (List) objetoArchivado.getTelefonoCollection();
+//      miDireccion = (List) objetoArchivado.getDireccionCollection();
+//      
+//      for (Telefono tel : miTelefono){
+//        System.out.println(tel.getDescripcion());
+//        tel.setEstado("eliminado");
+//        jpacTelefono.edit(tel);
+//      }
+//      for (Direccion dir : miDireccion) {
+//        System.out.println(dir.getDescripcion());
+//        dir.setEstado("eliminado");
+//        jpacDireccion.edit(dir);
+//      }
+      
+      objetoArchivado.setEstado("eliminado");
+      jpacObjeto.edit(objetoArchivado);
 
       PersonaListServlet call = new PersonaListServlet();
       call.processRequest(request, response);

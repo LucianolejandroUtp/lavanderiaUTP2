@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,9 +24,9 @@
   </head>
   <body class="hold-transition register-page">
     <div class="register-box">
-<!--      <div class="register-logo">
-        <a href="#">Lavandería<b>UTP</b></a>
-      </div>-->
+      <!--      <div class="register-logo">
+              <a href="#">Lavandería<b>UTP</b></a>
+            </div>-->
 
       <div class="card">
         <div class="card-header text-center" style="background-color: cornflowerblue;">
@@ -44,6 +45,54 @@
                   <span class="fas fa-user"></span>
                 </div>
               </div>
+            </div>
+            <div class="input-group mb-3">
+              <input required name="addApellidos" type="text" class="form-control" placeholder="Apellidos">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input required name="addDni" type="text" class="form-control" placeholder="DNI">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user-check"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input required name="addTelefono" type="text" class="form-control" placeholder="Teléfono">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-phone"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input required name="addDireccion" type="text" class="form-control" placeholder="Dirección">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-map-marker-alt"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input name="addReferencia" type="text" class="form-control" placeholder="Referencia">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-map-marker-alt"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <select class="form-control" name="addDistritoId">
+                <option disabled selected>Distrito</option>
+                <c:forEach var="temp" items="${miListaDeDistritos}">
+                  <option value="${temp.id}">${temp.descripcion}</option>
+                </c:forEach>
+              </select>
             </div>
             <div class="input-group mb-3">
               <input required name="addEmail" type="email" class="form-control" placeholder="Email">
@@ -87,7 +136,7 @@
           </form>
 
 
-          <a href="login.jsp" class="text-center">Ya tengo una cuenta</a>
+          <a href="auth/login.jsp" class="text-center">Ya tengo una cuenta</a>
         </div>
         <!-- /.form-box -->
       </div><!-- /.card -->

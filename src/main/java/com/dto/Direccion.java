@@ -5,7 +5,6 @@
 package com.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +28,8 @@ import javax.validation.constraints.Size;
  *
  * @author desti
  */
+import org.eclipse.persistence.annotations.AdditionalCriteria;
+@AdditionalCriteria("this.estado <> 'eliminado'")
 @Entity
 @Table(name = "direccion")
 @NamedQueries({
@@ -72,10 +72,11 @@ public class Direccion implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "distrito_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Distrito distritoId;
-  @OneToMany(mappedBy = "direccionId", fetch = FetchType.EAGER)
-  private Collection<DireccionPersona> direccionPersonaCollection;
+  @JoinColumn(name = "persona_id", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Persona personaId;
 
   public Direccion() {
   }
@@ -154,12 +155,12 @@ public class Direccion implements Serializable {
     this.distritoId = distritoId;
   }
 
-  public Collection<DireccionPersona> getDireccionPersonaCollection() {
-    return direccionPersonaCollection;
+  public Persona getPersonaId() {
+    return personaId;
   }
 
-  public void setDireccionPersonaCollection(Collection<DireccionPersona> direccionPersonaCollection) {
-    this.direccionPersonaCollection = direccionPersonaCollection;
+  public void setPersonaId(Persona personaId) {
+    this.personaId = personaId;
   }
 
   @Override

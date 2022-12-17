@@ -4,18 +4,19 @@
  */
 package com.servlets;
 
-import com.dao.DepartamentoJpaController;
 import com.dao.DistritoJpaController;
 import com.dao.PersonaJpaController;
 import com.dao.TipoPersonaJpaController;
-import com.dto.Departamento;
 import com.dto.Distrito;
 import com.dto.Persona;
+import com.dto.Telefono;
 import com.dto.TipoPersona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,30 +43,38 @@ public class PersonaListServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    
+
     System.out.println("Entrando a Persona List Servlet");
     try {
-      PersonaJpaController jpac_object_persona = new PersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      TipoPersonaJpaController jpac_object_TdP = new TipoPersonaJpaController(Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU"));
-      List<Persona> mi_lista_de_personas = new ArrayList<>();
-      List<TipoPersona> mi_lista_de_TdP = new ArrayList<>();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.lav_lavanderia115_war_1.0PU");
+      PersonaJpaController jpacPersona = new PersonaJpaController(emf);
+      TipoPersonaJpaController jpacTdP = new TipoPersonaJpaController(emf);
+      DistritoJpaController jpacDistrito = new DistritoJpaController(emf);
+      List<Persona> miListaDePersonas = new ArrayList<>();
+      List<TipoPersona> miListaDeTdP = new ArrayList<>();
+      List<Distrito> miListaDeDistritos = new ArrayList<>();
 
 //      System.out.println(jpacontroller_object.findDistritoEntities());
-      mi_lista_de_personas = jpac_object_persona.findPersonaEntities();
-      mi_lista_de_TdP = jpac_object_TdP.findTipoPersonaEntities();
+      miListaDePersonas = jpacPersona.findPersonaEntities();
+      miListaDeTdP = jpacTdP.findTipoPersonaEntities();
+      miListaDeDistritos = jpacDistrito.findDistritoEntities();
 
-      for (Persona per : mi_lista_de_personas) {
-        System.out.println(per.getId() + " - " + per.getNombres() +" - "+ per.getEmail()+" - " + per.getTipoPersonaId().getDescripcion());
+      List<Telefono> miListaDeTelefonos = new ArrayList<>();
+      for (Persona per : miListaDePersonas) {
+        System.out.println(per.getId()+" - "+ per.getNombres()+" - "+per.getEmail()+" - "+per.getTelefonoCollection());
+        miListaDeTelefonos = (List) per.getTelefonoCollection();
+        for(Telefono tel: per.getTelefonoCollection()){
+          System.out.println("Teléfono: "+tel.getDescripcion());
+        }
       }
-      for (TipoPersona tipoPer : mi_lista_de_TdP) {
+      for (TipoPersona tipoPer : miListaDeTdP) {
         System.out.println(tipoPer.getId() + " - " + tipoPer.getDescripcion());
       }
 
-      
-      request.setAttribute("mi_lista_de_personas", mi_lista_de_personas);
-      request.setAttribute("mi_lista_de_TdP", mi_lista_de_TdP);
+      request.setAttribute("mi_lista_de_personas", miListaDePersonas);
+      request.setAttribute("mi_lista_de_TdP", miListaDeTdP);
+      request.setAttribute("miListaDeDistritos", miListaDeDistritos);
       request.getRequestDispatcher("Persona.jsp").forward(request, response);
-
     } catch (IOException | ServletException theException) {
       System.out.println(theException);
     }
