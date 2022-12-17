@@ -18,11 +18,12 @@ public class Conexion {
     Connection con;
     public Conexion(){
         
-        Connection con = null;
+        
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/lavanderiautpmigrations","root","");
-            out.print("Conexion en Linea  ");
+            Connection con = null;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/lavanderiautpmigrations","root","");
+            out.println("Conexion en Linea  !!");
             }catch(Exception ex){
             out.print("Error:  !!!!!!!!!!!!!!  "+ex.getMessage());
             }

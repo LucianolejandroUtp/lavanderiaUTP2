@@ -59,7 +59,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.25</version>
+      <version>8.0.30</version>
     </dependency>
     <dependency>
       <groupId>jasperreports</groupId>
@@ -71,6 +71,11 @@
       <artifactId>jasper-jsp</artifactId>
       <version>10.0.2</version>
       <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>3.0.8</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
@@ -87,6 +92,15 @@
       <version>8.0.31</version>
       <type>jar</type>
     </dependency>
+    
+    
+    <!-- Thanks for using https://jar-download.com -->
+    <dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>8.0.18</version>
+    </dependency>
+    
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -114,12 +128,27 @@
 
     <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
 
-    <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+
     <dependency>
         <groupId>net.sf.jasperreports</groupId>
         <artifactId>jasperreports</artifactId>
         <version>6.20.0</version>
+        <!-- Excluimos dependencia itext-->
+        <exclusions>
+            <!-- <groupId>com.lowagie</groupId>  -->
+            <!-- <artifactId>itext</artifactId>  -->
+        </exclusions>
     </dependency>
+    <dependency>
+        <groupId>net.sf.jasperreports</groupId>
+        <artifactId>jasperreports-fonts</artifactId>
+        <version>6.0.0</version>
+        
+    </dependency>
+    
+    
+    
+    
 
 
   </dependencies>
